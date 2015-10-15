@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SiriusAPP</string>
+
+    <string-array name="drawer_itens">
+        <item>Novo Grupo</item>
+        <item>Novo Lançamento</item>
+        <item>Ranking</item>
+        <item>Pesquisar</item>
+    </string-array>
+
+    <string-array name="drawer_icons">
+        <item>@drawable/icon1</item>
+        <item>@drawable/icon2</item>
+        <item>@drawable/icon3</item>
+        <item>@drawable/icon4</item>
+    </string-array>
+</resources>

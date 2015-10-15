@@ -1,0 +1,16 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize the color palette -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="DrawerListView" parent="Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">#222</item>
+        <item name="android:textColor">#ccc</item>
+    </style>
+
+</resources>
