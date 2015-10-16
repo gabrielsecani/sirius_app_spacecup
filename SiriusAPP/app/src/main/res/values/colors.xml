@@ -3,4 +3,9 @@
     <color name="primary">#8BC34A</color>
     <color name="primary_dark">#33691E</color>
     <color name="accent">#558B2F</color>
+    <color name="bg_sirius_app_standard">#f5f5ed</color>
+    <color name="bg_sirius_app_menu">#999</color>
+    <color name="text_color_standard">#444</color>
+
+
 </resources>
