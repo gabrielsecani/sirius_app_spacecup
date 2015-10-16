@@ -1,4 +1,4 @@
-package app.sirius.spacecup.siriusapp;
+package app.sirius.spacecup.siriusapp.DrawerMenu;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import app.sirius.spacecup.siriusapp.R;
 
 /**
  * Created by nando on 14/10/2015.
@@ -44,6 +46,7 @@ public class DrawerMenuAdapter extends BaseAdapter{
         if(view == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.layout_menu_item, null);
+
         }
 
         ImageView icone = (ImageView) view.findViewById(R.id.imgView_menu_item);
@@ -52,7 +55,6 @@ public class DrawerMenuAdapter extends BaseAdapter{
         DrawerMenuItem item = menuItens.get(position);
         icone.setImageResource(item.getIcone());
         titulo.setText(item.getTexto());
-
 
         return view;
     }

@@ -9,8 +9,15 @@
     </style>
 
     <style name="DrawerListView" parent="Widget.AppCompat.Spinner.DropDown.ActionBar">
-        <item name="android:background">#222</item>
-        <item name="android:textColor">#ccc</item>
+        <item name="android:background">@color/bg_sirius_app_menu</item>
+    </style>
+
+    <style name="FragmentThemeLayout">
+        <item name="android:background">@color/bg_sirius_app_standard</item>
+        <item name="android:textColor">@color/text_color_standard</item>
+        <item name="android:textSize">@dimen/size_font_standar</item>
+        <item name="android:layout_margin">@dimen/activity_vertical_margin</item>
+
     </style>
 
 </resources>

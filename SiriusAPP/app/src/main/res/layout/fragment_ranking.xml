@@ -1,0 +1,57 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="app.sirius.spacecup.siriusapp.FragmentRanking">
+
+    <GridLayout
+        style="@style/FragmentThemeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/FragmentThemeLayout"
+                android:id="@+id/txtView_nome_grupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="2"
+                android:layout_column="0"
+                android:text="Sirius" />
+
+            <TextView
+                style="@style/FragmentThemeLayout"
+                android:id="@+id/txtView_distancia_alvo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_column="1"
+                android:text="10m" />
+
+            <TextView
+                style="@style/FragmentThemeLayout"
+                android:id="@+id/txtView_rank_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_column="2"
+                android:layout_gravity="right"
+                android:text="1"/>
+
+            <ImageView
+                android:id="@+id/icon_rankin_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_column="3"
+                android:src="@drawable/first_medal"/>
+
+        </LinearLayout>
+
+    </GridLayout>
+
+</FrameLayout>

@@ -19,6 +19,12 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.sirius.spacecup.siriusapp.DrawerMenu.DrawerMenuAdapter;
+import app.sirius.spacecup.siriusapp.DrawerMenu.DrawerMenuItem;
+
+/**
+ * Created by nando on 14/10/2015.
+ */
 /**
  * Created by nando on 14/10/2015.
  */
@@ -58,7 +64,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         layout.setDrawerListener(toogle);
 
         if(SaveInstanceState == null){
-            setFragment(0, FragmentCadastrarNovoGrupo.class);
+            setFragment(0, FragmentRanking.class);
         }
     }
 
@@ -81,9 +87,9 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position){
             case 0:
-                setFragment(0, FragmentCadastrarNovoGrupo.class);
+                setFragment(0, FragmentRanking.class);
                 break;
-            case 1:
+            /*case 1:
                 setFragment(1, FragmentCadastrarNovoGrupo.class);
                 break;
             case 2:
@@ -91,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
                 break;
             case 3:
                 setFragment(3, FragmentCadastrarNovoGrupo.class);
-                break;
+                break;*/
         }
 
     }
@@ -122,7 +128,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         toogle.onConfigurationChanged(newConfig);
     }
 
-    public void setFragment(int position, Class<FragmentCadastrarNovoGrupo> fragmentClass) {
+    public void setFragment(int position, Class<FragmentRanking> fragmentClass) {
         try {
             Fragment fragment = fragmentClass.newInstance();
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -139,3 +145,4 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         }
     }
 }
+

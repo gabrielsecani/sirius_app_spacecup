@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        //construção da tabela grupo
+        //construção da tabela grupos
         db.execSQL("CREATE TABLE grupo (_id INTEGER PRIMARY KEY, nome_grupo TEXT, nome_turma TEXT)");
 
         //construção da tabela pessoa
