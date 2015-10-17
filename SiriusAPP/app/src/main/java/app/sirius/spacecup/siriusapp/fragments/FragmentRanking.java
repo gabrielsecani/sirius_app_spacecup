@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -55,26 +56,33 @@ public class FragmentRanking extends FragmentBase {
 
         final List<Map<String, Object>> grupos = ListarGrupos();
 
-        SimpleAdapter adapter =
-                new SimpleAdapter(getContext(), grupos,
-                        R.layout.layout_fragment_ranking, chaves, identificadores) {
-                };
+        if (grupos.size() == 0) {
 
-        listView.setAdapter(adapter);
+            ((TextView) view.findViewById(R.id.txtView_sem_grupos)).setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+        } else {
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            SimpleAdapter adapter =
+                    new SimpleAdapter(getContext(), grupos,
+                            R.layout.layout_fragment_ranking, chaves, identificadores) {
+                    };
 
-                Map<String, Object> map = grupos.get(position);
-                String msg = "Grupo selecionado: ";
-                msg += (String) map.get("grupo");
+            listView.setAdapter(adapter);
 
-                Toast.makeText(getContext(), msg,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                    Map<String, Object> map = grupos.get(position);
+                    String msg = "Grupo selecionado: ";
+                    msg += (String) map.get("grupo");
+
+                    Toast.makeText(getContext(), msg,
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
        /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

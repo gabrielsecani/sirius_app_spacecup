@@ -4,6 +4,16 @@
     android:layout_height="match_parent"
     tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentRanking">
 
+    <TextView
+        android:id="@+id/txtView_sem_grupos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Paçoca"
+        android:textColor="@color/text_color_standard"
+        android:visibility="gone" />
+
+
     <ListView
         android:id="@+id/listView_ranking"
         style="@style/FragmentThemeLayout"
