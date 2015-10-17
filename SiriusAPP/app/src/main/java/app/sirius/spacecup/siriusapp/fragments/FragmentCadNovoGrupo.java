@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import app.sirius.spacecup.siriusapp.R;
-import app.sirius.spacecup.siriusapp.db.Database;
-import app.sirius.spacecup.siriusapp.db.DatabaseHelper;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 
 
@@ -34,6 +32,10 @@ public class FragmentCadNovoGrupo extends FragmentBase  {
 
     private OnFragmentInteractionListener mListener;
 
+    public FragmentCadNovoGrupo() {
+        // Required empty public constructor
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -50,10 +52,6 @@ public class FragmentCadNovoGrupo extends FragmentBase  {
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public FragmentCadNovoGrupo() {
-        // Required empty public constructor
     }
 
     @Override
