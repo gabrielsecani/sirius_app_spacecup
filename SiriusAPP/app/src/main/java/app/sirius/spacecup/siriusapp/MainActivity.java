@@ -141,14 +141,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frameLayout_menu, fragment, fragmentClass.getSimpleName());
             fragmentTransaction.commit();
-            ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao)).setText(fragment.getResID_ToolbarDescricao());
-
+            ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao)).setText(((DrawerMenuItem) menu.getItemAtPosition(position)).getTexto());
             menu.setItemChecked(position, true);
             layout.closeDrawer(menu);
             menu.invalidateViews();
 
-        }
-        catch (Exception ex){
+        } catch (ClassCastException e) {
+            throw new ClassCastException(fragmentClass.toString() + " must extend FragmentBase");
+        } catch (Exception ex) {
             Log.e("setFragment", ex.getMessage());
         }
     }
