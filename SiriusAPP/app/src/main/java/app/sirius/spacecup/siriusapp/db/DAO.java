@@ -1,38 +1,16 @@
 package app.sirius.spacecup.siriusapp.db;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.ContentValues;
 
 /**
- * Created by nando on 15/10/2015.
+ * Created by Carol on 17/10/2015.
  */
-public class DAO {
+public interface DAO<T> {
+    public ContentValues getContentValues();
 
-    private static DatabaseHelper helper;
-    private static SQLiteDatabase db;
-    private boolean opened = false;
+    public String getTableName();
 
-    public DAO(Context context) {
-        helper = new DatabaseHelper(context);
-    }
+    public String getDeleteClause();
 
-    private SQLiteDatabase getDB() {
-
-        if (db == null) {
-            db = helper.getWritableDatabase();
-            opened = true;
-        }
-        return db;
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
-
-    public void close() {
-        if (opened)
-            helper.close();
-    }
+    public T getObject();
 }
