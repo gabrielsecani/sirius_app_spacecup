@@ -15,7 +15,8 @@
         <FrameLayout
             android:id="@+id/frameLayout_menu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/bg_sirius_app_standard"/>
 
         <ListView
             style="@style/DrawerListView"
@@ -29,5 +30,7 @@
             android:dividerHeight="0dp"/>
 
     </android.support.v4.widget.DrawerLayout>
+
+    <include layout="@layout/fragment_ranking" />
 
 </LinearLayout>

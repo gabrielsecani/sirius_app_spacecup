@@ -3,10 +3,10 @@
     <string name="toolbar_title_NovoGrupo">Novo Grupo</string>
 
     <string-array name="drawer_itens">
-        <item>Novo Grupo</item>
-        <item>Novo Lançamento</item>
         <item>Ranking</item>
-        <item>Pesquisar</item>
+        <item>Novo Grupo</item>
+        <item>Pré Lançamento</item>
+        <item>Pós Lançamento</item>
     </string-array>
 
     <string-array name="drawer_icons">

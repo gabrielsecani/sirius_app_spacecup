@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView menu;
     DrawerMenuAdapter menuAdapter;
 
-    protected Context contexto = this;
+    Context contexto = this;
 
     public void onCreate (Bundle SaveInstanceState){
         super.onCreate(SaveInstanceState);

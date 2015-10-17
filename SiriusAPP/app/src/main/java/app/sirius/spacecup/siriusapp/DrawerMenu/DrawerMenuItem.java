@@ -1,4 +1,4 @@
-package app.sirius.spacecup.siriusapp;
+package app.sirius.spacecup.siriusapp.DrawerMenu;
 
 /**
  * Created by nando on 14/10/2015.
