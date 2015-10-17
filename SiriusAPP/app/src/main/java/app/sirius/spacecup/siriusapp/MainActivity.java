@@ -20,8 +20,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.sirius.spacecup.siriusapp.DrawerMenu.DrawerMenuAdapter;
+import app.sirius.spacecup.siriusapp.DrawerMenu.DrawerMenuItem;
 import app.sirius.spacecup.siriusapp.fragments.FragmentBase;
 import app.sirius.spacecup.siriusapp.fragments.FragmentCadNovoGrupo;
+import app.sirius.spacecup.siriusapp.fragments.FragmentRanking;
 
 /**
  * Created by nando on 14/10/2015.
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position){
             case 0:
-                setFragment(0, FragmentCadNovoGrupo.class);
+                setFragment(0, FragmentRanking.class);
                 break;
             case 1:
                 setFragment(1, FragmentCadNovoGrupo.class);
