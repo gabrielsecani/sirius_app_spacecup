@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import app.sirius.spacecup.siriusapp.R;
-import app.sirius.spacecup.siriusapp.db.GrupoDAO2;
+import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.RankingDAO;
 
 
@@ -72,7 +72,7 @@ public class FragmentCadNovoGrupo extends FragmentBase {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        GrupoDAO2 grupoDAO = new GrupoDAO2(getContext());
+        GrupoDAO grupoDAO = new GrupoDAO(getContext());
 
         try {
             grupoDAO.getObject().setNome_turma("SIS");
@@ -86,7 +86,7 @@ public class FragmentCadNovoGrupo extends FragmentBase {
         ((Button) view.findViewById(R.id.btn1)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<GrupoDAO2.Grupo> grupos = new GrupoDAO2(getContext()).doSelectAll();
+                List<GrupoDAO.Grupo> grupos = new GrupoDAO(getContext()).doSelectAll();
                 Toast.makeText(getContext(), "Foram encontrados: " + grupos.size() + "grupos", Toast.LENGTH_LONG).show();
             }
         });

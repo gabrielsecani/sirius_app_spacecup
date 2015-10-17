@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Created by Gabriel on 17/10/2015.
  */
-public class GrupoDAO2 extends DAO<GrupoDAO2.Grupo> {
+public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
 
-    public GrupoDAO2(Context context) {
+    public GrupoDAO(Context context) {
         super(context);
-        object = new GrupoDAO2.Grupo();
+        object = new GrupoDAO.Grupo();
     }
 
     @Override
