@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     Context contexto = this;
 
-    public void onCreate (Bundle SaveInstanceState){
+    public void onCreate(Bundle SaveInstanceState) {
         super.onCreate(SaveInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         menuAdapter = new DrawerMenuAdapter(getApplicationContext(), menuItems);
         menu.setAdapter(menuAdapter);
 
-        toogle = new ActionBarDrawerToggle(this,layout,toolbar,R.string.app_name,R.string.app_name) {
+        toogle = new ActionBarDrawerToggle(this, layout, toolbar, R.string.app_name, R.string.app_name) {
             public void onDrawerClosed(View view) {
                 invalidateOptionsMenu();
             }
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         };
         layout.setDrawerListener(toogle);
 
-        if(SaveInstanceState == null){
+        if (SaveInstanceState == null) {
             onItemClick(null, null, 0, 0);
         }
     }
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position){
+        switch (position) {
             case 0:
                 setFragment(0, FragmentRanking.class);
                 break;
@@ -155,6 +156,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-        //
+        Toast.makeText(this, "." + uri.getFragment(), Toast.LENGTH_LONG).show();
     }
 }

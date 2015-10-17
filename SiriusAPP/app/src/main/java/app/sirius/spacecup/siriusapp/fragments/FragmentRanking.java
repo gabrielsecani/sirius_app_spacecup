@@ -22,12 +22,12 @@ public class FragmentRanking extends FragmentBase {
     private List<Map<String, Object>> grupos;
     private ListView listView;
 
-    public FragmentRanking(){
+    public FragmentRanking() {
 
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
     }
 
@@ -44,7 +44,7 @@ public class FragmentRanking extends FragmentBase {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SaveInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SaveInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
 
@@ -72,7 +72,7 @@ public class FragmentRanking extends FragmentBase {
 
         for (int i = 0; i < arrayLenght; i++) {
             item = new HashMap<String, Object>();
-            item.put("grupo", "Nome Grupo");
+            item.put("grupo", "Nome Pessoa");
             item.put("distancia", "10m");
             item.put("posicao", Integer.valueOf(i + 1));
 

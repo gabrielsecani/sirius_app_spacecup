@@ -7,11 +7,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.List;
 
 import app.sirius.spacecup.siriusapp.R;
-import app.sirius.spacecup.siriusapp.db.Database;
-import app.sirius.spacecup.siriusapp.db.DatabaseHelper;
-import app.sirius.spacecup.siriusapp.db.GrupoDAO;
+import app.sirius.spacecup.siriusapp.db.GrupoDAO2;
+import app.sirius.spacecup.siriusapp.db.RankingDAO;
 
 
 /**
@@ -22,7 +25,7 @@ import app.sirius.spacecup.siriusapp.db.GrupoDAO;
  * Use the {@link FragmentCadNovoGrupo#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentCadNovoGrupo extends FragmentBase  {
+public class FragmentCadNovoGrupo extends FragmentBase {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,6 +36,10 @@ public class FragmentCadNovoGrupo extends FragmentBase  {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    public FragmentCadNovoGrupo() {
+        // Required empty public constructor
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -52,10 +59,6 @@ public class FragmentCadNovoGrupo extends FragmentBase  {
         return fragment;
     }
 
-    public FragmentCadNovoGrupo() {
-        // Required empty public constructor
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +66,13 @@ public class FragmentCadNovoGrupo extends FragmentBase  {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        GrupoDAO grupoDAO = new GrupoDAO(getContext());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        GrupoDAO2 grupoDAO = new GrupoDAO2(getContext());
 
         try {
             grupoDAO.getObject().setNome_turma("SIS");
@@ -72,14 +81,26 @@ public class FragmentCadNovoGrupo extends FragmentBase  {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        grupoDAO.doSelectAll();
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
+        ((Button) view.findViewById(R.id.btn1)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<GrupoDAO2.Grupo> grupos = new GrupoDAO2(getContext()).doSelectAll();
+                Toast.makeText(getContext(), "Foram encontrados: " + grupos.size() + "grupos", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        ((Button) view.findViewById(R.id.btn2)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<RankingDAO.Ranking> grupos = new RankingDAO(getActivity()).doSelectAll();
+                Toast.makeText(getActivity(), "Foram !!!! encontrados: " + grupos.size() + " ranks", Toast.LENGTH_LONG).show();
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
+        return view;
     }
 
 

@@ -3,7 +3,7 @@ package app.sirius.spacecup.siriusapp.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Created by Gabriel on 17/10/2015.
  */
-public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
+public class GrupoDAO2 extends DAO<GrupoDAO2.Grupo> {
 
-    public GrupoDAO(Context context) {
+    public GrupoDAO2(Context context) {
         super(context);
-        object = new GrupoDAO.Grupo();
+        object = new GrupoDAO2.Grupo();
     }
 
     @Override
@@ -48,61 +48,37 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
     }
 
     @Override
-    public Grupo doSelectOne(long ID){
+    public Grupo doSelectOne(long ID) {
+        String[] args = new String[]{String.valueOf(ID)};
+        Cursor cursor = getDB().query(getTableName(), getAllColumns(), getWhereClause(), args, "", "", "");
+        cursor.moveToFirst();
+        this.object = new Grupo();
+        this.object.set_id(cursor.getInt(0));
+        this.object.setNome_grupo(cursor.getString(1));
+        this.object.setNome_turma(cursor.getString(2));
+        return object;
 
-        try {
-            String[] args = new String[]{String.valueOf(ID)};
-            Cursor cursor = getDB().query(getTableName(), getAllColumns(), getWhereClause(), args, "", "", "");
-            cursor.moveToFirst();
-            this.object = new Grupo();
-            this.object.set_id(cursor.getInt(0));
-            this.object.setNome_grupo(cursor.getString(1));
-            this.object.setNome_turma(cursor.getString(2));
-            return object;
-        }finally {
-            getDB().close();
-        }
     }
 
-    public List<Grupo> doSelectAll(){
-
+    public List<Grupo> doSelectAll() {
+        List<Grupo> lista = new ArrayList<>();
         try {
             Cursor cursor = getDB().query(getTableName(), getAllColumns(), null, null, null, null, "nome_grupo ASC");
             cursor.moveToFirst();
-            List<Grupo> lista = new ArrayList<>();
+
             do {
                 Grupo object = new Grupo();
                 object.set_id(cursor.getInt(0));
                 object.setNome_grupo(cursor.getString(1));
                 object.setNome_turma(cursor.getString(2));
-                lista.add(object);
-            }while(cursor.moveToNext());
-
-            return lista;
-        }finally {
-            getDB().close();
-        }
-    }
-
-    public List<Grupo> doSelectAllRanking() {
-
-        try {
-            Cursor cursor = getDB().rawQuery("select G._ID, nome_grupo, nome_turma from GRUPO G left join LANCAMENTO L on (grupo_id=L._ID) order by distancia_alcancada asc", null);
-            cursor.moveToFirst();
-            List<Grupo> lista = new ArrayList<>();
-            do {
-                Grupo object = new Grupo();
-                object.set_id(cursor.getInt(0));
-                object.setNome_grupo(cursor.getString(1));
-                object.setNome_turma(cursor.getString(2));
-                object.setPosicaoRank(cursor.getPosition());
                 lista.add(object);
             } while (cursor.moveToNext());
 
-            return lista;
-        } finally {
-            getDB().close();
+        } catch (Exception e) {
+            Log.e(this.getClass().getSimpleName(), "Erro abrindo dados: " + e.getMessage());
+            e.printStackTrace();
         }
+        return lista;
     }
 
     /**
@@ -112,7 +88,6 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
         private long _id;
         private String nome_grupo;
         private String nome_turma;
-        private int posicaoRank;
 
         public Grupo() {
         }
@@ -147,12 +122,5 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
             this.nome_turma = nome_turma;
         }
 
-        public void setPosicaoRank(int posicaoRank) {
-            this.posicaoRank = posicaoRank;
-        }
-
-        public int getPosicaoRank() {
-            return posicaoRank;
-        }
     }
 }

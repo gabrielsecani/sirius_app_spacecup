@@ -40,6 +40,8 @@ public class Database {
         if (opened) {
             helper.close();
             opened = false;
+            db.close();
+            db = null;
         }
     }
 

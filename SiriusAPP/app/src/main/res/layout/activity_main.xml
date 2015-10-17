@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include android:id="@+id/toolbar_menu"
+    <include
+        android:id="@+id/toolbar_menu"
         layout="@layout/layout_toolbar" />
 
     <android.support.v4.widget.DrawerLayout
@@ -16,7 +17,7 @@
             android:id="@+id/frameLayout_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_sirius_app_standard"/>
+            android:background="@color/bg_sirius_app_standard" />
 
         <ListView
             android:id="@+id/listView_menu"
@@ -26,7 +27,7 @@
             android:layout_gravity="start"
             android:choiceMode="singleChoice"
             android:divider="#ccc"
-            android:dividerHeight="0dp"/>
+            android:dividerHeight="0dp" />
 
     </android.support.v4.widget.DrawerLayout>
 

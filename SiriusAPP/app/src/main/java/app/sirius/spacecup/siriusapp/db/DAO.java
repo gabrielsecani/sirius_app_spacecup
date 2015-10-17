@@ -2,17 +2,23 @@ package app.sirius.spacecup.siriusapp.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 /**
  * Created by Gabriel on 17/10/2015.
  */
-public abstract class DAO<T> extends Database {
+public abstract class DAO<T> {
 
+    private final Context context;
     protected T object;
 
     protected DAO(Context context) {
-        super(context);
+        super();
+        this.context = context;
+    }
 
+    protected SQLiteDatabase getDB() {
+        return new Database(context).getDB();
     }
 
     /**
@@ -53,32 +59,26 @@ public abstract class DAO<T> extends Database {
      */
     public T getObject() throws Exception {
         if (this.object == null)
-            throw new Exception(this.getClass().getSimpleName()+ " do something wrong! You need to pass an Object Model to DAO!");
+            throw new Exception(this.getClass().getSimpleName() + " do something wrong! You need to pass an Object Model to DAO!");
         return this.object;
     }
 
     /**
      * @return retorna o objeto aldo de manipulação
      */
-    public void setObject(T object){
-        this.object=object;
+    public void setObject(T object) {
+        this.object = object;
     }
 
     public abstract T doSelectOne(long ID) throws Exception;
 
     public long doInsert() throws Exception {
-        try {
-            return getDB().insert(getTableName(), null, getContentValues());
-        } finally {
-            getDB().close();
-        }
+        return getDB().insert(getTableName(), null, getContentValues());
+
     }
 
     public int doUpdate() throws Exception {
-        try {
-            return getDB().update(getTableName(), getContentValues(), getWhereClause(), getWhereArgs());
-        } finally {
-            getDB().close();
-        }
+        return getDB().update(getTableName(), getContentValues(), getWhereClause(), getWhereArgs());
+
     }
 }
