@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FragmentThemeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/txtView_nome_grupo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Sirius"
+            android:textColor="@color/text_color_standard" />
+
+        <TextView
+            android:id="@+id/txtView_distancia_alvo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/txtView_rank_position"
+            android:layout_centerHorizontal="true"
+            android:text="10m"
+            android:textColor="@color/text_color_standard" />
+
+        <TextView
+            android:id="@+id/txtView_rank_position"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/txtView_nome_grupo"
+            android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_toEndOf="@+id/txtView_distancia_alvo"
+            android:layout_toRightOf="@+id/txtView_distancia_alvo"
+            android:gravity="right"
+            android:text="1"
+            android:textColor="@color/text_color_standard" />
+
+        <ImageView
+            android:id="@+id/icon_rankin_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/first_medal" />
+
+
+    </RelativeLayout>
+
+</LinearLayout>
