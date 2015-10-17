@@ -1,4 +1,4 @@
-package app.sirius.spacecup.siriusapp.DrawerMenu;
+package app.sirius.spacecup.siriusapp.menu;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,12 +16,12 @@ import app.sirius.spacecup.siriusapp.R;
 /**
  * Created by nando on 14/10/2015.
  */
-public class DrawerMenuAdapter extends BaseAdapter{
+public class DrawerMenuAdapter extends BaseAdapter {
 
     List<DrawerMenuItem> menuItens;
     Context context;
 
-    public DrawerMenuAdapter(Context context,List<DrawerMenuItem> menuItens){
+    public DrawerMenuAdapter(Context context, List<DrawerMenuItem> menuItens) {
         this.context = context;
         this.menuItens = menuItens;
     }
@@ -43,7 +43,7 @@ public class DrawerMenuAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
-        if(view == null){
+        if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.layout_menu_item, null);
 

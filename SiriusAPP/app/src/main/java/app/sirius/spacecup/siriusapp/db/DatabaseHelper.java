@@ -1,4 +1,4 @@
-package app.sirius.spacecup.siriusapp.database;
+package app.sirius.spacecup.siriusapp.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db){
+    public void onCreate(SQLiteDatabase db) {
         //construção da tabela grupos
         db.execSQL("CREATE TABLE grupo (_id INTEGER PRIMARY KEY, nome_grupo TEXT, nome_turma TEXT)");
 

@@ -20,11 +20,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.sirius.spacecup.siriusapp.drawermenu.DrawerMenuAdapter;
-import app.sirius.spacecup.siriusapp.drawermenu.DrawerMenuItem;
 import app.sirius.spacecup.siriusapp.fragments.FragmentBase;
 import app.sirius.spacecup.siriusapp.fragments.FragmentCadNovoGrupo;
 import app.sirius.spacecup.siriusapp.fragments.FragmentRanking;
+import app.sirius.spacecup.siriusapp.menu.DrawerMenuAdapter;
+import app.sirius.spacecup.siriusapp.menu.DrawerMenuItem;
 
 /**
  * Created by nando on 14/10/2015.

@@ -1,4 +1,4 @@
-package app.sirius.spacecup.siriusapp.database;
+package app.sirius.spacecup.siriusapp.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,13 +12,13 @@ public class DAO {
     private static SQLiteDatabase db;
     private boolean opened = false;
 
-    public DAO(Context context){
+    public DAO(Context context) {
         helper = new DatabaseHelper(context);
     }
 
-    private SQLiteDatabase getDB(){
+    private SQLiteDatabase getDB() {
 
-        if(db == null){
+        if (db == null) {
             db = helper.getWritableDatabase();
             opened = true;
         }
@@ -31,8 +31,8 @@ public class DAO {
         super.finalize();
     }
 
-    public void close(){
-        if(opened)
+    public void close() {
+        if (opened)
             helper.close();
     }
 }
