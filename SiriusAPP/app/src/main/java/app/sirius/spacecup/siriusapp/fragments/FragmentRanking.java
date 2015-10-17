@@ -10,17 +10,17 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import app.sirius.spacecup.siriusapp.R;
+import app.sirius.spacecup.siriusapp.db.RankingDAO;
 
 
 public class FragmentRanking extends FragmentBase {
 
-    private List<Map<String, Object>> grupos;
+
+    /*private List<Map<String, Object>> grupos;*/
     private ListView listView;
 
     public FragmentRanking(){
@@ -41,12 +41,10 @@ public class FragmentRanking extends FragmentBase {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SaveInstanceState){
-
 
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
 
@@ -55,9 +53,12 @@ public class FragmentRanking extends FragmentBase {
 
         listView = (ListView) view.findViewById(R.id.listView_ranking);
 
+        final List<Map<String, Object>> grupos = ListarGrupos();
+
         SimpleAdapter adapter =
-                new SimpleAdapter(getContext(), ListarGrupos(),
-                        R.layout.layout_fragment_ranking, chaves, identificadores);
+                new SimpleAdapter(getContext(), grupos,
+                        R.layout.layout_fragment_ranking, chaves, identificadores) {
+                };
 
         listView.setAdapter(adapter);
 
@@ -74,34 +75,23 @@ public class FragmentRanking extends FragmentBase {
             }
         });
 
+       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+
         return view;
     }
 
     private List<Map<String, Object>> ListarGrupos() {
-        grupos = new ArrayList<Map<String, Object>>();
+        RankingDAO grupos = new RankingDAO(getContext());
 
-        Map<String, Object> item;
-        int arrayLenght = 20;
+        return grupos.doSelectAllMap();
 
-        for (int i = 0; i < arrayLenght; i++) {
-            item = new HashMap<String, Object>();
-            item.put("grupo", "Nome Grupo " + Integer.valueOf(i + 1));
-            item.put("distancia", "10m");
-            item.put("posicao", Integer.valueOf(i + 1));
-
-            if (i == 0)
-                item.put("img", R.drawable.first_medal);
-            else if (i == 1)
-                item.put("img", R.drawable.second_medal);
-            else if (i == 2)
-                item.put("img", R.drawable.third_medal);
-            else
-                item.put("img", R.drawable.third_medal);
-
-            grupos.add(item);
-        }
-
-        return grupos;
     }
 
     @Override

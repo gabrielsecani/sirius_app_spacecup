@@ -59,22 +59,29 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
         Cursor cursor = getDB().rawQuery(
                 "select G.nome_grupo, G.nome_turma, L.distancia_alcancada from GRUPO G " +
                         "left join LANCAMENTO L on (grupo_id=L._ID) order by L.distancia_alcancada asc", null);
-        cursor.moveToFirst();
-        List<Ranking> lista = new ArrayList<>();
-        int i = 1;
-        NumberFormat nf = NumberFormat.getNumberInstance();
-        nf.setMaximumFractionDigits(1);
-        do {
-            Ranking object = new Ranking();
-            object.setNome_grupo(cursor.getString(1));
-            object.setNome_turma(cursor.getString(2));
-            if (!cursor.isNull(3)) {
-                object.setPosicaoRank(i++);
-                object.setDistancia_alcancada(nf.format(cursor.getFloat(3)));
-            }
-            lista.add(object);
-        } while (cursor.moveToNext());
 
+        List<Ranking> lista = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
+
+            int i = 1;
+            NumberFormat nf = NumberFormat.getNumberInstance();
+            nf.setMaximumFractionDigits(1);
+            do {
+                Ranking object = new Ranking();
+                object.setNome_grupo(cursor.getString(1));
+                object.setNome_turma(cursor.getString(2));
+                if (!cursor.isNull(3)) {
+                    object.setPosicaoRank(String.valueOf(i++));
+                    object.setDistancia_alcancada(nf.format(cursor.getFloat(3)) + " m");
+                } else {
+                    object.setPosicaoRank("");
+                    object.setDistancia_alcancada("");
+                }
+
+                lista.add(object);
+            } while (cursor.moveToNext());
+        }
         return lista;
 
     }
@@ -84,7 +91,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
         for (Ranking r : doSelectAll()) {
             HashMap<String, Object> hashMap = new HashMap<String, Object>();
             hashMap.put("grupo", r.getNome_grupo());
-            hashMap.put("distancia", r.getDistancia_alcancada() + "m");
+            hashMap.put("distancia", r.getDistancia_alcancada());
             hashMap.put("posicao", String.valueOf(r.getPosicaoRank()));
             hashMap.put("img", r.getResIdMedal());
 
@@ -100,7 +107,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
 
         private String nome_grupo;
         private String nome_turma;
-        private int posicaoRank;
+        private String posicaoRank;
         private String distancia_alcancada;
 
         public Ranking() {
@@ -122,11 +129,11 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
             this.nome_turma = nome_turma;
         }
 
-        public int getPosicaoRank() {
+        public String getPosicaoRank() {
             return posicaoRank;
         }
 
-        public void setPosicaoRank(int posicaoRank) {
+        public void setPosicaoRank(String posicaoRank) {
             this.posicaoRank = posicaoRank;
         }
 
@@ -141,11 +148,11 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
         @DrawableRes
         public int getResIdMedal() {
             switch (posicaoRank) {
-                case 1:
+                case "1":
                     return R.drawable.first_medal;
-                case 2:
+                case "2":
                     return R.drawable.second_medal;
-                case 3:
+                case "3":
                     return R.drawable.third_medal;
                 default:
                     return R.drawable.no_medal;
