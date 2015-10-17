@@ -4,26 +4,30 @@ package app.sirius.spacecup.siriusapp;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import app.sirius.spacecup.siriusapp.fragments.FragmentBase;
+import app.sirius.spacecup.siriusapp.fragments.FragmentCadNovoGrupo;
 
 /**
  * Created by nando on 14/10/2015.
  */
-public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
-/*public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{*/
+//public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, FragmentCadNovoGrupo.OnFragmentInteractionListener {
 
     android.support.v7.widget.Toolbar toolbar;
     DrawerLayout layout;
@@ -31,7 +35,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     ListView menu;
     DrawerMenuAdapter menuAdapter;
 
-    Context contexto = this;
+    protected Context contexto = this;
 
     public void onCreate (Bundle SaveInstanceState){
         super.onCreate(SaveInstanceState);
@@ -58,7 +62,7 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         layout.setDrawerListener(toogle);
 
         if(SaveInstanceState == null){
-            setFragment(0, FragmentCadastrarNovoGrupo.class);
+            onItemClick(null, null, 0, 0);
         }
     }
 
@@ -66,14 +70,18 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
         String[] itens = getResources().getStringArray(R.array.drawer_itens);
         TypedArray icones = getResources().obtainTypedArray(R.array.drawer_icons);
-        List<DrawerMenuItem> result = new ArrayList<DrawerMenuItem>();
-        for (int i = 0; i < itens.length; i++) {
-            DrawerMenuItem item = new DrawerMenuItem();
-            item.setTexto(itens[i]);
-            item.setIcone(icones.getResourceId(i, -1));
-            result.add(item);
+        try {
+            List<DrawerMenuItem> result = new ArrayList<DrawerMenuItem>();
+            for (int i = 0; i < itens.length; i++) {
+                DrawerMenuItem item = new DrawerMenuItem();
+                item.setTexto(itens[i]);
+                item.setIcone(icones.getResourceId(i, -1));
+                result.add(item);
+            }
+            return result;
+        } finally {
+            icones.recycle();
         }
-        return result;
     }
 
 
@@ -81,16 +89,16 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position){
             case 0:
-                setFragment(0, FragmentCadastrarNovoGrupo.class);
+                setFragment(0, FragmentCadNovoGrupo.class);
                 break;
             case 1:
-                setFragment(1, FragmentCadastrarNovoGrupo.class);
+                setFragment(1, FragmentCadNovoGrupo.class);
                 break;
             case 2:
-                setFragment(2, FragmentCadastrarNovoGrupo.class);
+                setFragment(2, FragmentCadNovoGrupo.class);
                 break;
             case 3:
-                setFragment(3, FragmentCadastrarNovoGrupo.class);
+                setFragment(3, FragmentCadNovoGrupo.class);
                 break;
         }
 
@@ -122,20 +130,28 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         toogle.onConfigurationChanged(newConfig);
     }
 
-    public void setFragment(int position, Class<FragmentCadastrarNovoGrupo> fragmentClass) {
+    public void setFragment(int position, Class fragmentClass) {
+
         try {
-            Fragment fragment = fragmentClass.newInstance();
+            FragmentBase fragment = (FragmentBase) fragmentClass.newInstance();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frameLayout_menu, fragment, fragmentClass.getSimpleName());
             fragmentTransaction.commit();
+            ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao)).setText(fragment.getResID_ToolbarDescricao());
 
             menu.setItemChecked(position, true);
             layout.closeDrawer(menu);
             menu.invalidateViews();
+
         }
         catch (Exception ex){
             Log.e("setFragment", ex.getMessage());
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        //
     }
 }
