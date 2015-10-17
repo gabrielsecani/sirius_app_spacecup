@@ -4,12 +4,11 @@
     tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentRanking">
 
     <ListView
+        android:id="@+id/listView_ranking"
+        style="@style/FragmentThemeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-
-    </ListView>
-
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice" />
 
 </FrameLayout>

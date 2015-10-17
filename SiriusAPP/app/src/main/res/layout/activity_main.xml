@@ -19,18 +19,15 @@
             android:background="@color/bg_sirius_app_standard"/>
 
         <ListView
-            style="@style/DrawerListView"
             android:id="@+id/listView_menu"
+            style="@style/DrawerListView"
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:choiceMode="singleChoice"
-
             android:divider="#ccc"
             android:dividerHeight="0dp"/>
 
     </android.support.v4.widget.DrawerLayout>
-
-    <include layout="@layout/fragment_ranking" />
 
 </LinearLayout>
