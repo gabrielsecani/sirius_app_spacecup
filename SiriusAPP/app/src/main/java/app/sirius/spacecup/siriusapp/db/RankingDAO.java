@@ -7,6 +7,7 @@ import android.support.annotation.DrawableRes;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import app.sirius.spacecup.siriusapp.R;
@@ -75,6 +76,14 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
 
         return lista;
 
+    }
+
+    public HashMap<String, Ranking> doSelectAllMap() {
+        HashMap<String, Ranking> hm = new HashMap<String, Ranking>();
+        for (Ranking r : doSelectAll()) {
+            hm.put(r.getNome_grupo(), r);
+        }
+        return hm;
     }
 
     /**
