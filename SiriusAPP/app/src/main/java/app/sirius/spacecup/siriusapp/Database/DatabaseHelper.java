@@ -1,4 +1,4 @@
-package app.sirius.spacecup.siriusapp.Database;
+package app.sirius.spacecup.siriusapp.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
