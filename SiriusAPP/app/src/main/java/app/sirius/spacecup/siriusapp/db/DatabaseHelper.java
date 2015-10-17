@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String BANCO_DADOS = "SiruisDatabase";
+    private static final String BANCO_DADOS = "SiriusDatabase";
     private static final int VERSION = 1;
 
     public DatabaseHelper(Context context) {
@@ -19,14 +19,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //construção da tabela grupos
-        db.execSQL("CREATE TABLE grupo (_id INTEGER PRIMARY KEY, nome_grupo TEXT, nome_turma TEXT)");
+        db.execSQL("CREATE TABLE grupo (_id INTEGER PRIMARY KEY autoincrement, nome_grupo TEXT not null, nome_turma TEXT not null)");
 
         //construção da tabela pessoa
-        db.execSQL("CREATE TABLE pessoa (_id INTEGER PRIMARY KEY, nome_pessoa TEXT, rm_pessoa INTEGER, flg_ativa INTEGER, grupo_id INTEGER)" +
+        db.execSQL("CREATE TABLE pessoa (_id INTEGER PRIMARY KEY autoincrement, nome_pessoa TEXT not null, rm_pessoa INTEGER not null, grupo_id INTEGER)" +
                 "FOREIGN KEY (grupo_id) REFERENCES grupo(_id)");
 
         //Construção da tabela lancamento
-        db.execSQL("CREATE TABLE lancamento (_id INTEGER PRIMARY KEY, local TEXT, data TEXT, distancia_alvo REAL" +
+        db.execSQL("CREATE TABLE lancamento (_id INTEGER PRIMARY KEY autoincrement, local TEXT, data TEXT, distancia_alvo REAL" +
                 "angulo_lancamento REAL, velocidade_vento REAL, peso_foguete REAL, maxima_altitude REAL, maxima_velocidade REAL" +
                 "tempo_propoulsao REAL, aceleracao_pico REAL, aceleracao_media REAL, tempo_apogeo_distancia REAL," +
                 "tempo_ejecao REAL, taxa_decida REAL, duracao_voo REAL, grupo_id INTEGER" +
