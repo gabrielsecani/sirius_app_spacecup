@@ -1,5 +1,6 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentRanking">
 
@@ -9,6 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:choiceMode="singleChoice" />
+        android:choiceMode="singleChoice"
+        android:clickable="false"
+        android:divider="@color/text_color_standard"
+        android:dividerHeight="1dp"
+        android:focusable="false"
+        android:footerDividersEnabled="false"
+        android:longClickable="false" />
 
-</FrameLayout>
+</RelativeLayout>

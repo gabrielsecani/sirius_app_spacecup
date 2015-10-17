@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,16 +20,15 @@ import app.sirius.spacecup.siriusapp.R;
 
 public class FragmentRanking extends FragmentBase {
 
-
     private List<Map<String, Object>> grupos;
     private ListView listView;
 
-    public FragmentRanking() {
+    public FragmentRanking(){
 
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(Context context){
         super.onAttach(context);
     }
 
@@ -44,7 +45,8 @@ public class FragmentRanking extends FragmentBase {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SaveInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle SaveInstanceState){
+
 
         View view = inflater.inflate(R.layout.fragment_ranking, container, false);
 
@@ -59,7 +61,18 @@ public class FragmentRanking extends FragmentBase {
 
         listView.setAdapter(adapter);
 
-        /*return inflater.inflate(R.layout.fragment_ranking,container,false);*/
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Map<String, Object> map = grupos.get(position);
+                String msg = "Grupo selecionado: ";
+                msg += (String) map.get("grupo");
+
+                Toast.makeText(getContext(), msg,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return view;
     }
@@ -68,11 +81,11 @@ public class FragmentRanking extends FragmentBase {
         grupos = new ArrayList<Map<String, Object>>();
 
         Map<String, Object> item;
-        int arrayLenght = 10;
+        int arrayLenght = 20;
 
         for (int i = 0; i < arrayLenght; i++) {
             item = new HashMap<String, Object>();
-            item.put("grupo", "Nome Pessoa");
+            item.put("grupo", "Nome Grupo " + Integer.valueOf(i + 1));
             item.put("distancia", "10m");
             item.put("posicao", Integer.valueOf(i + 1));
 
@@ -87,7 +100,6 @@ public class FragmentRanking extends FragmentBase {
 
             grupos.add(item);
         }
-
 
         return grupos;
     }
