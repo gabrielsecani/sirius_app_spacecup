@@ -16,10 +16,14 @@ public class Database {
         helper = new DatabaseHelper(context);
     }
 
-    private SQLiteDatabase getDB() {
+    protected SQLiteDatabase getDB() {
 
         if (db == null) {
             db = helper.getWritableDatabase();
+            // Enable foreign key constraints
+            if (!db.isReadOnly()) {
+                db.execSQL("PRAGMA foreign_keys = ON;");
+            }
             opened = true;
         }
 

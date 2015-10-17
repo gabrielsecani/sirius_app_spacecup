@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import app.sirius.spacecup.siriusapp.R;
+import app.sirius.spacecup.siriusapp.db.Database;
+import app.sirius.spacecup.siriusapp.db.DatabaseHelper;
+import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 
 
 /**
@@ -60,6 +63,16 @@ public class FragmentCadNovoGrupo extends FragmentBase  {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        GrupoDAO grupoDAO = new GrupoDAO(getContext());
+
+        try {
+            grupoDAO.getObject().setNome_turma("SIS");
+            grupoDAO.getObject().setNome_grupo("turma");
+            grupoDAO.doInsert();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        grupoDAO.doSelectAll();
     }
 
     @Override

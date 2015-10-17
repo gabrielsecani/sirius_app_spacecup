@@ -1,19 +1,27 @@
 package app.sirius.spacecup.siriusapp.db;
 
 import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Gabriel on 17/10/2015.
  */
-public class GrupoDAO extends DAOObject<GrupoDAO.Grupo> {
+public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
+
+    public GrupoDAO(Context context) {
+        super(context);
+        object = new GrupoDAO.Grupo();
+    }
 
     @Override
-    public ContentValues getContentValues() {
+    public ContentValues getContentValues() throws Exception {
 
         ContentValues cv = new ContentValues();
-        if (getObject().get_id() > 0) {
-            cv.put("nome_grupo", getObject().get_id());
-        }
         cv.put("nome_grupo", getObject().getNome_grupo());
         cv.put("nome_turma", getObject().getNome_turma());
         return cv;
@@ -25,18 +33,86 @@ public class GrupoDAO extends DAOObject<GrupoDAO.Grupo> {
     }
 
     @Override
-    public String getDeleteClause() {
-        return "_id = " + (getObject().get_id());
+    public String getWhereClause() {
+        return "_id = ?";
     }
 
+    @Override
+    public String[] getWhereArgs() throws Exception {
+        return new String[]{String.valueOf(getObject().get_id())};
+    }
+
+    @Override
+    public String[] getAllColumns() {
+        return new String[]{"_id", "nome_grupo", "nome_turma"};
+    }
+
+    @Override
+    public Grupo doSelectOne(long ID){
+
+        try {
+            String[] args = new String[]{String.valueOf(ID)};
+            Cursor cursor = getDB().query(getTableName(), getAllColumns(), getWhereClause(), args, "", "", "");
+            cursor.moveToFirst();
+            this.object = new Grupo();
+            this.object.set_id(cursor.getInt(0));
+            this.object.setNome_grupo(cursor.getString(1));
+            this.object.setNome_turma(cursor.getString(2));
+            return object;
+        }finally {
+            getDB().close();
+        }
+    }
+
+    public List<Grupo> doSelectAll(){
+
+        try {
+            Cursor cursor = getDB().query(getTableName(), getAllColumns(), null, null, null, null, "nome_grupo ASC");
+            cursor.moveToFirst();
+            List<Grupo> lista = new ArrayList<>();
+            do {
+                Grupo object = new Grupo();
+                object.set_id(cursor.getInt(0));
+                object.setNome_grupo(cursor.getString(1));
+                object.setNome_turma(cursor.getString(2));
+                lista.add(object);
+            }while(cursor.moveToNext());
+
+            return lista;
+        }finally {
+            getDB().close();
+        }
+    }
+
+    public List<Grupo> doSelectAllRanking() {
+
+        try {
+            Cursor cursor = getDB().rawQuery("select G._ID, nome_grupo, nome_turma from GRUPO G left join LANCAMENTO L on (grupo_id=L._ID) order by distancia_alcancada asc", null);
+            cursor.moveToFirst();
+            List<Grupo> lista = new ArrayList<>();
+            do {
+                Grupo object = new Grupo();
+                object.set_id(cursor.getInt(0));
+                object.setNome_grupo(cursor.getString(1));
+                object.setNome_turma(cursor.getString(2));
+                object.setPosicaoRank(cursor.getPosition());
+                lista.add(object);
+            } while (cursor.moveToNext());
+
+            return lista;
+        } finally {
+            getDB().close();
+        }
+    }
 
     /**
      * Classe de objeto para acesso aos dados
      */
-    public static class Grupo {
-        private int _id;
+    public class Grupo {
+        private long _id;
         private String nome_grupo;
         private String nome_turma;
+        private int posicaoRank;
 
         public Grupo() {
         }
@@ -47,7 +123,7 @@ public class GrupoDAO extends DAOObject<GrupoDAO.Grupo> {
             this.nome_turma = nome_turma;
         }
 
-        public int get_id() {
+        public long get_id() {
             return _id;
         }
 
@@ -71,5 +147,12 @@ public class GrupoDAO extends DAOObject<GrupoDAO.Grupo> {
             this.nome_turma = nome_turma;
         }
 
+        public void setPosicaoRank(int posicaoRank) {
+            this.posicaoRank = posicaoRank;
+        }
+
+        public int getPosicaoRank() {
+            return posicaoRank;
+        }
     }
 }
