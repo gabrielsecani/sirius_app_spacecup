@@ -79,11 +79,15 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
 
     }
 
-    public List<Map<String, Ranking>> doSelectAllMap() {
-        List<Map<String, Ranking>> mapList = new ArrayList<Map<String, Ranking>>();
+    public List<Map<String, Object>> doSelectAllMap() {
+        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
         for (Ranking r : doSelectAll()) {
-            HashMap<String, Ranking> hashMap = new HashMap<String, Ranking>();
-            hashMap.put("grupo", r);
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
+            hashMap.put("grupo", r.getNome_grupo());
+            hashMap.put("distancia", r.getDistancia_alcancada() + "m");
+            hashMap.put("posicao", String.valueOf(r.getPosicaoRank()));
+            hashMap.put("img", r.getResIdMedal());
+
             mapList.add(hashMap);
         }
         return mapList;
