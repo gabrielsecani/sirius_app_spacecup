@@ -2,9 +2,6 @@ package app.sirius.spacecup.siriusapp.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +16,7 @@ import com.melnykov.fab.FloatingActionButton;
 import java.util.List;
 import java.util.Map;
 
+import app.sirius.spacecup.siriusapp.MainActivity;
 import app.sirius.spacecup.siriusapp.R;
 import app.sirius.spacecup.siriusapp.db.RankingDAO;
 
@@ -93,20 +91,21 @@ public class FragmentRanking extends FragmentBase {
                 /*Toast.makeText(getContext(), "TESTE",
                         Toast.LENGTH_SHORT).show();*/
 
-                try {
-                    FragmentBase fragment = FragmentCadNovoGrupo.newInstance(null, null);
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.frameLayout_menu, fragment);
-                    fragmentTransaction.commit();
+                ((MainActivity)getContext()).onItemClick(null,null, 1, 0);
+//                try {
+//                    FragmentBase fragment = FragmentCadNovoGrupo.newInstance(null, null);
+//                    FragmentManager fragmentManager = getFragmentManager();
+//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                    fragmentTransaction.replace(R.id.frameLayout_menu, fragment);
+//                    fragmentTransaction.commit();
                     /*android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) view.findViewById(R.id.toolbar_menu);
                     ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao)).setText(getResources().getString(R.string.toolbar_title_NovoGrupo));*/
 
-                } catch (ClassCastException e) {
-                    throw new ClassCastException(FragmentCadNovoGrupo.newInstance(null, null).toString() + " must extend FragmentBase");
-                } catch (Exception ex) {
-                    Log.e("setFragment", ex.getMessage());
-                }
+//                } catch (ClassCastException e) {
+//                    throw new ClassCastException(FragmentCadNovoGrupo.newInstance(null, null).toString() + " must extend FragmentBase");
+//                } catch (Exception ex) {
+//                    Log.e("setFragment", ex.getMessage());
+//                }
             }
 
         });
