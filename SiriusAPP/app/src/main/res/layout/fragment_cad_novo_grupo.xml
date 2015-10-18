@@ -94,6 +94,7 @@
         android:visibility="visible" />
 
     <ListView
+        android:id="@+id/list_membros_grupos"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:layout_below="@id/txtView_membros_grupo">
