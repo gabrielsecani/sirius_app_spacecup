@@ -15,7 +15,7 @@
     <style name="FragmentThemeLayout">
         <item name="android:background">@color/bg_sirius_app_standard</item>
         <item name="android:textColor">@color/text_color_standard</item>
-        <item name="android:textSize">@dimen/size_font_standar</item>
+        <item name="android:textSize">@dimen/size_font_standard</item>
 
     </style>
 
