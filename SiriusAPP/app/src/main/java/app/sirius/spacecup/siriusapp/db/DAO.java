@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * Created by Gabriel on 17/10/2015.
  */
-public abstract class DAO<T> {
+public abstract class DAO<T extends DAO.ObjetoDao> {
 
     private final Context context;
     protected T object;
@@ -40,14 +40,19 @@ public abstract class DAO<T> {
      *
      * @return clausula where com parametros na sequencia (usando "?")
      */
-    public abstract String getWhereClause();
+    public String getWhereClause() {
+        return "_id = ?";
+    }
 
     /**
      * Arqgumentos de parametro de identificação
      *
      * @return listagem de parametros seguenciais
      */
-    public abstract String[] getWhereArgs() throws Exception;
+
+    public String[] getWhereArgs() throws Exception {
+        return new String[]{String.valueOf(getObject().get_id())};
+    }
 
     /**
      * Define o nome de todas as colunas
@@ -72,16 +77,48 @@ public abstract class DAO<T> {
 
     public abstract T doSelectOne(long ID) throws Exception;
 
-    public long doInsert() throws Exception {
-        return getDB().insert(getTableName(), null, getContentValues());
 
+    /**
+     * Convenience method for inserting a row into the database.
+     *
+     * @return the row ID of the newly inserted row, or -1 if an error occurred
+     */
+    public long doInsert() throws Exception {
+        long id = getDB().insert(getTableName(), null, getContentValues());
+        getObject().set_id(id);
+        return id;
     }
 
+    /**
+     * Convenience method for updating rows in the database.
+     *
+     * @return the number of rows affected
+     */
     public int doUpdate() throws Exception {
         return getDB().update(getTableName(), getContentValues(), getWhereClause(), getWhereArgs());
     }
 
+    /**
+     * Convenience method for deleting rows in the database.
+     *
+     * @return the number of rows affected if a whereClause is passed in, 0
+     * otherwise. To remove all rows and get a count pass "1" as the
+     * whereClause.
+     */
     public int doDelete() throws Exception {
         return getDB().delete(getTableName(), getWhereClause(), getWhereArgs());
+    }
+
+    public abstract class ObjetoDao {
+
+        private long _id;
+
+        public long get_id() {
+            return _id;
+        }
+
+        public void set_id(long _id) {
+            this._id = _id;
+        }
     }
 }

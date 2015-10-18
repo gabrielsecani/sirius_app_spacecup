@@ -102,7 +102,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
     /**
      * Classe de objeto para acesso aos dados
      */
-    public class Ranking {
+    public class Ranking extends DAO.ObjetoDao {
 
         private String nome_grupo;
         private String nome_turma;

@@ -33,16 +33,6 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
     }
 
     @Override
-    public String getWhereClause() {
-        return "_id = ?";
-    }
-
-    @Override
-    public String[] getWhereArgs() throws Exception {
-        return new String[]{String.valueOf(getObject().get_id())};
-    }
-
-    @Override
     public String[] getAllColumns() {
         return new String[]{"_id", "nome_grupo", "nome_turma"};
     }
@@ -85,8 +75,7 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
     /**
      * Classe de objeto para acesso aos dados
      */
-    public class Grupo {
-        private long _id;
+    public class Grupo extends DAO.ObjetoDao {
         private String nome_grupo;
         private String nome_turma;
 
@@ -94,17 +83,9 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
         }
 
         public Grupo(int _id, String nome_grupo, String nome_turma) {
-            this._id = _id;
+            super.set_id(_id);
             this.nome_grupo = nome_grupo;
             this.nome_turma = nome_turma;
-        }
-
-        public long get_id() {
-            return _id;
-        }
-
-        public void set_id(int _id) {
-            this._id = _id;
         }
 
         public String getNome_grupo() {

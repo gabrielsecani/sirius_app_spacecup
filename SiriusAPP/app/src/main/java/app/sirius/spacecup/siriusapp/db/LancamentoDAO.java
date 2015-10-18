@@ -48,16 +48,6 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
     }
 
     @Override
-    public String getWhereClause() {
-        return "_id = ?";
-    }
-
-    @Override
-    public String[] getWhereArgs() throws Exception {
-        return new String[]{String.valueOf(getObject().get_id())};
-    }
-
-    @Override
     public String[] getAllColumns() {
         return new String[]{"_id",
                 "local",
@@ -148,10 +138,9 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
     /**
      * Classe de objeto para acesso aos dados
      */
-    public class Lancamento {
+    public class Lancamento extends DAO.ObjetoDao {
 
         GrupoDAO.Grupo grupo;
-        private long _id;
         private String local;
         private String data;
         private double distancia_alcancada;
@@ -168,17 +157,9 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
         private double tempo_ejecao;
         private double taxa_decida;
         private double duracao_voo;
-        private int grupo_id;
+        private long grupo_id;
 
         public Lancamento() {
-        }
-
-        public long get_id() {
-            return _id;
-        }
-
-        public void set_id(long _id) {
-            this._id = _id;
         }
 
         public String getLocal() {
@@ -301,16 +282,18 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
             this.duracao_voo = duracao_voo;
         }
 
-        public int getGrupo_id() {
+        public long getGrupo_id() {
             return grupo_id;
         }
 
-        public void setGrupo_id(int grupo_id) {
+        public void setGrupo_id(long grupo_id) {
             this.grupo_id = grupo_id;
         }
 
         public GrupoDAO.Grupo getGrupo(Context context) {
-            return new GrupoDAO(context).doSelectOne(getGrupo_id());
+            if (grupo == null)
+                grupo = new GrupoDAO(context).doSelectOne(getGrupo_id());
+            return grupo;
         }
 
         public double getAngulo_lancamento() {
