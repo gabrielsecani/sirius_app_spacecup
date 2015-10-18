@@ -19,11 +19,12 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
     }
 
     @Override
-    public ContentValues getContentValues() throws Exception {
+    protected ContentValues getContentValues() throws Exception {
 
         ContentValues cv = new ContentValues();
-        cv.put("nome_grupo", getObject().getNome_grupo());
-        cv.put("nome_turma", getObject().getNome_turma());
+        cv.put("nome_grupo", getObject().getNome_pessoa());
+        cv.put("rm_pessoa", getObject().getRm_pessoa());
+        cv.put("grupo_id", getObject().getGrupo_id());
         return cv;
     }
 
@@ -44,18 +45,20 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
 
     @Override
     public String[] getAllColumns() {
-        return new String[]{"_id", "nome_grupo", "nome_turma"};
+        return new String[]{"_id", "nome_pessoa", "rm_pessoa", "grupo_id"};
     }
 
     @Override
     public Pessoa doSelectOne(long ID) {
         String[] args = new String[]{String.valueOf(ID)};
         Cursor cursor = getDB().query(getTableName(), getAllColumns(), getWhereClause(), args, "", "", "");
-        cursor.moveToFirst();
         this.object = new Pessoa();
-        this.object.set_id(cursor.getInt(0));
-        this.object.setNome_grupo(cursor.getString(1));
-        this.object.setNome_turma(cursor.getString(2));
+        if (cursor.moveToFirst()) {
+            this.object.set_id(cursor.getInt(0));
+            this.object.setNome_pessoa(cursor.getString(1));
+            this.object.setRm_pessoa(cursor.getInt(2));
+            this.object.setGrupo_id(cursor.getInt(2));
+        }
         return object;
 
     }
@@ -63,15 +66,16 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
     public List<Pessoa> doSelectAll() {
         List<Pessoa> lista = new ArrayList<>();
         try {
-            Cursor cursor = getDB().query(getTableName(), getAllColumns(), null, null, null, null, "nome_grupo ASC");
+            Cursor cursor = getDB().query(getTableName(), getAllColumns(), null, null, null, null, getAllColumns()[1]+" ASC");
             cursor.moveToFirst();
 
             do {
-                Pessoa object = new Pessoa();
-                object.set_id(cursor.getInt(0));
-                object.setNome_grupo(cursor.getString(1));
-                object.setNome_turma(cursor.getString(2));
-                lista.add(object);
+                Pessoa pessoa = new Pessoa();
+                pessoa.set_id(cursor.getInt(0));
+                pessoa.setNome_pessoa(cursor.getString(1));
+                pessoa.setRm_pessoa(cursor.getInt(2));
+                pessoa.setGrupo_id(cursor.getInt(2));
+                lista.add(pessoa);
             } while (cursor.moveToNext());
 
         } catch (Exception e) {
@@ -81,42 +85,18 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
         return lista;
     }
 
-    public List<Pessoa> doSelectAllRanking() {
-
-        Cursor cursor = getDB().rawQuery("select G._ID, nome_grupo, nome_turma, l._id as lanc from GRUPO G left join LANCAMENTO L on (grupo_id=L._ID) order by distancia_alcancada asc", null);
-        cursor.moveToFirst();
-        List<Pessoa> lista = new ArrayList<>();
-        int i = 1;
-        do {
-            Pessoa object = new Pessoa();
-            object.set_id(cursor.getInt(0));
-            object.setNome_grupo(cursor.getString(1));
-            object.setNome_turma(cursor.getString(2));
-            if (!cursor.isNull(3))
-                object.setPosicaoRank(i++);
-            lista.add(object);
-        } while (cursor.moveToNext());
-
-        return lista;
-
-    }
-
     /**
      * Classe de objeto para acesso aos dados
      */
     public class Pessoa {
+
+        GrupoDAO.Grupo grupo;
         private long _id;
-        private String nome_grupo;
-        private String nome_turma;
-        private int posicaoRank;
+        private String nome_pessoa;
+        private int rm_pessoa;
+        private int grupo_id;
 
         public Pessoa() {
-        }
-
-        public Pessoa(int _id, String nome_grupo, String nome_turma) {
-            this._id = _id;
-            this.nome_grupo = nome_grupo;
-            this.nome_turma = nome_turma;
         }
 
         public long get_id() {
@@ -127,28 +107,33 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
             this._id = _id;
         }
 
-        public String getNome_grupo() {
-            return nome_grupo;
+        public String getNome_pessoa() {
+            return nome_pessoa;
         }
 
-        public void setNome_grupo(String nome_grupo) {
-            this.nome_grupo = nome_grupo;
+        public void setNome_pessoa(String nome_pessoa) {
+            this.nome_pessoa = nome_pessoa;
         }
 
-        public String getNome_turma() {
-            return nome_turma;
+        public int getRm_pessoa() {
+            return rm_pessoa;
         }
 
-        public void setNome_turma(String nome_turma) {
-            this.nome_turma = nome_turma;
+        public void setRm_pessoa(int rm_pessoa) {
+            this.rm_pessoa = rm_pessoa;
         }
 
-        public int getPosicaoRank() {
-            return posicaoRank;
+        public int getGrupo_id() {
+            return grupo_id;
         }
 
-        public void setPosicaoRank(int posicaoRank) {
-            this.posicaoRank = posicaoRank;
+        public void setGrupo_id(int grupo_id) {
+            this.grupo_id = grupo_id;
         }
+
+        public GrupoDAO.Grupo getGrupo(Context context){
+            return new GrupoDAO(context).doSelectOne(getGrupo_id());
+        }
+
     }
 }

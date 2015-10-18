@@ -24,13 +24,13 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
     }
 
     @Override
-    public ContentValues getContentValues() throws Exception {
+    protected ContentValues getContentValues() throws Exception {
         return null;
     }
 
     @Override
     public String getTableName() {
-        return "grupo";
+        return "";
     }
 
     @Override
@@ -45,13 +45,12 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
 
     @Override
     public String[] getAllColumns() {
-        return new String[]{"_id", "nome_grupo", "nome_turma"};
+        return new String[]{"_id"};
     }
 
     @Override
     public Ranking doSelectOne(long ID) {
         return null;
-
     }
 
     public List<Ranking> doSelectAll() {
