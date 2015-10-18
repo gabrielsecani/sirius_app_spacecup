@@ -91,14 +91,22 @@
         android:src="@android:drawable/ic_menu_add"
         android:visibility="visible" />
 
-    <ListView
+    <!-- <ListView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_below="@id/txtView_membros_grupo">
+
+     </ListView>-->
+
+    <!--<include layout="@layout/layout_footer_bar" />-->
+
+    <fragment
+        android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/txtView_membros_grupo">
-
-    </ListView>
-
-    <include layout="@layout/layout_footer_bar" />
+        android:layout_height="wrap_content"
+        android:tag="footerBar"
+        tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento"
+        tools:layout="@layout/layout_footer_bar" />
 
 
 </RelativeLayout>
