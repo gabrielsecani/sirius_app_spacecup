@@ -3,10 +3,11 @@ package app.sirius.spacecup.siriusapp.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Gabriel on 17/10/2015.
@@ -30,7 +31,7 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
 
     @Override
     public String getTableName() {
-        return "grupo";
+        return "pessoa";
     }
 
     @Override
@@ -63,27 +64,42 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
 
     }
 
-    public List<Pessoa> doSelectAll() {
-        List<Pessoa> lista = new ArrayList<>();
-        try {
-            Cursor cursor = getDB().query(getTableName(), getAllColumns(), null, null, null, null, getAllColumns()[1]+" ASC");
-            cursor.moveToFirst();
+    public List<Pessoa> doSelectAllMembersGroup(GrupoDAO.Grupo grupo) {
 
+        Cursor cursor = getDB().rawQuery(
+                "select P._id, nome, rm" +
+                        " from PESSOA P" +
+                        " join GRUPO G (on G._id = P.grupo_id) where G._id = ?", new String[]{String.valueOf(grupo.get_id())});
+
+        List<Pessoa> lista = new ArrayList<>();
+
+        if (cursor.moveToFirst()) {
             do {
-                Pessoa pessoa = new Pessoa();
-                pessoa.set_id(cursor.getInt(0));
-                pessoa.setNome_pessoa(cursor.getString(1));
-                pessoa.setRm_pessoa(cursor.getInt(2));
-                pessoa.setGrupo_id(cursor.getInt(2));
-                lista.add(pessoa);
+                Pessoa membro = new Pessoa();
+                membro.set_id(cursor.getInt(0));
+                membro.setNome_pessoa(cursor.getString(1));
+                membro.setRm_pessoa(cursor.getInt(2));
+                membro.grupo = grupo;
             } while (cursor.moveToNext());
 
-        } catch (Exception e) {
-            Log.e(this.getClass().getSimpleName(), "Erro abrindo dados: " + e.getMessage());
-            e.printStackTrace();
         }
+
         return lista;
     }
+
+    public List<Map<String, Object>> doSelectAllMap(GrupoDAO.Grupo grupo) {
+
+        List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+
+        for (Pessoa p : doSelectAllMembersGroup(grupo)) {
+            HashMap<String, Object> hashMap = new HashMap<String, Object>();
+            hashMap.put("nome", p.getNome_pessoa());
+            hashMap.put("rm", p.getRm_pessoa());
+            mapList.add(hashMap);
+        }
+        return mapList;
+    }
+
 
     /**
      * Classe de objeto para acesso aos dados
@@ -132,7 +148,10 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
         }
 
         public GrupoDAO.Grupo getGrupo(Context context){
-            return new GrupoDAO(context).doSelectOne(getGrupo_id());
+            if (grupo == null) {
+                grupo = new GrupoDAO(context).doSelectOne(getGrupo_id());
+            }
+            return grupo;
         }
 
     }
