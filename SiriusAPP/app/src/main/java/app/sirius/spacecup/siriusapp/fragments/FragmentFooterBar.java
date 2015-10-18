@@ -63,10 +63,11 @@ public class FragmentFooterBar extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
         try {
-            mListener = (OnFragmentFooterBarInteractionListener) context;
+            mListener = (OnFragmentFooterBarInteractionListener) this.getParentFragment();
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
+            throw new ClassCastException(this.getParentFragment().toString()
                     + " must implement OnFragmentFooterBarInteractionListener");
         }
     }
