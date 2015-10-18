@@ -7,9 +7,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-
-
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="140dp">
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -83,6 +82,7 @@
                 android:digits="3"
                 android:inputType="number" />
         </TableLayout>
+
     </ScrollView>
 
     <fragment

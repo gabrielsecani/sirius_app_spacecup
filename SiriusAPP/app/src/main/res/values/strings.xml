@@ -16,17 +16,17 @@
         <item>@drawable/ic_pos_lanc</item>
     </string-array>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 
-    <string name="txt_nome_grupo">Nome do grupo</string>
-    <string name="txt_turma_grupo">Turma </string>
-    <string name="txt_membros_grupo">Integrantes </string>
-    <string name="data_de_lancamento">Data de Lançamento</string>
-    <string name="distancia_ate_alvo">Distância até o alvo</string>
-    <string name="angulo_lacamento">Ângulo do lançamento</string>
-    <string name="velocidade_vento">Velocidade do vento</string>
-    <string name="peso_foguete">Peso do foguete</string>
+    <string name="txt_nome_grupo" translatable="false">Nome do grupo</string>
+    <string name="txt_turma_grupo" translatable="false">Turma </string>
+    <string name="txt_membros_grupo" translatable="false">Integrantes </string>
+    <string name="data_de_lancamento" translatable="false">Data de Lançamento</string>
+    <string name="distancia_ate_alvo" translatable="false">Distância até o alvo</string>
+    <string name="angulo_lacamento" translatable="false">Ângulo do lançamento</string>
+    <string name="velocidade_vento" translatable="false">Velocidade do vento</string>
+    <string name="peso_foguete" translatable="false">Peso do foguete</string>
 
-    <string name="btn_savar">Salvar</string>
+    <string name="btn_salvar">Salvar</string>
 
 </resources>

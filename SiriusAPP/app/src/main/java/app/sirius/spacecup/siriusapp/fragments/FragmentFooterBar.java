@@ -89,7 +89,7 @@ public class FragmentFooterBar extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentFooterBarInteractionListener {
-        public void onFragmentFooterBarSalvarClick(View uri);
+        public void onFragmentFooterBarSalvarClick(View view);
     }
 
 }

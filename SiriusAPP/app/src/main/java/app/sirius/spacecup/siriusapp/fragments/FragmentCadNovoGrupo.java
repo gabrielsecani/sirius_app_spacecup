@@ -1,13 +1,18 @@
 package app.sirius.spacecup.siriusapp.fragments;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import app.sirius.spacecup.siriusapp.R;
 
@@ -17,7 +22,7 @@ import app.sirius.spacecup.siriusapp.R;
  * Use the {@link FragmentCadNovoGrupo#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentCadNovoGrupo extends FragmentBase {
+public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooterBar.OnFragmentFooterBarInteractionListener {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -72,7 +77,13 @@ public class FragmentCadNovoGrupo extends FragmentBase {
 //        }
 
         View view = inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
-
+        ImageButton img = (ImageButton) view.findViewById(R.id.imageView3);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updadeDataGrupo();
+            }
+        });
         String[] chaves = {"nome", "rm"};
         /*int[] identificadores = {R.id.txtView_nome_grupo, R.id.txtView_rm};
 
@@ -148,4 +159,37 @@ public class FragmentCadNovoGrupo extends FragmentBase {
         super.onDetach();
     }
 
+    public void updadeDataGrupo() {
+        AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater(null).inflate(R.layout.layout_menu_item, null);
+        TextView txt = (TextView) view.findViewById(R.id.txtView_menu_item);
+        txt.setText("Eu sou o cara!");
+        b.setView(view).setIcon(R.drawable.icon3).setTitle("Titulo").
+                setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).
+                setNegativeButton("Cancelar 2", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //salvar
+                        Toast.makeText(getContext(), "Adicionado", Toast.LENGTH_SHORT).show();
+                        //TODO: atualiza TELA
+                        dialog.dismiss();
+                    }
+                }).create().show();
+    }
+
+    @Override
+    public void onFragmentFooterBarSalvarClick(View view) {
+        Toast.makeText(getContext(), "SALVOU!", Toast.LENGTH_LONG).show();
+    }
 }

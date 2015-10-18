@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import app.sirius.spacecup.siriusapp.fragments.FragmentBase;
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.frameLayout_menu, fragment, fragmentClass.getSimpleName());
+            fragmentTransaction.addToBackStack("back" + new Date().getTime());
             fragmentTransaction.commit();
             ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao)).setText(((DrawerMenuItem) menu.getItemAtPosition(position)).getTexto());
             menu.setItemChecked(position, true);
