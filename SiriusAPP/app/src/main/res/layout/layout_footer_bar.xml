@@ -5,18 +5,14 @@
     android:layout_height="wrap_content"
     tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar">
 
-    <RelativeLayout
+    <Button
+        android:id="@+id/btnSalvar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/primary"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/btn_salvar" />
 
-        <Button
-            android:id="@+id/btnSalvar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/primary"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="@string/btn_salvar" />
-    </RelativeLayout>
 </FrameLayout>
+

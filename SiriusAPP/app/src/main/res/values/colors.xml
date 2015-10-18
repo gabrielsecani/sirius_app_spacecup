@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#FF00D7C3</color>
-    <color name="primary_dark">#FF00675D</color>
-    <color name="accent">#FF009688</color>
+    <color name="primary">#8BC34A</color>
+    <color name="primary_dark">#33691E</color>
+    <color name="accent">#558B2F</color>
+
     <color name="primary_text_material_light">#444</color>
     <color name="bg_sirius_app_standard">#f5f5ed</color>
     <color name="bg_sirius_app_menu">#999</color>

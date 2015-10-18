@@ -10,7 +10,7 @@
     </style>
 
     <style name="DrawerListView" parent="AppTheme">
-        <item name="android:background">@color/bg_sirius_app_menu</item>
+        <item name="android:background">@drawable/bg_menu</item>
     </style>
 
 
