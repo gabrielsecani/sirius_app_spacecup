@@ -26,6 +26,7 @@
     <string name="angulo_lacamento">Ângulo do lançamento</string>
     <string name="velocidade_vento">Velocidade do vento</string>
     <string name="peso_foguete">Peso do foguete</string>
-    <string name="btnSalvar">Salvar</string>
+
+    <string name="btn_savar">Salvar</string>
 
 </resources>
