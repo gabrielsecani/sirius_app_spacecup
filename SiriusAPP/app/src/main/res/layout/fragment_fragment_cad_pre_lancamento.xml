@@ -7,80 +7,110 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginBottom="140dp">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="45dp">
+
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:stretchColumns="1">
+            android:baselineAligned="false">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/data_de_lancamento" />
+            </TableRow>
+
+            <TableRow>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="@string/data_de_lancamento" />
+                <DatePicker
+                    android:id="@+id/prelancto_dtLancamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner" />
 
+            </TableRow>
 
-            <DatePicker
-                android:id="@+id/prelancto_dtLancamento"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
+            <TableRow>
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/distancia_ate_alvo" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="@string/distancia_ate_alvo" />
+            <TableRow>
 
-            <EditText
-                android:id="@+id/prelancto_distanciaAlvo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:digits="3"
-                android:inputType="number" />
+                <EditText
+                    android:id="@+id/prelancto_distanciaAlvo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:digits="3"
+                    android:inputType="number" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="@string/angulo_lacamento" />
+            <TableRow>
 
-            <EditText
-                android:id="@+id/prelancto_angulo_lancto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:digits="3"
-                android:inputType="number" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/angulo_lacamento" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="@string/velocidade_vento" />
+            <TableRow>
 
-            <EditText
-                android:id="@+id/prelancto_velocidade_vento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:digits="3"
-                android:inputType="number" />
+                <EditText
+                    android:id="@+id/prelancto_angulo_lancto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:digits="3"
+                    android:inputType="number" />
+            </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="@string/peso_foguete" />
+            <TableRow>
 
-            <EditText
-                android:id="@+id/prelancto_peso_foguete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:digits="3"
-                android:inputType="number" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/velocidade_vento" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/prelancto_velocidade_vento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:digits="3"
+                    android:inputType="number" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/peso_foguete" />
+            </TableRow>
+
+            <TableRow>
+
+                <EditText
+                    android:id="@+id/prelancto_peso_foguete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:digits="3"
+                    android:inputType="number" />
+            </TableRow>
         </TableLayout>
 
     </ScrollView>
@@ -88,7 +118,8 @@
     <fragment
         android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_gravity="bottom"
         android:tag="footerBar"
         tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento"
         tools:layout="@layout/layout_footer_bar" />

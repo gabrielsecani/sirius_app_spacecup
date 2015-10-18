@@ -102,11 +102,12 @@
     </ListView>
 
 
+
     <fragment
         android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView3"
+        android:layout_height="fill_parent"
+        android:layout_gravity="bottom"
         android:tag="footerBar"
         tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento"
         tools:layout="@layout/layout_footer_bar" />

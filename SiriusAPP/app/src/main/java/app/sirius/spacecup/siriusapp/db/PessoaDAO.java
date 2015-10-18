@@ -35,16 +35,6 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
     }
 
     @Override
-    public String getWhereClause() {
-        return "_id = ?";
-    }
-
-    @Override
-    public String[] getWhereArgs() throws Exception {
-        return new String[]{String.valueOf(getObject().get_id())};
-    }
-
-    @Override
     public String[] getAllColumns() {
         return new String[]{"_id", "nome_pessoa", "rm_pessoa", "grupo_id"};
     }
@@ -104,10 +94,10 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
     /**
      * Classe de objeto para acesso aos dados
      */
-    public class Pessoa {
+    public class Pessoa extends DAO.ObjetoDao {
 
         GrupoDAO.Grupo grupo;
-        private long _id;
+
         private String nome_pessoa;
         private int rm_pessoa;
         private int grupo_id;
@@ -115,13 +105,6 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
         public Pessoa() {
         }
 
-        public long get_id() {
-            return _id;
-        }
-
-        public void set_id(int _id) {
-            this._id = _id;
-        }
 
         public String getNome_pessoa() {
             return nome_pessoa;
