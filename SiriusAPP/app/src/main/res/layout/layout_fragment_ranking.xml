@@ -15,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:textColor="@color/text_color_standard" />
+            android:textColor="@color/text_color_standard"
+            android:textSize="@dimen/size_font_standard" />
 
         <TextView
             android:id="@+id/txtView_distancia_alvo"
@@ -23,7 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/txtView_rank_position"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/text_color_standard" />
+            android:textColor="@color/text_color_standard"
+            android:textSize="@dimen/size_font_standard" />
 
         <TextView
             android:id="@+id/txtView_rank_position"
@@ -35,7 +37,8 @@
             android:layout_toEndOf="@+id/txtView_distancia_alvo"
             android:layout_toRightOf="@+id/txtView_distancia_alvo"
             android:gravity="right"
-            android:textColor="@color/text_color_standard" />
+            android:textColor="@color/text_color_standard"
+            android:textSize="@dimen/size_font_standard" />
 
         <ImageView
             android:id="@+id/icon_rankin_position"

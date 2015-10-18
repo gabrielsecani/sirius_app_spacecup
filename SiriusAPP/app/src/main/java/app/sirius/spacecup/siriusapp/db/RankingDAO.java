@@ -147,17 +147,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
         @DrawableRes
         public int getResIdMedal() {
 
-            if (posicaoRank.equals("1"))
-                return R.drawable.first_medal;
-            else if (posicaoRank.equals("1"))
-                return R.drawable.second_medal;
-            else if (posicaoRank.equals("1"))
-                return R.drawable.third_medal;
-            else if (Integer.parseInt(posicaoRank) > 3 || distancia_alcancada != null)
-                return R.drawable.ic_lanc_ok;
-            else
-                return R.drawable.ic_lanc_nok;
-            /*switch (posicaoRank) {
+            switch (posicaoRank) {
                 case "1":
                     return R.drawable.first_medal;
                 case "2":
@@ -165,8 +155,8 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
                 case "3":
                     return R.drawable.third_medal;
                 default:
-                    return R.drawable.no_medal;
-            }*/
+                    return R.drawable.ic_lanc_ok;
+            }
         }
     }
 }
