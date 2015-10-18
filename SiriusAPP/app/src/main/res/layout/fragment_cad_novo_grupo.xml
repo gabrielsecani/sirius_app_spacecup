@@ -1,18 +1,168 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadNovoGrupo">
 
-    <TextView
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="0,1,2,3">
+
+        <TextView
+            style="@style/text_view_style"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/layout_margin"
+            android:text="@string/txt_nome_grupo" />
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/edt_nome_grupo"
+                style="@style/edit_text_cadastro"
+                android:inputType="text" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:onClick="updtadeDataGrupo"
+                android:src="@android:drawable/ic_menu_add"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TextView
+            style="@style/text_view_style"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/layout_margin"
+            android:text="@string/txt_turma_grupo" />
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/edt_turma_grupo"
+                style="@style/edit_text_cadastro"
+                android:inputType="text" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:onClick="updtadeDataGrupo"
+                android:src="@android:drawable/ic_menu_add"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TextView
+            style="@style/text_view_style"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/layout_margin"
+            android:text="@string/txt_membros_grupo" />
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/edt_membro_grupo1"
+                style="@style/edit_text_cadastro"
+                android:inputType="text" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:onClick="updtadeDataGrupo"
+                android:src="@android:drawable/ic_menu_add"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/edt_turma_grupo2"
+                style="@style/edit_text_cadastro"
+                android:inputType="text" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:onClick="updtadeDataGrupo"
+                android:src="@android:drawable/ic_menu_add"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/edt_membro_grupo3"
+                style="@style/edit_text_cadastro"
+                android:inputType="text" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:onClick="updtadeDataGrupo"
+                android:src="@android:drawable/ic_menu_add"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/edt_membro_grupo4"
+                style="@style/edit_text_cadastro"
+                android:inputType="text" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:onClick="updtadeDataGrupo"
+                android:src="@android:drawable/ic_menu_add"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TableRow>
+
+            <EditText
+                android:id="@+id/edt_membro_grupo5"
+                style="@style/edit_text_cadastro"
+                android:inputType="text" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|right"
+                android:onClick="updtadeDataGrupo"
+                android:src="@android:drawable/ic_menu_add"
+                android:visibility="visible" />
+        </TableRow>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@color/primary"
+            android:gravity="center_vertical|center_horizontal"
+            android:onClick="gravarRegistro"
+            android:text="Salvar"
+            android:textColor="#fff"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </TableLayout>
+
+    <!--<TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/size_font_standard"
         android:text="cadNovoGrupo"
-        android:textColor="@color/primary_dark" />
+        android:textColor="@color/primary_dark" />-->
 
-    <ListView
+    <!--<ListView
         android:id="@+id/listView_participantes"
         style="@style/FragmentThemeLayout"
         android:layout_width="match_parent"
@@ -40,7 +190,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" />-->
 
 
-</LinearLayout>
+</ScrollView>

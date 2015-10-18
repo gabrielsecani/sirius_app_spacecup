@@ -12,33 +12,27 @@
 
         <TextView
             android:id="@+id/txtView_nome_grupo"
+            style="@style/text_view_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:textColor="@color/text_color_standard"
-            android:textSize="@dimen/size_font_standard" />
+            android:layout_margin="16dp" />
 
         <TextView
             android:id="@+id/txtView_distancia_alvo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/text_view_style"
             android:layout_alignTop="@+id/txtView_rank_position"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/text_color_standard"
-            android:textSize="@dimen/size_font_standard" />
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/txtView_rank_position"
+            style="@style/text_view_style"
             android:layout_width="50dp"
-            android:layout_height="wrap_content"
             android:layout_alignTop="@+id/txtView_nome_grupo"
             android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp"
             android:layout_toEndOf="@+id/txtView_distancia_alvo"
             android:layout_toRightOf="@+id/txtView_distancia_alvo"
-            android:gravity="right"
-            android:textColor="@color/text_color_standard"
-            android:textSize="@dimen/size_font_standard" />
+            android:gravity="right" />
 
         <ImageView
             android:id="@+id/icon_rankin_position"

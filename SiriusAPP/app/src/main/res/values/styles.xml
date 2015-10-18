@@ -19,4 +19,22 @@
 
     </style>
 
+    <style name="text_view_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/size_font_standard</item>
+        <item name="android:textColor">@color/text_color_standard</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="edit_text_cadastro">
+        <item name="android:layout_marginLeft">@dimen/layout_margin</item>
+        <item name="android:layout_marginRight">@dimen/layout_margin</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_span">3</item>
+        <item name="android:textColor">@color/text_color_standard</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:background">@drawable/bg_pin</item>
+    </style>
+
 </resources>

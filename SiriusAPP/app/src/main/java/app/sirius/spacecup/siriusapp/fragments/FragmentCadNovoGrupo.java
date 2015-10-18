@@ -1,26 +1,15 @@
 package app.sirius.spacecup.siriusapp.fragments;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import app.sirius.spacecup.siriusapp.R;
-import app.sirius.spacecup.siriusapp.db.GrupoDAO;
-import app.sirius.spacecup.siriusapp.db.RankingDAO;
 
 
 /**
@@ -85,7 +74,7 @@ public class FragmentCadNovoGrupo extends FragmentBase {
         View view = inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
 
         String[] chaves = {"nome", "rm"};
-        int[] identificadores = {R.id.txtView_nome_grupo, R.id.txtView_rm};
+        /*int[] identificadores = {R.id.txtView_nome_grupo, R.id.txtView_rm};
 
         listView = (ListView) view.findViewById(R.id.listView_participantes);
 
@@ -138,10 +127,15 @@ public class FragmentCadNovoGrupo extends FragmentBase {
                 List<RankingDAO.Ranking> grupos = new RankingDAO(getActivity()).doSelectAll();
                 Toast.makeText(getActivity(), "Foram !!!! encontrados: " + grupos.size() + " ranks", Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
 
         // Inflate the layout for this fragment
+
         return view;
+    }
+
+    private ActionBar getActionBar() {
+        return null;
     }
 
     @Override
