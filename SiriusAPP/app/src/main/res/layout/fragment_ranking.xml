@@ -21,7 +21,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:clickable="false"
+        android:clickable="true"
         android:divider="@color/text_color_standard"
         android:dividerHeight="1dp"
         android:focusable="false"

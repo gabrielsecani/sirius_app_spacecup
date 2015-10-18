@@ -4,7 +4,6 @@ package app.sirius.spacecup.siriusapp;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +28,7 @@ import app.sirius.spacecup.siriusapp.menu.DrawerMenuItem;
 /**
  * Created by nando on 14/10/2015.
  */
-//public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, FragmentCadNovoGrupo.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     android.support.v7.widget.Toolbar toolbar;
     DrawerLayout layout;
@@ -154,8 +151,4 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-        Toast.makeText(this, "." + uri.getFragment(), Toast.LENGTH_LONG).show();
-    }
 }
