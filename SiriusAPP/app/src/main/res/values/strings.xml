@@ -10,10 +10,10 @@
     </string-array>
 
     <string-array name="drawer_icons">
-        <item>@drawable/icon1</item>
-        <item>@drawable/icon2</item>
-        <item>@drawable/icon3</item>
-        <item>@drawable/icon4</item>
+        <item>@drawable/ic_rank</item>
+        <item>@drawable/ic_novo_grupo</item>
+        <item>@drawable/ic_pre_lanc</item>
+        <item>@drawable/ic_pos_lanc</item>
     </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
-    android:popupTheme="@style/Theme.AppCompat.Light"
-    android:title="@string/app_name">
+    android:popupTheme="@style/Theme.AppCompat.Light">
 
     <TextView
         android:id="@+id/txtToolbarDescricao"
