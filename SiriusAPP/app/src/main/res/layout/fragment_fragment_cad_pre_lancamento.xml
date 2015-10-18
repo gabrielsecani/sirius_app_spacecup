@@ -88,5 +88,6 @@
         android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:tag="footerBar"
         tools:layout="@layout/layout_footer_bar" />
 </FrameLayout>

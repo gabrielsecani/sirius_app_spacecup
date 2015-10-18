@@ -15,7 +15,7 @@ import app.sirius.spacecup.siriusapp.R;
  * Use the {@link FragmentCadPreLancamento#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentCadPreLancamento extends Fragment implements FragmentFooterBar.OnFragmentFooterBarInteractionListener {
+public class FragmentCadPreLancamento extends FragmentBase implements FragmentFooterBar.OnFragmentFooterBarInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_IDGRUPO = "grupo_id";

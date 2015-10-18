@@ -21,6 +21,8 @@ import java.util.List;
 
 import app.sirius.spacecup.siriusapp.fragments.FragmentBase;
 import app.sirius.spacecup.siriusapp.fragments.FragmentCadNovoGrupo;
+import app.sirius.spacecup.siriusapp.fragments.FragmentCadPosLancamento;
+import app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento;
 import app.sirius.spacecup.siriusapp.fragments.FragmentRanking;
 import app.sirius.spacecup.siriusapp.menu.DrawerMenuAdapter;
 import app.sirius.spacecup.siriusapp.menu.DrawerMenuItem;
@@ -96,10 +98,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 setFragment(1, FragmentCadNovoGrupo.class);
                 break;
             case 2:
-                setFragment(2, FragmentCadNovoGrupo.class);
+                setFragment(2, FragmentCadPreLancamento.class);
                 break;
             case 3:
-                setFragment(3, FragmentCadNovoGrupo.class);
+                setFragment(3, FragmentCadPosLancamento.class);
                 break;
         }
 
