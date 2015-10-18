@@ -9,20 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Paçoca"
-        android:textColor="@color/text_color_standard"
         android:visibility="gone" />
-
 
     <ListView
         android:id="@+id/listView_ranking"
-        style="@style/FragmentThemeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:clickable="true"
-        android:divider="@color/text_color_standard"
         android:dividerHeight="1dp"
         android:focusable="false"
         android:footerDividersEnabled="false"

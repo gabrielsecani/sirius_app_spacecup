@@ -33,10 +33,6 @@ public class FragmentRanking extends FragmentBase {
         super.onAttach(context);
     }
 
-    /*@Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
-    }*/
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,24 +84,9 @@ public class FragmentRanking extends FragmentBase {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Toast.makeText(getContext(), "TESTE",
-                        Toast.LENGTH_SHORT).show();*/
 
-                ((MainActivity)getContext()).onItemClick(null,null, 1, 0);
-//                try {
-//                    FragmentBase fragment = FragmentCadNovoGrupo.newInstance(null, null);
-//                    FragmentManager fragmentManager = getFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.frameLayout_menu, fragment);
-//                    fragmentTransaction.commit();
-                    /*android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) view.findViewById(R.id.toolbar_menu);
-                    ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao)).setText(getResources().getString(R.string.toolbar_title_NovoGrupo));*/
 
-//                } catch (ClassCastException e) {
-//                    throw new ClassCastException(FragmentCadNovoGrupo.newInstance(null, null).toString() + " must extend FragmentBase");
-//                } catch (Exception ex) {
-//                    Log.e("setFragment", ex.getMessage());
-//                }
+                ((MainActivity) getContext()).onItemClick(null, null, 1, 0);
             }
 
         });

@@ -8,14 +8,14 @@
 
     <TextView
         android:id="@+id/txtView_nome_grupo"
-        style="@style/text_view_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/layout_margin"
         android:text="@string/txt_nome_grupo" />
 
     <EditText
         android:id="@+id/edt_nome_grupo"
-        style="@style/edit_text_cadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -39,7 +39,8 @@
 
     <TextView
         android:id="@+id/txtView_turma_grupo"
-        style="@style/text_view_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/imageView"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/layout_margin"
@@ -47,7 +48,6 @@
 
     <EditText
         android:id="@+id/edt_turma_grupo"
-        style="@style/edit_text_cadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -72,38 +72,40 @@
 
     <TextView
         android:id="@+id/txtView_membros_grupo"
-        style="@style/text_view_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/imageView2"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/layout_margin"
         android:text="@string/txt_membros_grupo"
         android:textSize="28dp" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_turma_grupo"
         android:layout_centerHorizontal="true"
-        android:maxHeight="24dp"
-        android:maxWidth="24dp"
+        android:background="@android:color/transparent"
+        android:maxHeight="32dp"
+        android:maxWidth="32dp"
         android:onClick="updtadeDataGrupo"
         android:src="@android:drawable/ic_menu_add"
         android:visibility="visible" />
 
-    <!-- <ListView
+    <ListView
          android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:layout_below="@id/txtView_membros_grupo">
 
-     </ListView>-->
+    </ListView>
 
-    <!--<include layout="@layout/layout_footer_bar" />-->
 
     <fragment
         android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView3"
         android:tag="footerBar"
         tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento"
         tools:layout="@layout/layout_footer_bar" />

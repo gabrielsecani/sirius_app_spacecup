@@ -1,40 +1,18 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <!-- Customize the color palette -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/primary_text_material_light</item>
     </style>
 
-    <style name="DrawerListView" parent="Widget.AppCompat.Spinner.DropDown.ActionBar">
+    <style name="DrawerListView" parent="AppTheme">
         <item name="android:background">@color/bg_sirius_app_menu</item>
     </style>
 
-    <style name="FragmentThemeLayout">
-        <item name="android:background">@color/bg_sirius_app_standard</item>
-        <item name="android:textColor">@color/text_color_standard</item>
-        <item name="android:textSize">@dimen/size_font_standard</item>
 
-    </style>
-
-    <style name="text_view_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/size_font_standard</item>
-        <item name="android:textColor">@color/text_color_standard</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="edit_text_cadastro">
-        <item name="android:layout_marginLeft">@dimen/layout_margin</item>
-        <item name="android:layout_marginRight">@dimen/layout_margin</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:layout_span">3</item>
-        <item name="android:textColor">@color/text_color_standard</item>
-        <item name="android:textSize">20dp</item>
-        <item name="android:background">@drawable/bg_pin</item>
-    </style>
 
 </resources>

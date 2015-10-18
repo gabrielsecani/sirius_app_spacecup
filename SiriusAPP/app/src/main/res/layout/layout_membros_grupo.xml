@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_nome_membro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nome" />
+
+    <TextView
+        android:id="@+id/txt_rm_membro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_nome_membro"
+        android:text="72015" />
+
+    <ImageButton
+        android:id="@+id/image_aletar_membro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edt_turma_grupo"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:maxHeight="32dp"
+        android:maxWidth="32dp"
+        android:onClick="updtadeDataGrupo"
+        android:src="@android:drawable/ic_menu_edit"
+        android:visibility="visible" />
+
+
+</RelativeLayout>
