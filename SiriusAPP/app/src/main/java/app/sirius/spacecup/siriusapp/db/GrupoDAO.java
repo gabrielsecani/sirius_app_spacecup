@@ -51,11 +51,12 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
     public Grupo doSelectOne(long ID) {
         String[] args = new String[]{String.valueOf(ID)};
         Cursor cursor = getDB().query(getTableName(), getAllColumns(), getWhereClause(), args, "", "", "");
-        cursor.moveToFirst();
         this.object = new Grupo();
-        this.object.set_id(cursor.getInt(0));
-        this.object.setNome_grupo(cursor.getString(1));
-        this.object.setNome_turma(cursor.getString(2));
+        if (cursor.moveToFirst()) {
+            this.object.set_id(cursor.getInt(0));
+            this.object.setNome_grupo(cursor.getString(1));
+            this.object.setNome_turma(cursor.getString(2));
+        }
         return object;
 
     }

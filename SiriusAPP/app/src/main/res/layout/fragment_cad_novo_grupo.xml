@@ -6,10 +6,25 @@
     tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadNovoGrupo">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
+        android:padding="@dimen/size_font_standard"
+        android:text="cadNovoGrupo"
         android:textColor="@color/primary_dark" />
+
+    <ListView
+        android:id="@+id/listView_participantes"
+        style="@style/FragmentThemeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:clickable="true"
+        android:divider="@color/text_color_standard"
+        android:dividerHeight="1dp"
+        android:focusable="false"
+        android:footerDividersEnabled="false"
+        android:longClickable="false" />
 
     <Button
         android:id="@+id/btn1"

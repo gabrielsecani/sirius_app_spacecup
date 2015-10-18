@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/FragmentThemeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/txtView_nome_participante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layout_margin"
+        android:text="sagfasgas"
+        android:textColor="@color/text_color_standard" />
+
+    <TextView
+        android:id="@+id/txtView_rm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layout_margin"
+        android:gravity="right"
+        android:text="23532"
+        android:textColor="@color/text_color_standard" />
+
+    <ImageButton
+        android:id="@+id/btn_Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon1" />
+</LinearLayout>

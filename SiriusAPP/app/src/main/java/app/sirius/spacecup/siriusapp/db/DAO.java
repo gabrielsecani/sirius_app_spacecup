@@ -28,7 +28,7 @@ public abstract class DAO<T> {
      *
      * @return ContentValues para realizar INSERT e UPDATE
      */
-    public abstract ContentValues getContentValues() throws Exception;
+    protected abstract ContentValues getContentValues() throws Exception;
 
     /**
      * @return Noma de tabela
@@ -79,6 +79,9 @@ public abstract class DAO<T> {
 
     public int doUpdate() throws Exception {
         return getDB().update(getTableName(), getContentValues(), getWhereClause(), getWhereArgs());
+    }
 
+    public int doDelete() throws Exception {
+        return getDB().delete(getTableName(), getWhereClause(), getWhereArgs());
     }
 }
