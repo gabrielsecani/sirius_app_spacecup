@@ -13,6 +13,25 @@ import java.util.List;
  */
 public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
 
+    static String[] AllColumns = new String[]{"_id",
+            "local",
+            "data",
+            "distancia_alvo",
+            "distancia_alcancada",
+            "angulo_lancamento",
+            "velocidade_vento",
+            "peso_foguete",
+            "maxima_altitude",
+            "maxima_velocidade",
+            "tempo_propoulsao",
+            "aceleracao_pico",
+            "aceleracao_media",
+            "tempo_apogeo_distancia",
+            "tempo_ejecao",
+            "taxa_decida",
+            "duracao_voo",
+            "grupo_id"};
+
     public LancamentoDAO(Context context) {
         super(context);
         object = new Lancamento();
@@ -49,24 +68,7 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
 
     @Override
     public String[] getAllColumns() {
-        return new String[]{"_id",
-                "local",
-                "data",
-                "distancia_alvo",
-                "distancia_alcancada",
-                "angulo_lancamento",
-                "velocidade_vento",
-                "peso_foguete",
-                "maxima_altitude",
-                "maxima_velocidade",
-                "tempo_propoulsao",
-                "aceleracao_pico",
-                "aceleracao_media",
-                "tempo_apogeo_distancia",
-                "tempo_ejecao",
-                "taxa_decida",
-                "duracao_voo",
-                "grupo_id"};
+        return AllColumns;
     }
 
     @Override

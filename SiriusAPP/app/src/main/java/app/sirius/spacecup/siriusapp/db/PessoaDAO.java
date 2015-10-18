@@ -14,6 +14,8 @@ import java.util.Map;
  */
 public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
 
+    static String[] AllColumns = new String[]{"_id", "nome_pessoa", "rm_pessoa", "grupo_id"};
+
     public PessoaDAO(Context context) {
         super(context);
         object = new Pessoa();
@@ -36,7 +38,7 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
 
     @Override
     public String[] getAllColumns() {
-        return new String[]{"_id", "nome_pessoa", "rm_pessoa", "grupo_id"};
+        return AllColumns;
     }
 
     @Override
@@ -130,7 +132,7 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
             this.grupo_id = grupo_id;
         }
 
-        public GrupoDAO.Grupo getGrupo(Context context){
+        public GrupoDAO.Grupo getGrupo(Context context) {
             if (grupo == null) {
                 grupo = new GrupoDAO(context).doSelectOne(getGrupo_id());
             }

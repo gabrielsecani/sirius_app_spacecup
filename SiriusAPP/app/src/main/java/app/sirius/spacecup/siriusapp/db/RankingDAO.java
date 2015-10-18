@@ -30,26 +30,16 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
 
     @Override
     public String getTableName() {
-        return "";
-    }
-
-    @Override
-    public String getWhereClause() {
-        return "_id = ?";
-    }
-
-    @Override
-    public String[] getWhereArgs() throws Exception {
         return null;
     }
 
     @Override
     public String[] getAllColumns() {
-        return new String[]{"_id"};
+        return new String[0];
     }
 
     @Override
-    public Ranking doSelectOne(long ID) {
+    public Ranking doSelectOne(long ID) throws Exception {
         return null;
     }
 

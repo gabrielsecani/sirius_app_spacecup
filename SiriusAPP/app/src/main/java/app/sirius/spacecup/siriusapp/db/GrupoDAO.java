@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
 
+    static String[] AllColumns = new String[]{"_id", "nome_grupo", "nome_turma"};
+
     public GrupoDAO(Context context) {
         super(context);
         object = new GrupoDAO.Grupo();
@@ -34,7 +36,7 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
 
     @Override
     public String[] getAllColumns() {
-        return new String[]{"_id", "nome_grupo", "nome_turma"};
+        return AllColumns;
     }
 
     @Override
