@@ -1,6 +1,5 @@
 package app.sirius.spacecup.siriusapp.fragments;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,12 +8,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+import java.util.Map;
+
 import app.sirius.spacecup.siriusapp.R;
+import app.sirius.spacecup.siriusapp.db.GrupoDAO;
+import app.sirius.spacecup.siriusapp.db.PessoaDAO;
+
 
 
 /**
@@ -30,6 +36,10 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     private ListView listView;
     private String mParam1;
     private String mParam2;
+
+    private EditText edtNomeGrupo;
+    private EditText edtTurmaGrupo;
+
 
     public FragmentCadNovoGrupo() {
         // Required empty public constructor
@@ -66,17 +76,16 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        GrupoDAO grupoDAO = new GrupoDAO(getContext());
-//
-//        try {
-//            grupoDAO.getObject().setNome_turma("SIS");
-//            grupoDAO.getObject().setNome_grupo("turma");
-//            grupoDAO.doInsert();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
         View view = inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
+
+        edtNomeGrupo = (EditText) view.findViewById(R.id.edt_nome_grupo);
+        edtTurmaGrupo = (EditText) view.findViewById(R.id.edt_turma_grupo);
+
+
+        listView = (ListView) view.findViewById(R.id.list_membros_grupos);
+
+        final List<Map<String, Object>> membros = ListarMembros();
+
         ImageButton img = (ImageButton) view.findViewById(R.id.imageView3);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,69 +93,40 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                 updadeDataGrupo();
             }
         });
-        String[] chaves = {"nome", "rm"};
-        /*int[] identificadores = {R.id.txtView_nome_grupo, R.id.txtView_rm};
 
-        listView = (ListView) view.findViewById(R.id.listView_participantes);
+        /*if (membros.size() == 0) {
 
-        final List<Map<String, Object>> participantes = new ArrayList<>();
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("nome", "Teste de um");
-        map.put("rm", "77788");
-        participantes.add(map);
-        map = new HashMap<String, Object>();
-        map.put("nome", "Teste de 2");
-        map.put("rm", "74330");
-        participantes.add(map);
-
-        if (participantes.size() == 0) {
             ((TextView) view.findViewById(R.id.txtView_sem_grupos)).setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
         } else {
 
+            String[] chaves = {"nome", "rm"};
+            int[] identificadores = {R.id.txt_nome_membro,R.id.txt_rm_membro};
+//
             SimpleAdapter adapter =
-                    new SimpleAdapter(getContext(), participantes,
-                            R.layout.layout_fragment_participantes, chaves, identificadores);
-
+                    new SimpleAdapter(getContext(), membros,
+                            R.layout.layout_fragment_ranking, chaves, identificadores) {
+                    };
             listView.setAdapter(adapter);
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                    Map<String, Object> map = participantes.get(position);
-                    String msg = "Grupo selecionado: ";
-                    msg += (String) map.get("grupo");
-
-                    Toast.makeText(getContext(), msg,
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-        ((Button) view.findViewById(R.id.btn1)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<GrupoDAO.Grupo> grupos = new GrupoDAO(getContext()).doSelectAll();
-                Toast.makeText(getContext(), "Foram encontrados: " + grupos.size() + "participantes", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        ((Button) view.findViewById(R.id.btn2)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                List<RankingDAO.Ranking> grupos = new RankingDAO(getActivity()).doSelectAll();
-                Toast.makeText(getActivity(), "Foram !!!! encontrados: " + grupos.size() + " ranks", Toast.LENGTH_LONG).show();
-            }
-        });*/
-
-        // Inflate the layout for this fragment
+        }*/
 
         return view;
     }
 
-    private ActionBar getActionBar() {
+    private List<Map<String, Object>> ListarGrupo() {
+        GrupoDAO grupos = new GrupoDAO(getContext());
+
         return null;
+
+    }
+
+    private List<Map<String, Object>> ListarMembros() {
+        PessoaDAO grupos = new PessoaDAO(getContext());
+        GrupoDAO grupoDAO = new GrupoDAO(getContext());
+
+        return null;
+
     }
 
     @Override
@@ -170,19 +150,35 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                }).
-                setNegativeButton("Cancelar 2", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
                 })
-                .setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //salvar
+
+                        GrupoDAO grupoDAO = new GrupoDAO(getContext());
+                        PessoaDAO pessoaDAO = new PessoaDAO(getContext());
+
+                        try {
+                            grupoDAO.getObject().setNome_turma(String.valueOf(edtNomeGrupo.getText()));
+                            grupoDAO.getObject().setNome_grupo(String.valueOf(edtTurmaGrupo.getText()));
+                            grupoDAO.doInsert();
+
+                            grupoDAO.getObject();
+
+
+                           /* pessoaDAO.getObject().setNome_pessoa();
+                            pessoaDAO.getObject().setRm_pessoa();
+                            pessoaDAO.getObject().setGrupo_id();
+                            pessoaDAO.doInsert();*/
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+                        }
+
                         Toast.makeText(getContext(), "Adicionado", Toast.LENGTH_SHORT).show();
-                        //TODO: atualiza TELA
+
                         dialog.dismiss();
                     }
                 }).create().show();

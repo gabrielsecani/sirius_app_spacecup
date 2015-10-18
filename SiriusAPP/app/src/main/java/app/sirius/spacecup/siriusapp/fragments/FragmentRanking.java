@@ -85,7 +85,6 @@ public class FragmentRanking extends FragmentBase {
             @Override
             public void onClick(View view) {
 
-
                 ((MainActivity) getContext()).onItemClick(null, null, 1, 0);
             }
 
