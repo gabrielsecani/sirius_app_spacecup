@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -102,7 +104,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
             }
         });
 
-        /*if (membros.size() == 0) {
+        if (membros.size() == 0) {
 
             ((TextView) view.findViewById(R.id.txtView_sem_grupos)).setVisibility(View.VISIBLE);
             listView.setVisibility(View.GONE);
@@ -110,23 +112,18 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
             String[] chaves = {"nome", "rm"};
             int[] identificadores = {R.id.txt_nome_membro,R.id.txt_rm_membro};
-//
+
             SimpleAdapter adapter =
                     new SimpleAdapter(getContext(), membros,
                             R.layout.layout_fragment_ranking, chaves, identificadores) {
                     };
             listView.setAdapter(adapter);
-
-        }*/
+        }
 
         return view;
     }
 
-
-
     private List<Map<String, Object>> ListarMembros() {
-        PessoaDAO grupos = new PessoaDAO(getContext());
-        GrupoDAO grupoDAO = new GrupoDAO(getContext());
 
         return null;
     }
@@ -203,7 +200,6 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                             dialog.dismiss();
                         }
                     }).create().show();
-
         }
     }
 
