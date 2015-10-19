@@ -29,4 +29,13 @@
 
     <string name="btn_salvar">Salvar</string>
 
+
+    <string name="txt_nome_membro">Nome</string>
+    <string name="txt_rm_membro">RM</string>
+    <string name="novo_integrante">Novo membro</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="adicionar">Adicionar</string>
+    <string name="adicionado_sucesso">Integrante adicionado com sucesso!</string>
+    <string name="valida_grupos">Insira o nome do grupo e a turma</string>
+
 </resources>

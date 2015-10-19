@@ -20,28 +20,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/txtView_nome_grupo"
-        android:layout_toLeftOf="@+id/imageView"
-        android:layout_toStartOf="@+id/imageView"
+        android:layout_toLeftOf="@+id/img_btn_altera"
+        android:layout_toStartOf="@+id/img_btn_altera"
         android:inputType="text" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <ImageButton
+        android:id="@+id/img_btn_altera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/txtView_nome_grupo"
         android:layout_marginRight="@dimen/layout_margin"
+        android:background="@android:color/transparent"
         android:maxHeight="24dp"
         android:maxWidth="24dp"
         android:onClick="updtadeDataGrupo"
         android:src="@android:drawable/ic_menu_edit"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/txtView_turma_grupo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView"
+        android:layout_below="@id/img_btn_altera"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/layout_margin"
         android:text="@string/txt_turma_grupo" />
@@ -52,36 +53,37 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/txtView_turma_grupo"
-        android:layout_toLeftOf="@+id/imageView2"
-        android:layout_toStartOf="@+id/imageView2"
+        android:layout_toLeftOf="@+id/img_btn_altera2"
+        android:layout_toStartOf="@+id/img_btn_altera2"
         android:inputType="text" />
 
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <ImageButton
+        android:id="@+id/img_btn_altera2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/txtView_turma_grupo"
         android:layout_marginRight="@dimen/layout_margin"
+        android:background="@android:color/transparent"
         android:maxHeight="24dp"
         android:maxWidth="24dp"
         android:onClick="updtadeDataGrupo"
         android:src="@android:drawable/ic_menu_edit"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/txtView_membros_grupo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imageView2"
+        android:layout_below="@id/img_btn_altera2"
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:paddingLeft="@dimen/layout_margin"
         android:text="@string/txt_membros_grupo"
         android:textSize="28dp" />
 
     <ImageButton
-        android:id="@+id/imageView3"
+        android:id="@+id/img_btn_novo_membro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_turma_grupo"
@@ -100,8 +102,6 @@
          android:layout_below="@id/txtView_membros_grupo">
 
     </ListView>
-
-
 
     <fragment
         android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"

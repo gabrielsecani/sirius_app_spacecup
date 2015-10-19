@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -39,7 +39,12 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
     private EditText edtNomeGrupo;
     private EditText edtTurmaGrupo;
+    private ImageButton alteraNomeGrupo;
+    private ImageButton alteraTurmaGrupo;
 
+    private long idGrupo;
+
+    private GrupoDAO grupoDAO;
 
     public FragmentCadNovoGrupo() {
         // Required empty public constructor
@@ -80,14 +85,17 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
         edtNomeGrupo = (EditText) view.findViewById(R.id.edt_nome_grupo);
         edtTurmaGrupo = (EditText) view.findViewById(R.id.edt_turma_grupo);
-
+        alteraNomeGrupo = (ImageButton) view.findViewById(R.id.img_btn_altera);
+        alteraTurmaGrupo = (ImageButton) view.findViewById(R.id.img_btn_altera2);
 
         listView = (ListView) view.findViewById(R.id.list_membros_grupos);
 
+        grupoDAO = new GrupoDAO(getContext());
+
         final List<Map<String, Object>> membros = ListarMembros();
 
-        ImageButton img = (ImageButton) view.findViewById(R.id.imageView3);
-        img.setOnClickListener(new View.OnClickListener() {
+        ImageButton addNovoMembro = (ImageButton) view.findViewById(R.id.img_btn_novo_membro);
+        addNovoMembro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updadeDataGrupo();
@@ -114,19 +122,13 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         return view;
     }
 
-    private List<Map<String, Object>> ListarGrupo() {
-        GrupoDAO grupos = new GrupoDAO(getContext());
 
-        return null;
-
-    }
 
     private List<Map<String, Object>> ListarMembros() {
         PessoaDAO grupos = new PessoaDAO(getContext());
         GrupoDAO grupoDAO = new GrupoDAO(getContext());
 
         return null;
-
     }
 
     @Override
@@ -140,48 +142,69 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     }
 
     public void updadeDataGrupo() {
-        AlertDialog.Builder b = new AlertDialog.Builder(getContext());
-        View view = getLayoutInflater(null).inflate(R.layout.layout_menu_item, null);
-        TextView txt = (TextView) view.findViewById(R.id.txtView_menu_item);
-        txt.setText("Eu sou o cara!");
-        b.setView(view).setIcon(R.drawable.icon3).setTitle("Titulo").
-                setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //salvar
 
-                        GrupoDAO grupoDAO = new GrupoDAO(getContext());
-                        PessoaDAO pessoaDAO = new PessoaDAO(getContext());
+        final String nomeGrupo = String.valueOf(edtNomeGrupo.getText());
+        final String turmaGrupo = String.valueOf(edtNomeGrupo.getText());
 
-                        try {
-                            grupoDAO.getObject().setNome_turma(String.valueOf(edtNomeGrupo.getText()));
-                            grupoDAO.getObject().setNome_grupo(String.valueOf(edtTurmaGrupo.getText()));
-                            grupoDAO.doInsert();
+        if (nomeGrupo.isEmpty() || turmaGrupo.isEmpty()) {
+            Toast.makeText(getContext(), R.string.valida_grupos, Toast.LENGTH_LONG).show();
 
-                            grupoDAO.getObject();
+        } else {
 
+            AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+            final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
 
-                           /* pessoaDAO.getObject().setNome_pessoa();
-                            pessoaDAO.getObject().setRm_pessoa();
-                            pessoaDAO.getObject().setGrupo_id();
-                            pessoaDAO.doInsert();*/
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-
+            b.setView(view).setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.novo_integrante).
+                    setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
                         }
+                    })
+                    .setPositiveButton(R.string.adicionar, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //salvar
 
-                        Toast.makeText(getContext(), "Adicionado", Toast.LENGTH_SHORT).show();
+                            /*GrupoDAO grupoDAO = new GrupoDAO(getContext());*/
+                            PessoaDAO pessoaDAO = new PessoaDAO(getContext());
 
-                        dialog.dismiss();
-                    }
-                }).create().show();
+                            try {
+                                if (grupoDAO.getObject().get_id() == 0) {
+                                    grupoDAO.getObject().setNome_turma(nomeGrupo);
+                                    grupoDAO.getObject().setNome_grupo(turmaGrupo);
+                                    grupoDAO.doInsert();
+
+                                    pessoaDAO.getObject().setNome_pessoa(String.valueOf(view.findViewById(R.id.edt_nome_membro)));
+                                    pessoaDAO.getObject().setRm_pessoa(Integer.parseInt(String.valueOf(view.findViewById(R.id.edt_rm_membro))));
+                                    pessoaDAO.getObject().setGrupo_id((int) grupoDAO.getObject().get_id());
+                                    pessoaDAO.doInsert();
+
+                                    edtNomeGrupo.setEnabled(false);
+                                    edtTurmaGrupo.setEnabled(false);
+                                    alteraNomeGrupo.setVisibility(View.VISIBLE);
+                                    alteraTurmaGrupo.setVisibility(View.VISIBLE);
+
+                                } else {
+                                    pessoaDAO.getObject().setNome_pessoa(String.valueOf(view.findViewById(R.id.edt_nome_membro)));
+                                    pessoaDAO.getObject().setRm_pessoa(Integer.parseInt(String.valueOf(view.findViewById(R.id.edt_rm_membro))));
+                                    pessoaDAO.getObject().setGrupo_id((int) grupoDAO.getObject().get_id());
+                                    pessoaDAO.doInsert();
+
+                                }
+
+                            } catch (Exception e) {
+                                Log.getStackTraceString(e);
+
+                            }
+
+                            Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
+
+                            dialog.dismiss();
+                        }
+                    }).create().show();
+
+        }
     }
 
     @Override
