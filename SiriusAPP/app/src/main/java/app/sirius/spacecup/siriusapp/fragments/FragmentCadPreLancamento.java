@@ -50,10 +50,11 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
      * @param grupo é um objeto <code>GrupoDAO.Grupo</code> grupo que vai abrir os dados de lancamento
      * @return A new instance of fragment FragmentCadPreLancamento.
      */
-    public static FragmentCadPreLancamento newInstance(GrupoDAO.Grupo grupo) {
+    public static FragmentCadPreLancamento newInstance(GrupoDAO.Grupo grupo, boolean openReadOnly) {
         FragmentCadPreLancamento fragment = new FragmentCadPreLancamento();
         Bundle args = new Bundle();
         args.putSerializable(ARG_GRUPO, grupo);
+        args.putSerializable(ARG_READONLY, openReadOnly);
         fragment.setArguments(args);
         return fragment;
     }
@@ -105,7 +106,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_fragment_cad_pre_lancamento, container, false);
+        View view = inflater.inflate(R.layout.fragment_cad_pre_lancamento, container, false);
 
         prelancto_angulo_lancto = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
         prelancto_distanciaAlvo = (EditText) view.findViewById(R.id.prelancto_distanciaAlvo);
@@ -142,6 +143,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             prelancto_velocidade_vento.setEnabled(false);
             prelancto_peso_foguete.setEnabled(false);
         }
+        view.findViewById(R.id.prelancto_Grupos).requestFocus();
         return view;
     }
 

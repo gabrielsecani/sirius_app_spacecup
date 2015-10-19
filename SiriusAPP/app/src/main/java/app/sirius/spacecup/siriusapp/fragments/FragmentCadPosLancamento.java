@@ -64,7 +64,7 @@ public class FragmentCadPosLancamento extends FragmentBase implements FragmentFo
         //TODO: buscar o id do botao salvar da pre lancamento e exclui-lo
         //TODO: fazer o fragment abrir os dados de pre lancamento abrirem somente leitura
         //TODO: fazer os dados da fragment pré lancamento persistir no Bundle
-        FragmentCadPreLancamento fragment = FragmentCadPreLancamento.newInstance(grupo);
+        FragmentCadPreLancamento fragment = FragmentCadPreLancamento.newInstance(grupo, true);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_layout, fragment);
@@ -76,8 +76,8 @@ public class FragmentCadPosLancamento extends FragmentBase implements FragmentFo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_fragment_cad_pos_lancamento, container, false);
-        view.findViewById(R.id.prelancto_Grupos).requestFocus();
+        View view = inflater.inflate(R.layout.fragment_cad_pos_lancamento, container, false);
+
         return view;
     }
 
