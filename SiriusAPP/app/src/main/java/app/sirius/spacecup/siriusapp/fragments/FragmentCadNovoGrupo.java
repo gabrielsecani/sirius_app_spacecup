@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -21,8 +22,6 @@ import java.util.Map;
 import app.sirius.spacecup.siriusapp.R;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.PessoaDAO;
-
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +43,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     private ImageButton alteraTurmaGrupo;
 
     private GrupoDAO grupoDAO;
-    private PessoaDAO pessoaDAO;
+
     private SimpleAdapter adapter;
 
     public FragmentCadNovoGrupo() {
@@ -89,36 +88,9 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         alteraNomeGrupo = (ImageButton) view.findViewById(R.id.img_btn_altera);
         alteraTurmaGrupo = (ImageButton) view.findViewById(R.id.img_btn_altera2);
 
-        listView = (ListView) view.findViewById(R.id.list_membros_grupos);
-
         grupoDAO = new GrupoDAO(getContext());
 
-        pessoaDAO = new PessoaDAO(getContext());
-        final List<Map<String, Object>> membros = pessoaDAO.doSelectAllMap(grupoDAO.getObject());
-
-        /*if (membros.size() == 0) {
-
-            ((TextView) view.findViewById(R.id.txtView_sem_grupos)).setVisibility(View.VISIBLE);
-            listView.setVisibility(View.GONE);
-        } else {*/
-
-            String[] chaves = {"nome", "rm"};
-            int[] identificadores = {R.id.txt_nome_membro,R.id.txt_rm_membro};
-
-        adapter =
-                    new SimpleAdapter(getContext(), membros,
-                            R.layout.layout_membros_grupo, chaves, identificadores) {
-                    };
-            listView.setAdapter(adapter);
-       /* }*/
-
-        ImageButton addNovoMembro = (ImageButton) view.findViewById(R.id.img_btn_novo_membro);
-        addNovoMembro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updadeDataGrupo();
-            }
-        });
+        listMembers(view);
 
         return view;
     }
@@ -133,7 +105,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         super.onDetach();
     }
 
-    public List<Map<String, Object>> updadeDataGrupo() {
+    public void updadeDataGrupo(View view) {
 
         final String nomeGrupo = String.valueOf(edtNomeGrupo.getText());
         final String turmaGrupo = String.valueOf(edtTurmaGrupo.getText());
@@ -143,7 +115,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
         } else {
 
-            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+            final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 
             if (grupoDAO.getObject().get_id() == 0) {
 
@@ -172,52 +144,101 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                         alteraNomeGrupo.setVisibility(View.VISIBLE);
                         alteraTurmaGrupo.setVisibility(View.VISIBLE);
 
+
                         dialog.dismiss();
+
+                        registerMember(alert);
                     }
                 }).create().show();
 
+            } else {
+                registerMember(alert);
             }
-
-
-            final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
-
-            alert.setView(view).setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.novo_integrante).
-                    setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //salvar
-
-                            try {
-
-                                pessoaDAO.getObject().setNome_pessoa(String.valueOf(view.findViewById(R.id.edt_nome_membro)));
-                                pessoaDAO.getObject().setRm_pessoa(Integer.parseInt(String.valueOf(view.findViewById(R.id.edt_rm_membro))));
-                                pessoaDAO.getObject().setGrupo_id((int) grupoDAO.getObject().get_id());
-                                pessoaDAO.doInsert();
-
-                            } catch (Exception e) {
-                                Log.getStackTraceString(e);
-
-                            }
-
-
-                            Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
-
-                            dialog.dismiss();
-                        }
-                    }).create().show();
         }
 
-        return pessoaDAO.doSelectAllMap(grupoDAO.getObject());
+        listMembers(view);
+    }
+
+    public void registerMember(AlertDialog.Builder alert) {
+        final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
+
+        alert.setView(view).setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.novo_integrante).
+                setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //salvar
+
+                        EditText nome = (EditText) view.findViewById(R.id.edt_nome_membro);
+                        EditText rm = (EditText) view.findViewById(R.id.edt_rm_membro);
+                        int idGrupo = (int) (grupoDAO.getObject().get_id());
+
+                        try {
+                            PessoaDAO pessoaDAO = new PessoaDAO(getContext());
+                            pessoaDAO.getObject().setNome_pessoa(String.valueOf(nome.getText()));
+                            pessoaDAO.getObject().setRm_pessoa(Integer.valueOf(String.valueOf(rm.getText())));
+                            pessoaDAO.getObject().setGrupo_id(idGrupo);
+                            pessoaDAO.doInsert();
+
+                        } catch (Exception e) {
+                            Log.getStackTraceString(e);
+
+                        }
+
+                        Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
+
+                        dialog.dismiss();
+                    }
+                }).create().show();
     }
 
     @Override
     public void onFragmentFooterBarSalvarClick(View view) {
         Toast.makeText(getContext(), "SALVOU!", Toast.LENGTH_LONG).show();
     }
+
+
+    public void listMembers(final View view){
+
+        listView = (ListView) view.findViewById(R.id.list_membros_grupos);
+
+
+        PessoaDAO pessoaDAO = new PessoaDAO(getContext());
+
+        final List<Map<String, Object>> membros = pessoaDAO.doSelectAllMap(grupoDAO.getObject());
+
+        if (membros.size() == 0) {
+
+            ((TextView) view.findViewById(R.id.txtView_sem_grupos)).setVisibility(View.VISIBLE);
+            listView.setVisibility(View.GONE);
+        } else {
+
+
+        String[] chaves = {"nome", "rm"};
+        int[] identificadores = {R.id.txt_nome_membro,R.id.txt_rm_membro};
+
+        adapter =
+                new SimpleAdapter(getContext(), membros,
+                        R.layout.layout_membros_grupo, chaves, identificadores) {
+                };
+        listView.setAdapter(adapter);
+        }
+
+        ImageButton addNovoMembro = (ImageButton) view.findViewById(R.id.img_btn_novo_membro);
+        addNovoMembro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updadeDataGrupo(view);
+            }
+        });
+
+    }
+
+
+
 }
