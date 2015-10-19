@@ -1,18 +1,30 @@
 package app.sirius.spacecup.siriusapp.fragments;
 
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.List;
+import java.util.Map;
+
+import app.sirius.spacecup.siriusapp.MainActivity;
 import app.sirius.spacecup.siriusapp.R;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.LancamentoDAO;
+
+import static android.R.layout.simple_spinner_dropdown_item;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,8 +33,10 @@ import app.sirius.spacecup.siriusapp.db.LancamentoDAO;
  */
 public class FragmentCadPreLancamento extends FragmentBase implements FragmentFooterBar.OnFragmentFooterBarInteractionListener {
     private static final String ARG_GRUPO = "grupo_id";
+    private static final String ARG_LANCTO = "lancamento";
 
     private GrupoDAO.Grupo mGrupo;
+    private LancamentoDAO.Lancamento mLancamento;
     private EditText prelancto_angulo_lancto;
     private EditText prelancto_distanciaAlvo;
     private DatePicker prelancto_dtLancamento;
@@ -49,6 +63,13 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(ARG_GRUPO, mGrupo);
+        outState.putSerializable(ARG_LANCTO, mLancamento);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -58,9 +79,15 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
                 throw new ClassCastException("parameter " + ARG_GRUPO
                         + " must be a GrupoDAO.Grupo class");
             }
+            try {
+                mLancamento = (LancamentoDAO.Lancamento) getArguments().getSerializable(ARG_LANCTO);
+            } catch (ClassCastException e) {
+                throw new ClassCastException("parameter " + ARG_LANCTO
+                        + " must be a LancamentoDAO.Lancamento class");
+            }
         }
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,9 +100,38 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         prelancto_dtLancamento = (DatePicker) view.findViewById(R.id.prelancto_dtLancamento);
         prelancto_velocidade_vento = (EditText) view.findViewById(R.id.prelancto_velocidade_vento);
         prelancto_peso_foguete = (EditText) view.findViewById(R.id.prelancto_peso_foguete);
+
+        Spinner spinner = (Spinner) view.findViewById(R.id.prelancto_Grupos);
+        final List<Map<String, Object>> listagrupos = new GrupoDAO(getContext()).doSelectAllMap();
+
+        View v=View.inflate(getContext(), android.R.layout.simple_spinner_dropdown_item, null);
+
+        SimpleAdapter adap = new SimpleAdapter(getContext(), listagrupos, android.R.layout.simple_spinner_dropdown_item, new String[]{"nome_grupo"}, null);
+        spinner.setAdapter(adap);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Map<String, Object> map = listagrupos.get(position);
+                mGrupo = (GrupoDAO.Grupo) map.get("self");
+                carregaDadosLancamento();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return view;
     }
 
+    private void carregaDadosLancamento() {
+        if(mGrupo == null){
+            Toast.makeText(getContext(), R.string.valida_grupos, Toast.LENGTH_LONG).show();
+        }else{
+            LancamentoDAO dao = new LancamentoDAO(getContext());
+            mLancamento = dao.doSelectOne(mGrupo);
+        }
+    }
 
     @Override
     public void onFragmentFooterBarSalvarClick(View view) {
@@ -89,6 +145,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
 
         lan.setVelocidade_vento(Double.parseDouble(String.valueOf(prelancto_velocidade_vento.getText())));
         lan.setPeso_foguete(Double.parseDouble(String.valueOf(prelancto_peso_foguete.getText())));
+        lan.setGrupo_id(mGrupo.get_id());
 
         dao.doInsert();
     }

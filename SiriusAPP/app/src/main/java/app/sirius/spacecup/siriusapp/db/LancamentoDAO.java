@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
  * Created by Gabriel on 17/10/2015.
  */
 public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
+
+    static String FK_GRUPO = "grupo_id";
 
     static String[] AllColumns = new String[]{"_id",
             "local",
@@ -30,7 +33,8 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
             "tempo_ejecao",
             "taxa_decida",
             "duracao_voo",
-            "grupo_id"};
+            FK_GRUPO};
+
 
     public LancamentoDAO(Context context) {
         super(context);
@@ -71,34 +75,48 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
         return AllColumns;
     }
 
+    private void carregaDadosFromCursor(Cursor cursor){
+        this.object = new Lancamento();
+        this.object.set_id(cursor.getInt(0));
+        this.object.setLocal(cursor.getString(1));
+        this.object.setData(cursor.getString(2));
+        this.object.setDistancia_alvo(cursor.getDouble(3));
+        this.object.setDistancia_alcancada(cursor.getDouble(4));
+        this.object.setAngulo_lancamento(cursor.getDouble(5));
+        this.object.setVelocidade_vento(cursor.getDouble(6));
+        this.object.setPeso_foguete(cursor.getDouble(7));
+        this.object.setMaxima_altitude(cursor.getDouble(8));
+        this.object.setMaxima_velocidade(cursor.getDouble(9));
+        this.object.setTempo_propoulsao(cursor.getDouble(10));
+        this.object.setAceleracao_pico(cursor.getDouble(11));
+        this.object.setAceleracao_media(cursor.getDouble(12));
+        this.object.setTempo_apogeo_distancia(cursor.getDouble(13));
+        this.object.setTempo_ejecao(cursor.getDouble(14));
+        this.object.setTaxa_decida(cursor.getDouble(15));
+        this.object.setDuracao_voo(cursor.getDouble(16));
+        this.object.setGrupo_id(cursor.getInt(17));
+
+    }
+
     @Override
     public Lancamento doSelectOne(long ID) {
         String[] args = new String[]{String.valueOf(ID)};
         Cursor cursor = getDB().query(getTableName(), getAllColumns(), getWhereClause(), args, "", "", "");
         this.object = new Lancamento();
         if (cursor.moveToFirst()) {
-            this.object.set_id(cursor.getInt(0));
-            this.object.setLocal(cursor.getString(1));
-            this.object.setData(cursor.getString(2));
-            this.object.setDistancia_alvo(cursor.getDouble(3));
-            this.object.setDistancia_alcancada(cursor.getDouble(4));
-            this.object.setAngulo_lancamento(cursor.getDouble(5));
-            this.object.setVelocidade_vento(cursor.getDouble(6));
-            this.object.setPeso_foguete(cursor.getDouble(7));
-            this.object.setMaxima_altitude(cursor.getDouble(8));
-            this.object.setMaxima_velocidade(cursor.getDouble(9));
-            this.object.setTempo_propoulsao(cursor.getDouble(10));
-            this.object.setAceleracao_pico(cursor.getDouble(11));
-            this.object.setAceleracao_media(cursor.getDouble(12));
-            this.object.setTempo_apogeo_distancia(cursor.getDouble(13));
-            this.object.setTempo_ejecao(cursor.getDouble(14));
-            this.object.setTaxa_decida(cursor.getDouble(15));
-            this.object.setDuracao_voo(cursor.getDouble(16));
-            this.object.setGrupo_id(cursor.getInt(17));
-
+           carregaDadosFromCursor(cursor);
         }
-        return object;
+        return this.object;
+    }
 
+    public Lancamento doSelectOne(GrupoDAO.Grupo mGrupo) {
+        String[] args = new String[]{String.valueOf(mGrupo.get_id())};
+        Cursor cursor = getDB().query(getTableName(), getAllColumns(), FK_GRUPO+"=?", args, "", "", "");
+        if (cursor.moveToFirst()) {
+            carregaDadosFromCursor(cursor);
+            this.object.grupo=mGrupo;
+        }
+        return this.object;
     }
 
     public List<Lancamento> doSelectAll() {
@@ -108,26 +126,8 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
             cursor.moveToFirst();
 
             do {
-                Lancamento lancamento = new Lancamento();
-                this.object.set_id(cursor.getInt(0));
-                this.object.setLocal(cursor.getString(1));
-                this.object.setData(cursor.getString(2));
-                this.object.setDistancia_alvo(cursor.getDouble(3));
-                this.object.setDistancia_alcancada(cursor.getDouble(4));
-                this.object.setAngulo_lancamento(cursor.getDouble(5));
-                this.object.setVelocidade_vento(cursor.getDouble(6));
-                this.object.setPeso_foguete(cursor.getDouble(7));
-                this.object.setMaxima_altitude(cursor.getDouble(8));
-                this.object.setMaxima_velocidade(cursor.getDouble(9));
-                this.object.setTempo_propoulsao(cursor.getDouble(10));
-                this.object.setAceleracao_pico(cursor.getDouble(11));
-                this.object.setAceleracao_media(cursor.getDouble(12));
-                this.object.setTempo_apogeo_distancia(cursor.getDouble(13));
-                this.object.setTempo_ejecao(cursor.getDouble(14));
-                this.object.setTaxa_decida(cursor.getDouble(15));
-                this.object.setDuracao_voo(cursor.getDouble(16));
-                this.object.setGrupo_id(cursor.getInt(17));
-                lista.add(lancamento);
+                carregaDadosFromCursor(cursor);
+                lista.add(this.object);
             } while (cursor.moveToNext());
 
         } catch (Exception e) {
@@ -140,7 +140,7 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
     /**
      * Classe de objeto para acesso aos dados
      */
-    public class Lancamento extends DAO.ObjetoDao {
+    public class Lancamento extends DAO.ObjetoDao implements Serializable {
 
         GrupoDAO.Grupo grupo;
         private String local;

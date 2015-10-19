@@ -7,7 +7,9 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Gabriel on 17/10/2015.
@@ -23,11 +25,7 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
 
     @Override
     public ContentValues getContentValues() {
-
-        ContentValues cv = new ContentValues();
-        cv.put("nome_grupo", getObject().getNome_grupo());
-        cv.put("nome_turma", getObject().getNome_turma());
-        return cv;
+        return getObject().getContentValues();
     }
 
     @Override
@@ -75,6 +73,22 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
         return lista;
     }
 
+    public List<Map<String, Object>> doSelectAllMap() {
+        List<Grupo> lista = doSelectAll();
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (Grupo g : lista) {
+
+            Map<String,Object> map=new HashMap<>();
+            for (Map.Entry<String, Object> ent:g.getContentValues().valueSet()) {
+                map.put(ent.getKey(),ent.getValue());
+            }
+//            map.putAll((Map<? extends String, ?>) g.getContentValues().valueSet());
+            map.put("self", g);
+            list.add(map);
+
+        }
+        return list;
+    }
     /**
      * Classe de objeto para acesso aos dados
      */
@@ -107,5 +121,13 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
             this.nome_turma = nome_turma;
         }
 
+        public ContentValues getContentValues() {
+
+            ContentValues cv = new ContentValues();
+            cv.put("nome_grupo", getNome_grupo());
+            cv.put("nome_turma", getNome_turma());
+
+            return cv;
+        }
     }
 }
