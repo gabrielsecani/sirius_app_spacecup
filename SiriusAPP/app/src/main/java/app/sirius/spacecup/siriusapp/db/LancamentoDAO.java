@@ -143,8 +143,8 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
     public class Lancamento extends DAO.ObjetoDao implements Serializable {
 
         GrupoDAO.Grupo grupo;
-        private String local;
-        private String data;
+        private String local = "";
+        private String data = "";
         private double distancia_alcancada;
         private double distancia_alvo;
         private double angulo_lancamento;

@@ -37,5 +37,6 @@
     <string name="adicionado_sucesso">Integrante adicionado com sucesso!</string>
     <string name="valida_grupos">Insira o nome do grupo e a turma</string>
     <string name="confirma_cad_grupo">Cadastrar novo grupo?</string>
+    <string name="aguarde">Aguarde...</string>
 
 </resources>

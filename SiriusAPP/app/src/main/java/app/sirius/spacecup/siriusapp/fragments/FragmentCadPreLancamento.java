@@ -1,6 +1,7 @@
 package app.sirius.spacecup.siriusapp.fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,9 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -114,12 +118,15 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         prelancto_velocidade_vento = (EditText) view.findViewById(R.id.prelancto_velocidade_vento);
         prelancto_peso_foguete = (EditText) view.findViewById(R.id.prelancto_peso_foguete);
 
-        Spinner spinner = (Spinner) view.findViewById(R.id.prelancto_Grupos);
+        Spinner prelancto_Grupos = (Spinner) view.findViewById(R.id.prelancto_Grupos);
+        prelancto_Grupos.requestFocus();
+
         final List<Map<String, Object>> listagrupos = new GrupoDAO(getContext()).doSelectAllMap();
 
-        SimpleAdapter adap = new SimpleAdapter(getContext(), listagrupos, R.layout.layout_spinner, new String[]{"nome_grupo"}, new int[]{R.id.txt_spinner_item});
-        spinner.setAdapter(adap);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        SimpleAdapter adap = new SimpleAdapter(getContext(), listagrupos, R.layout.layout_spinner,
+                new String[]{"nome_grupo"}, new int[]{R.id.txt_spinner_item});
+        prelancto_Grupos.setAdapter(adap);
+        prelancto_Grupos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Map<String, Object> map = listagrupos.get(position);
@@ -142,8 +149,11 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             prelancto_dtLancamento.setEnabled(false);
             prelancto_velocidade_vento.setEnabled(false);
             prelancto_peso_foguete.setEnabled(false);
+            if (mGrupo != null) {
+                prelancto_Grupos.setSelection(listagrupos.indexOf(mGrupo), true);
+                prelancto_Grupos.setEnabled(false);
+            }
         }
-        view.findViewById(R.id.prelancto_Grupos).requestFocus();
         return view;
     }
 
@@ -157,25 +167,53 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             prelancto_distanciaAlvo.setText(String.valueOf(mLancamento.getDistancia_alvo()));
             prelancto_velocidade_vento.setText(String.valueOf(mLancamento.getVelocidade_vento()));
             prelancto_peso_foguete.setText(String.valueOf(mLancamento.getPeso_foguete()));
-            //TODO: Fazer colocar a data de lancamento no datepicker
-//            prelancto_dtLancamento.setText(String.valueOf(mLancamento.getData()));
+
+            if (!mLancamento.getData().isEmpty()) {
+                try {
+
+                    // Isso da vontade de ... nos programadores que fazem voce usar formatador e ainda um Calendar pra manipular datas.
+                    Date data = dao.dateFormat.parse(mLancamento.getData());
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(data);
+
+                    prelancto_dtLancamento.updateDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                    // setDate(df.parse(mLancamento.getData()).getTime());
+                } catch (ParseException e) {
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
         }
     }
 
     @Override
     public void onFragmentFooterBarSalvarClick(View view) {
-        Toast.makeText(getContext(), "botao salvar do footer", Toast.LENGTH_LONG).show();
-        LancamentoDAO dao = new LancamentoDAO(getContext());
-        LancamentoDAO.Lancamento lan = dao.getObject();
-        lan.setAngulo_lancamento(Double.parseDouble(String.valueOf(prelancto_angulo_lancto.getText())));
-        lan.setAngulo_lancamento(Double.parseDouble(String.valueOf(prelancto_distanciaAlvo.getText())));
-
-        lan.setData(prelancto_dtLancamento.getDayOfMonth() + "/" + prelancto_dtLancamento.getMonth() + "/" + prelancto_dtLancamento.getYear());
-
-        lan.setVelocidade_vento(Double.parseDouble(String.valueOf(prelancto_velocidade_vento.getText())));
-        lan.setPeso_foguete(Double.parseDouble(String.valueOf(prelancto_peso_foguete.getText())));
-        lan.setGrupo_id(mGrupo.get_id());
-
-        dao.doInsert();
+        ProgressDialog pd = new ProgressDialog(getContext());
+        try {
+            pd.setIndeterminate(false);
+            pd.setMessage(getContext().getString(R.string.aguarde));
+            pd.setMax(6);
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            pd.setCancelable(false);
+            pd.show();
+            pd.incrementProgressBy(1);
+            LancamentoDAO dao = new LancamentoDAO(getContext());
+            LancamentoDAO.Lancamento lan = dao.getObject();
+            lan.setAngulo_lancamento(Double.parseDouble(String.valueOf(prelancto_angulo_lancto.getText())));
+            lan.setAngulo_lancamento(Double.parseDouble(String.valueOf(prelancto_distanciaAlvo.getText())));
+            pd.incrementProgressBy(1);
+            String sData = dao.dateFormat.format(new Date(prelancto_dtLancamento.getYear(), prelancto_dtLancamento.getMonth(), prelancto_dtLancamento.getDayOfMonth()));
+            lan.setData(sData);
+            pd.incrementProgressBy(1);
+            lan.setVelocidade_vento(Double.parseDouble(String.valueOf(prelancto_velocidade_vento.getText())));
+            lan.setPeso_foguete(Double.parseDouble(String.valueOf(prelancto_peso_foguete.getText())));
+            lan.setGrupo_id(mGrupo.get_id());
+            pd.incrementProgressBy(1);
+            dao.doPersist();
+            pd.incrementProgressBy(1);
+            Toast.makeText(getContext(), "botao salvar do footer", Toast.LENGTH_LONG).show();
+            pd.incrementProgressBy(1);
+        } finally {
+            pd.dismiss();
+        }
     }
 }
