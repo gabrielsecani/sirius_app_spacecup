@@ -16,7 +16,7 @@
         <item>@drawable/ic_pos_lanc</item>
     </string-array>
 
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+
 
     <string name="txt_nome_grupo" translatable="false">Nome do grupo</string>
     <string name="txt_turma_grupo" translatable="false">Turma </string>
@@ -35,6 +35,7 @@
     <string name="novo_integrante">Novo membro</string>
     <string name="cancelar">Cancelar</string>
     <string name="adicionar">Adicionar</string>
+    <string name="txt_grupo_sem_integrantes" translatable="false">Cadastre ao menos um integrante!</string>
     <string name="adicionado_sucesso">Integrante adicionado com sucesso!</string>
     <string name="valida_grupos">Insira o nome do grupo e a turma</string>
 
