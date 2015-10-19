@@ -44,6 +44,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     private ImageButton alteraTurmaGrupo;
 
     private GrupoDAO grupoDAO;
+    private PessoaDAO pessoaDAO;
     private SimpleAdapter adapter;
 
     public FragmentCadNovoGrupo() {
@@ -92,8 +93,8 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
         grupoDAO = new GrupoDAO(getContext());
 
-        PessoaDAO pessoa = new PessoaDAO(getContext());
-        final List<Map<String, Object>> membros = pessoa.doSelectAllMap(grupoDAO.getObject());
+        pessoaDAO = new PessoaDAO(getContext());
+        final List<Map<String, Object>> membros = pessoaDAO.doSelectAllMap(grupoDAO.getObject());
 
         /*if (membros.size() == 0) {
 
@@ -122,7 +123,6 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         return view;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -133,7 +133,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         super.onDetach();
     }
 
-    public void updadeDataGrupo() {
+    public List<Map<String, Object>> updadeDataGrupo() {
 
         final String nomeGrupo = String.valueOf(edtNomeGrupo.getText());
         final String turmaGrupo = String.valueOf(edtTurmaGrupo.getText());
@@ -143,11 +143,11 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
         } else {
 
+            AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
             if (grupoDAO.getObject().get_id() == 0) {
 
-                AlertDialog.Builder alertCadGrupo = new AlertDialog.Builder(getContext());
-
-                alertCadGrupo.setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.confirma_cad_grupo).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                alert.setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.confirma_cad_grupo).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -167,31 +167,34 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
                         }
 
+                        edtNomeGrupo.setEnabled(false);
+                        edtTurmaGrupo.setEnabled(false);
+                        alteraNomeGrupo.setVisibility(View.VISIBLE);
+                        alteraTurmaGrupo.setVisibility(View.VISIBLE);
+
                         dialog.dismiss();
                     }
                 }).create().show();
 
             }
 
-            /*AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+
             final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
 
-            b.setView(view).setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.novo_integrante).
+            alert.setView(view).setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.novo_integrante).
                     setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     })
-                    .setPositiveButton(R.string.adicionar, new DialogInterface.OnClickListener() {
+                    .setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             //salvar
 
-                            *//*GrupoDAO grupoDAO = new GrupoDAO(getContext());*//*
-
                             try {
-                                PessoaDAO pessoaDAO = new PessoaDAO(getContext());
+
                                 pessoaDAO.getObject().setNome_pessoa(String.valueOf(view.findViewById(R.id.edt_nome_membro)));
                                 pessoaDAO.getObject().setRm_pessoa(Integer.parseInt(String.valueOf(view.findViewById(R.id.edt_rm_membro))));
                                 pessoaDAO.getObject().setGrupo_id((int) grupoDAO.getObject().get_id());
@@ -202,18 +205,15 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
                             }
 
-                            edtNomeGrupo.setEnabled(false);
-                            edtTurmaGrupo.setEnabled(false);
-                            alteraNomeGrupo.setVisibility(View.VISIBLE);
-                            alteraTurmaGrupo.setVisibility(View.VISIBLE);
-                            listView.setAdapter(adapter);
 
                             Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
 
                             dialog.dismiss();
                         }
-                    }).create().show();*/
+                    }).create().show();
         }
+
+        return pessoaDAO.doSelectAllMap(grupoDAO.getObject());
     }
 
     @Override
