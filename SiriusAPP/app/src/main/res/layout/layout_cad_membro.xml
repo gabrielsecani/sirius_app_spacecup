@@ -21,7 +21,7 @@
         android:layout_below="@+id/txt_nome_membro"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:inputType="text" />
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/txt_rm_membro"
@@ -40,7 +40,7 @@
         android:layout_below="@+id/txt_rm_membro"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:inputType="text" />
+        android:inputType="number" />
 
 
 </RelativeLayout>

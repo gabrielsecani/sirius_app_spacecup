@@ -7,4 +7,5 @@
     <string name="adicionar">Adicionar</string>
     <string name="adicionado_sucesso">Adicionado</string>
     <string name="valida_grupos">Insira o nome do grupo e a turma</string>
+    <string name="confirma_cad_grupo">Cadastro novo grupo</string>
 </resources>

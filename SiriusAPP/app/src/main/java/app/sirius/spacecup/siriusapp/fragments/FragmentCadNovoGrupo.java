@@ -143,19 +143,37 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
         } else {
 
-            try {
-                if (grupoDAO.getObject().get_id() == 0) {
-                    grupoDAO.getObject().setNome_turma(nomeGrupo);
-                    grupoDAO.getObject().setNome_grupo(turmaGrupo);
-                    grupoDAO.doInsert();
-                }
+            if (grupoDAO.getObject().get_id() == 0) {
 
-            } catch (Exception e) {
-                Log.getStackTraceString(e);
+                AlertDialog.Builder alertCadGrupo = new AlertDialog.Builder(getContext());
+
+                alertCadGrupo.setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.confirma_cad_grupo).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        try {
+
+                            grupoDAO.getObject().setNome_turma(nomeGrupo);
+                            grupoDAO.getObject().setNome_grupo(turmaGrupo);
+                            grupoDAO.doInsert();
+
+                        } catch (Exception e) {
+                            Log.getStackTraceString(e);
+
+                        }
+
+                        dialog.dismiss();
+                    }
+                }).create().show();
 
             }
 
-            AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+            /*AlertDialog.Builder b = new AlertDialog.Builder(getContext());
             final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
 
             b.setView(view).setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.novo_integrante).
@@ -170,7 +188,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                         public void onClick(DialogInterface dialog, int which) {
                             //salvar
 
-                            /*GrupoDAO grupoDAO = new GrupoDAO(getContext());*/
+                            *//*GrupoDAO grupoDAO = new GrupoDAO(getContext());*//*
 
                             try {
                                 PessoaDAO pessoaDAO = new PessoaDAO(getContext());
@@ -194,7 +212,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
                             dialog.dismiss();
                         }
-                    }).create().show();
+                    }).create().show();*/
         }
     }
 

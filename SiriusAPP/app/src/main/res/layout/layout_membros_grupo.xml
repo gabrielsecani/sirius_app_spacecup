@@ -19,17 +19,17 @@
         android:layout_toRightOf="@+id/txt_nome_membro"
         android:text="72015" />
 
-    <ImageButton
-        android:id="@+id/image_aletar_membro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@android:color/transparent"
-        android:maxHeight="32dp"
-        android:maxWidth="32dp"
-        android:onClick="updtadeDataGrupo"
-        android:src="@android:drawable/ic_menu_edit"
-        android:visibility="visible" />
+    <!-- <ImageButton
+         android:id="@+id/image_aletar_membro"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_marginRight="@dimen/activity_horizontal_margin"
+         android:background="@android:color/transparent"
+         android:maxHeight="32dp"
+         android:maxWidth="32dp"
+         android:onClick="updtadeDataGrupo"
+         android:src="@android:drawable/ic_menu_edit"
+         android:visibility="visible" />-->
 
 </RelativeLayout>
