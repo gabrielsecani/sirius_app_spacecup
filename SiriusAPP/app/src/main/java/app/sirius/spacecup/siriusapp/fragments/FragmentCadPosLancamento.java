@@ -3,18 +3,21 @@ package app.sirius.spacecup.siriusapp.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import app.sirius.spacecup.siriusapp.R;
+import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentCadPosLancamento#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentCadPosLancamento extends FragmentBase {
+public class FragmentCadPosLancamento extends FragmentBase implements FragmentFooterBar.OnFragmentFooterBarInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -54,6 +57,14 @@ public class FragmentCadPosLancamento extends FragmentBase {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        GrupoDAO.Grupo grupo = new GrupoDAO(getContext()).getObject();
+
+        FragmentCadPreLancamento fragment = FragmentCadPreLancamento.newInstance(grupo);
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout_menu, fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -64,4 +75,8 @@ public class FragmentCadPosLancamento extends FragmentBase {
     }
 
 
+    @Override
+    public void onFragmentFooterBarSalvarClick(View view) {
+
+    }
 }

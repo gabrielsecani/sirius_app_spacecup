@@ -10,109 +10,105 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="45dp">
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:baselineAligned="false">
+            android:orientation="vertical">
 
-            <TableRow>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:text="@string/data_de_lancamento" />
-            </TableRow>
-
-            <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/data_de_lancamento" />
 
 
-                <DatePicker
-                    android:id="@+id/prelancto_dtLancamento"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:calendarViewShown="false"
-                    android:datePickerMode="spinner" />
+            <DatePicker
+                android:id="@+id/prelancto_dtLancamento"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
 
-            </TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/distancia_ate_alvo" />
 
-            <TableRow>
+            <EditText
+                android:id="@+id/prelancto_distanciaAlvo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/distancia_ate_alvo"
+                android:inputType="number"
+                android:maxLength="3" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:text="@string/distancia_ate_alvo" />
-            </TableRow>
 
-            <TableRow>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/angulo_lacamento" />
 
-                <EditText
-                    android:id="@+id/prelancto_distanciaAlvo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:digits="3"
-                    android:inputType="number" />
-            </TableRow>
+            <EditText
+                android:id="@+id/prelancto_angulo_lancto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/angulo_lacamento"
+                android:inputType="number"
+                android:maxLength="3" />
 
-            <TableRow>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:text="@string/angulo_lacamento" />
-            </TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/velocidade_vento" />
 
-            <TableRow>
 
-                <EditText
-                    android:id="@+id/prelancto_angulo_lancto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:digits="3"
-                    android:inputType="number" />
-            </TableRow>
+            <EditText
+                android:id="@+id/prelancto_velocidade_vento"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/velocidade_vento"
+                android:inputType="number"
+                android:maxLength="3" />
 
-            <TableRow>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:text="@string/velocidade_vento" />
-            </TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/peso_foguete" />
 
-            <TableRow>
 
-                <EditText
-                    android:id="@+id/prelancto_velocidade_vento"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:digits="3"
-                    android:inputType="number" />
-            </TableRow>
+            <EditText
+                android:id="@+id/prelancto_peso_foguete"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/peso_foguete"
+                android:inputType="number"
+                android:maxLength="3" />
+        </LinearLayout>
+        <!--1) Altitude máxima-->
 
-            <TableRow>
+        <!--2) Velocidade máxima-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_horizontal_margin"
-                    android:text="@string/peso_foguete" />
-            </TableRow>
+        <!--3) Tempo de propulsão-->
 
-            <TableRow>
+        <!--4) Pico de Aceleração-->
 
-                <EditText
-                    android:id="@+id/prelancto_peso_foguete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:digits="3"
-                    android:inputType="number" />
-            </TableRow>
-        </TableLayout>
+        <!--5) Aceleração media-->
 
+        <!--6) Tempo entre apogeu e descida-->
+
+        <!--7) Tempo de ejeção-->
+
+        <!--8) Altitude de ejeção-->
+
+        <!--9) Taxa de descida-->
+
+        <!--10) Duração do voo-->
     </ScrollView>
 
     <fragment

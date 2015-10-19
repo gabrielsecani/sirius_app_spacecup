@@ -22,7 +22,7 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
     }
 
     @Override
-    protected ContentValues getContentValues() throws Exception {
+    protected ContentValues getContentValues() {
 
         ContentValues cv = new ContentValues();
         cv.put("nome_grupo", getObject().getNome_pessoa());

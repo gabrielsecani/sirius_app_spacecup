@@ -24,7 +24,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
     }
 
     @Override
-    protected ContentValues getContentValues() throws Exception {
+    protected ContentValues getContentValues() {
         return null;
     }
 
@@ -39,7 +39,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
     }
 
     @Override
-    public Ranking doSelectOne(long ID) throws Exception {
+    public Ranking doSelectOne(long ID) {
         return null;
     }
 

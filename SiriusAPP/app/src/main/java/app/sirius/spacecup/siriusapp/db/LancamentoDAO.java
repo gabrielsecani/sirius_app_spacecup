@@ -38,7 +38,7 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
     }
 
     @Override
-    protected ContentValues getContentValues() throws Exception {
+    protected ContentValues getContentValues() {
 
         ContentValues cv = new ContentValues();
         cv.put("local", getObject().getLocal());
