@@ -1,17 +1,14 @@
 package app.sirius.spacecup.siriusapp.fragments;
 
 
-import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,12 +16,9 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Map;
 
-import app.sirius.spacecup.siriusapp.MainActivity;
 import app.sirius.spacecup.siriusapp.R;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.LancamentoDAO;
-
-import static android.R.layout.simple_spinner_dropdown_item;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -104,9 +98,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         Spinner spinner = (Spinner) view.findViewById(R.id.prelancto_Grupos);
         final List<Map<String, Object>> listagrupos = new GrupoDAO(getContext()).doSelectAllMap();
 
-        View v=View.inflate(getContext(), android.R.layout.simple_spinner_dropdown_item, null);
-
-        SimpleAdapter adap = new SimpleAdapter(getContext(), listagrupos, android.R.layout.simple_spinner_dropdown_item, new String[]{"nome_grupo"}, null);
+        SimpleAdapter adap = new SimpleAdapter(getContext(), listagrupos, R.layout.layout_spinner, new String[]{"nome_grupo"}, new int[]{R.id.txt_spinner_item});
         spinner.setAdapter(adap);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -130,6 +122,12 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         }else{
             LancamentoDAO dao = new LancamentoDAO(getContext());
             mLancamento = dao.doSelectOne(mGrupo);
+            prelancto_angulo_lancto.setText(String.valueOf(mLancamento.getAngulo_lancamento()));
+            prelancto_distanciaAlvo.setText(String.valueOf(mLancamento.getDistancia_alvo()));
+            prelancto_velocidade_vento.setText(String.valueOf(mLancamento.getVelocidade_vento()));
+            prelancto_peso_foguete.setText(String.valueOf(mLancamento.getPeso_foguete()));
+            //TODO: Fazer colocar a data de lancamento no datepicker
+//            prelancto_dtLancamento.setText(String.valueOf(mLancamento.getData()));
         }
     }
 
