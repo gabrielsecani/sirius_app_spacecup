@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ViewAnimator
-            android:id="@+id/frameLayout_menu"
+            android:id="@+id/fragment_container_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/bg_sirius_app_standard"/>

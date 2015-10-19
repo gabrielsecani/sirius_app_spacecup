@@ -3,7 +3,7 @@ package app.sirius.spacecup.siriusapp.fragments;
 import android.support.v4.app.Fragment;
 
 /**
- * Created by Gabriel on 17/10/2015.
+ * Created by Gabriel Lucas de Toledo Ribeiro on 17/10/2015.
  */
 public class FragmentBase extends Fragment {
 

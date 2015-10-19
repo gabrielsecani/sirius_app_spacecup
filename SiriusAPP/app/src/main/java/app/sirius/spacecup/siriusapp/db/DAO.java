@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * Created by Gabriel on 17/10/2015.
+ * Created by Gabriel Lucas de Toledo Ribeiro on 17/10/2015.
  */
 public abstract class DAO<T extends DAO.ObjetoDao> {
 

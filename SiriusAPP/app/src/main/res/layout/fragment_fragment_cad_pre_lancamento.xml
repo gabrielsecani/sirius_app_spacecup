@@ -1,6 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,15 +15,17 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
             <Spinner
+                android:id="@+id/prelancto_Grupos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/prelancto_Grupos"
                 android:saveEnabled="true"
                 />
-            <TextView android:labelFor="@+id/prelancto_dtLancamento"
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:labelFor="@+id/prelancto_dtLancamento"
                 android:text="@string/data_de_lancamento" />
 
 
@@ -96,33 +97,15 @@
                 android:inputType="number"
                 android:maxLength="3" />
         </LinearLayout>
-        <!--1) Altitude máxima-->
 
-        <!--2) Velocidade máxima-->
-
-        <!--3) Tempo de propulsão-->
-
-        <!--4) Pico de Aceleração-->
-
-        <!--5) Aceleração media-->
-
-        <!--6) Tempo entre apogeu e descida-->
-
-        <!--7) Tempo de ejeção-->
-
-        <!--8) Altitude de ejeção-->
-
-        <!--9) Taxa de descida-->
-
-        <!--10) Duração do voo-->
     </ScrollView>
 
     <fragment
+        android:id="@+id/footerbar_prelancto"
         android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="bottom"
-        android:tag="footerBar"
         tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento"
         tools:layout="@layout/layout_footer_bar" />
 </FrameLayout>

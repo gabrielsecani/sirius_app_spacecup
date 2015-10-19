@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import app.sirius.spacecup.siriusapp.R;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
@@ -16,6 +17,7 @@ import app.sirius.spacecup.siriusapp.db.GrupoDAO;
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentCadPosLancamento#newInstance} factory method to
  * create an instance of this fragment.
+ *
  */
 public class FragmentCadPosLancamento extends FragmentBase implements FragmentFooterBar.OnFragmentFooterBarInteractionListener {
     // TODO: Rename parameter arguments, choose names that match
@@ -59,24 +61,29 @@ public class FragmentCadPosLancamento extends FragmentBase implements FragmentFo
         }
 
         GrupoDAO.Grupo grupo = new GrupoDAO(getContext()).getObject();
-
+        //TODO: buscar o id do botao salvar da pre lancamento e exclui-lo
+        //TODO: fazer o fragment abrir os dados de pre lancamento abrirem somente leitura
+        //TODO: fazer os dados da fragment pré lancamento persistir no Bundle
         FragmentCadPreLancamento fragment = FragmentCadPreLancamento.newInstance(grupo);
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout_menu, fragment);
+        fragmentTransaction.replace(R.id.fragment_container_layout, fragment);
         fragmentTransaction.commit();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment_cad_pos_lancamento, container, false);
+        View view = inflater.inflate(R.layout.fragment_fragment_cad_pos_lancamento, container, false);
+        view.findViewById(R.id.prelancto_Grupos).requestFocus();
+        return view;
     }
 
 
     @Override
     public void onFragmentFooterBarSalvarClick(View view) {
-
+        Toast.makeText(getContext(), "salvar do POS lancamento", Toast.LENGTH_LONG).show();
     }
 }

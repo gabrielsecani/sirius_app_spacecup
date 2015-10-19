@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             FragmentBase fragment = (FragmentBase) fragmentClass.newInstance();
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frameLayout_menu, fragment, fragmentClass.getSimpleName());
+            fragmentTransaction.replace(R.id.fragment_container_layout, fragment, fragmentClass.getSimpleName());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao)).setText(((DrawerMenuItem) menu.getItemAtPosition(position)).getTexto());

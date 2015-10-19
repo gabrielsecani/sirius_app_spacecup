@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Gabriel on 17/10/2015.
+ * Created by Gabriel Lucas de Toledo Ribeiro on 17/10/2015.
  */
 public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
 

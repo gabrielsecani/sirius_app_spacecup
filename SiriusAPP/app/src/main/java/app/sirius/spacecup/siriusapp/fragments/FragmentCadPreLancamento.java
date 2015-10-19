@@ -28,9 +28,11 @@ import app.sirius.spacecup.siriusapp.db.LancamentoDAO;
 public class FragmentCadPreLancamento extends FragmentBase implements FragmentFooterBar.OnFragmentFooterBarInteractionListener {
     private static final String ARG_GRUPO = "grupo_id";
     private static final String ARG_LANCTO = "lancamento";
+    private static final String ARG_READONLY = "readonly";
 
     private GrupoDAO.Grupo mGrupo;
     private LancamentoDAO.Lancamento mLancamento;
+    private boolean mReadOnly;
     private EditText prelancto_angulo_lancto;
     private EditText prelancto_distanciaAlvo;
     private DatePicker prelancto_dtLancamento;
@@ -61,24 +63,40 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         super.onSaveInstanceState(outState);
         outState.putSerializable(ARG_GRUPO, mGrupo);
         outState.putSerializable(ARG_LANCTO, mLancamento);
+
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args = null;
+        if (savedInstanceState != null)
+            args = savedInstanceState;
         if (getArguments() != null) {
-            try {
-                mGrupo = (GrupoDAO.Grupo) getArguments().getSerializable(ARG_GRUPO);
-            } catch (ClassCastException e) {
-                throw new ClassCastException("parameter " + ARG_GRUPO
-                        + " must be a GrupoDAO.Grupo class");
+            if (args != null)
+                args.putAll(getArguments());
+            else
+                args = getArguments();
+        }
+        if (args != null) {
+            if (args.containsKey(ARG_GRUPO)) {
+                try {
+                    mGrupo = (GrupoDAO.Grupo) args.getSerializable(ARG_GRUPO);
+                } catch (ClassCastException e) {
+                    throw new ClassCastException("parameter " + ARG_GRUPO
+                            + " must be a GrupoDAO.Grupo class");
+                }
             }
-            try {
-                mLancamento = (LancamentoDAO.Lancamento) getArguments().getSerializable(ARG_LANCTO);
-            } catch (ClassCastException e) {
-                throw new ClassCastException("parameter " + ARG_LANCTO
-                        + " must be a LancamentoDAO.Lancamento class");
+            if (args.containsKey(ARG_LANCTO)) {
+                try {
+                    mLancamento = (LancamentoDAO.Lancamento) args.getSerializable(ARG_LANCTO);
+                } catch (ClassCastException e) {
+                    throw new ClassCastException("parameter " + ARG_LANCTO
+                            + " must be a LancamentoDAO.Lancamento class");
+                }
             }
+            mReadOnly = args.getBoolean(ARG_READONLY, false);
         }
     }
 
@@ -113,13 +131,24 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
 
             }
         });
+
+        if (mReadOnly) {
+            View v = view.findViewById(R.id.footerbar_prelancto);
+            if (v != null)
+                v.setVisibility(View.GONE);
+            prelancto_angulo_lancto.setEnabled(false);
+            prelancto_distanciaAlvo.setEnabled(false);
+            prelancto_dtLancamento.setEnabled(false);
+            prelancto_velocidade_vento.setEnabled(false);
+            prelancto_peso_foguete.setEnabled(false);
+        }
         return view;
     }
 
     private void carregaDadosLancamento() {
-        if(mGrupo == null){
+        if (mGrupo == null) {
             Toast.makeText(getContext(), R.string.valida_grupos, Toast.LENGTH_LONG).show();
-        }else{
+        } else {
             LancamentoDAO dao = new LancamentoDAO(getContext());
             mLancamento = dao.doSelectOne(mGrupo);
             prelancto_angulo_lancto.setText(String.valueOf(mLancamento.getAngulo_lancamento()));

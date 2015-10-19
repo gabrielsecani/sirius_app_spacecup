@@ -6,10 +6,9 @@
     tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPosLancamento">
 
     <View
-        android:id="@id/frameLayout_menu"
+        android:id="@id/fragment_container_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <!--<include layout="@layout/fragment_fragment_cad_pre_lancamento" />-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -104,12 +103,14 @@
 
     </ScrollView>
 
-    <!--<fragment-->
-    <!--android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="fill_parent"-->
-    <!--android:layout_gravity="bottom"-->
-    <!--android:tag="footerBar"-->
-    <!--tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento"-->
-    <!--tools:layout="@layout/layout_footer_bar" />-->
+
+    <fragment
+        android:id="@+id/footerbar_poslancto"
+        android:name="app.sirius.spacecup.siriusapp.fragments.FragmentFooterBar"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="bottom"
+        tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento"
+        tools:layout="@layout/layout_footer_bar" />
+
 </FrameLayout>
