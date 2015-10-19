@@ -4,11 +4,19 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.DateFormat;
+import java.util.Locale;
+
 /**
  * Created by Gabriel Lucas de Toledo Ribeiro on 17/10/2015.
  */
 public abstract class DAO<T extends DAO.ObjetoDao> {
 
+    /**
+     * Formatador de data utilizado em todas as classes DAO.
+     * <code>DateFormat.getDateInstance(DateFormat.DATE_FIELD, Locale.ENGLISH);</code>
+     */
+    final public static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, Locale.ENGLISH);
     private final Context context;
     protected T object;
 
@@ -110,6 +118,24 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
         return getDB().delete(getTableName(), getWhereClause(), getWhereArgs());
     }
 
+    /**
+     * Convientemente faz o Insert ou Update do objeto carregado neste objeto DAO
+     *
+     * @return boolean
+     * <code><strong>true</strong></code> se foi realizado com sucesso.<br>
+     * <code><strong>false</strong></code>  se ocorreu algum erro.
+     */
+    public boolean doPersist() {
+        if (getObject().get_id() > 0) {
+            return doUpdate() > 0;
+        } else {
+            return doInsert() > 0;
+        }
+    }
+
+    /**
+     * Classe básica para todos os objetos internos utilizados pela classe <code>DAO</code> correspondente.
+     */
     public class ObjetoDao {
 
         private long _id;
@@ -121,6 +147,5 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
         public void set_id(long _id) {
             this._id = _id;
         }
-
     }
 }
