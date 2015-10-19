@@ -28,7 +28,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
      *
      * @return ContentValues para realizar INSERT e UPDATE
      */
-    protected abstract ContentValues getContentValues() throws Exception;
+    protected abstract ContentValues getContentValues();
 
     /**
      * @return Noma de tabela
@@ -50,7 +50,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
      * @return listagem de parametros seguenciais
      */
 
-    public String[] getWhereArgs() throws Exception {
+    public String[] getWhereArgs() {
         return new String[]{String.valueOf(getObject().get_id())};
     }
 
@@ -62,9 +62,10 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
     /**
      * @return retorna o objeto aldo de manipulação
      */
-    public T getObject() throws Exception {
+    public T getObject() {
         if (this.object == null)
-            throw new Exception(this.getClass().getSimpleName() + " do something wrong! You need to pass an Object Model to DAO!");
+            this.object = (T) new ObjetoDao();
+//            throw new Exception(this.getClass().getSimpleName() + " do something wrong! You need to pass an Object Model to DAO!");
         return this.object;
     }
 
@@ -75,7 +76,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
         this.object = object;
     }
 
-    public abstract T doSelectOne(long ID) throws Exception;
+    public abstract T doSelectOne(long ID);
 
 
     /**
@@ -83,7 +84,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
      *
      * @return the row ID of the newly inserted row, or -1 if an error occurred
      */
-    public long doInsert() throws Exception {
+    public long doInsert() {
         long id = getDB().insert(getTableName(), null, getContentValues());
         getObject().set_id(id);
         return id;
@@ -94,7 +95,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
      *
      * @return the number of rows affected
      */
-    public int doUpdate() throws Exception {
+    public int doUpdate() {
         return getDB().update(getTableName(), getContentValues(), getWhereClause(), getWhereArgs());
     }
 
@@ -105,11 +106,11 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
      * otherwise. To remove all rows and get a count pass "1" as the
      * whereClause.
      */
-    public int doDelete() throws Exception {
+    public int doDelete() {
         return getDB().delete(getTableName(), getWhereClause(), getWhereArgs());
     }
 
-    public abstract class ObjetoDao {
+    public class ObjetoDao {
 
         private long _id;
 
@@ -120,5 +121,6 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
         public void set_id(long _id) {
             this._id = _id;
         }
+
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
     }
 
     @Override
-    public ContentValues getContentValues() throws Exception {
+    public ContentValues getContentValues() {
 
         ContentValues cv = new ContentValues();
         cv.put("nome_grupo", getObject().getNome_grupo());
@@ -77,7 +78,7 @@ public class GrupoDAO extends DAO<GrupoDAO.Grupo> {
     /**
      * Classe de objeto para acesso aos dados
      */
-    public class Grupo extends DAO.ObjetoDao {
+    public class Grupo extends DAO.ObjetoDao implements Serializable {
         private String nome_grupo;
         private String nome_turma;
 
