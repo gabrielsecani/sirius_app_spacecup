@@ -9,4 +9,5 @@
     <string name="valida_grupos">Insira o nome do grupo e a turma</string>
     <string name="confirma_cad_grupo">Cadastro novo grupo</string>
     <string name="aguarde">Aguarde...</string>
+    <string name="msg_grupo_salvo_sucesso">Grupo salvo com sucesso!</string>
 </resources>

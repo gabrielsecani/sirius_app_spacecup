@@ -35,8 +35,12 @@
     <string name="cadastrar">Cadastrar</string>
     <string name="txt_grupo_sem_integrantes" translatable="false">Cadastre ao menos um integrante!</string>
     <string name="adicionado_sucesso">Integrante adicionado com sucesso!</string>
+    <string name="erro_add_integrante">Ocorreu um erro: Integrante não foi adicionado.</string>
     <string name="valida_grupos">Insira o nome do grupo e a turma</string>
     <string name="confirma_cad_grupo">Cadastrar novo grupo?</string>
     <string name="aguarde">Aguarde...</string>
+    <string name="msg_grupo_salvo_sucesso">Grupo salvo com sucesso!</string>
+    <string name="erro_salvor_grupo">Ocorreu um erro: Grupo não foi cadastrado.</string>
+    erro_salvor_grupo
 
 </resources>

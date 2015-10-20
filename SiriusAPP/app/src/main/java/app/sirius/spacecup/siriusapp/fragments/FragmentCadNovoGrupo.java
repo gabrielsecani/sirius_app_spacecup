@@ -1,7 +1,6 @@
 package app.sirius.spacecup.siriusapp.fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
 import java.util.Map;
@@ -31,18 +31,18 @@ import app.sirius.spacecup.siriusapp.db.PessoaDAO;
 public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooterBar.OnFragmentFooterBarInteractionListener {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_GRUPO = "grupo_id";
+    private static final String ARG_READONLY = "readonly";
+
+    private GrupoDAO.Grupo mGrupo;
+    private boolean mReadOnly;
+
     private ListView listView;
-    private String mParam1;
-    private String mParam2;
 
     private EditText edtNomeGrupo;
     private EditText edtTurmaGrupo;
-    private ImageButton alteraNomeGrupo;
-    private ImageButton alteraTurmaGrupo;
-
-    private GrupoDAO grupoDAO;
+    private TextView textViewIntegrantes;
+    private TextView textViewMsgSemIntegrantes;
 
     private SimpleAdapter adapter;
 
@@ -54,26 +54,48 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param grupo        Parameter 1.
+     * @param openReadOnly Parameter 2.
      * @return A new instance of fragment FragmentCadNovoGrupo.
      */
 
-    public static FragmentCadNovoGrupo newInstance(String param1, String param2) {
+    public static FragmentCadNovoGrupo newInstance(GrupoDAO.Grupo grupo, boolean openReadOnly) {
         FragmentCadNovoGrupo fragment = new FragmentCadNovoGrupo();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putSerializable(ARG_GRUPO, grupo);
+        args.putSerializable(ARG_READONLY, openReadOnly);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(ARG_GRUPO, mGrupo);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle args = null;
+        if (savedInstanceState != null)
+            args = savedInstanceState;
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            if (args != null)
+                args.putAll(getArguments());
+            else
+                args = getArguments();
+        }
+        if (args != null) {
+            if (args.containsKey(ARG_GRUPO)) {
+                try {
+                    mGrupo = (GrupoDAO.Grupo) args.getSerializable(ARG_GRUPO);
+                } catch (ClassCastException e) {
+                    throw new ClassCastException("parameter " + ARG_GRUPO
+                            + " must be a GrupoDAO.Grupo class");
+                }
+            }
+            mReadOnly = args.getBoolean(ARG_READONLY, false);
         }
     }
 
@@ -85,82 +107,70 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
         edtNomeGrupo = (EditText) view.findViewById(R.id.edt_nome_grupo);
         edtTurmaGrupo = (EditText) view.findViewById(R.id.edt_turma_grupo);
-        alteraNomeGrupo = (ImageButton) view.findViewById(R.id.img_btn_altera);
-        alteraTurmaGrupo = (ImageButton) view.findViewById(R.id.img_btn_altera2);
+        textViewIntegrantes = (TextView) view.findViewById(R.id.txtView_membros_grupo);
+        textViewMsgSemIntegrantes = (TextView) view.findViewById(R.id.txtView_sem_grupos);
 
-        grupoDAO = new GrupoDAO(getContext());
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
 
-        listMembers(view);
+        listarMembros(view, mGrupo);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                registraNovoIntegrante();
+            }
+
+        });
 
         return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+    public void onFragmentFooterBarSalvarClick(View view) {
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 
-    public void updadeDataGrupo(View view) {
-
-        final String nomeGrupo = String.valueOf(edtNomeGrupo.getText());
-        final String turmaGrupo = String.valueOf(edtTurmaGrupo.getText());
-
-        if (nomeGrupo.isEmpty() || turmaGrupo.isEmpty()) {
-            Toast.makeText(getContext(), R.string.valida_grupos, Toast.LENGTH_LONG).show();
-
-        } else {
-
-            final AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-
-            if (grupoDAO.getObject().get_id() == 0) {
-
-                alert.setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.confirma_cad_grupo).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                }).setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        try {
-
-                            grupoDAO.getObject().setNome_turma(nomeGrupo);
-                            grupoDAO.getObject().setNome_grupo(turmaGrupo);
-                            grupoDAO.doInsert();
-
-                        } catch (Exception e) {
-                            Log.getStackTraceString(e);
-
-                        }
-
-                        edtNomeGrupo.setEnabled(false);
-                        edtTurmaGrupo.setEnabled(false);
-                        alteraNomeGrupo.setVisibility(View.VISIBLE);
-                        alteraTurmaGrupo.setVisibility(View.VISIBLE);
-
-
-                        dialog.dismiss();
-
-                        registerMember(alert);
-                    }
-                }).create().show();
-
-            } else {
-                registerMember(alert);
+        alert.setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.confirma_cad_grupo).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
-        }
+        }).setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-        listMembers(view);
+                try {
+                    mGrupo.setNome_grupo(String.valueOf(edtNomeGrupo.getText()));
+                    mGrupo.setNome_turma(String.valueOf(edtTurmaGrupo.getText()));
+                    GrupoDAO grupoDAO = new GrupoDAO(getContext());
+                    grupoDAO.setObject(mGrupo);
+                    if (grupoDAO.doPersist()) {
+                        Toast.makeText(getContext(), R.string.msg_grupo_salvo_sucesso, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), R.string.erro_salvor_grupo, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Log.getStackTraceString(e);
+                }
+                dialog.dismiss();
+            }
+        }).create().show();
     }
 
-    public void registerMember(AlertDialog.Builder alert) {
+    public void configuraObjetos() {
+
+        edtNomeGrupo.setEnabled(false);
+        edtTurmaGrupo.setEnabled(false);
+
+
+    }
+
+    public void registraNovoIntegrante() {
+
         final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 
         alert.setView(view).setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.novo_integrante).
                 setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
@@ -176,69 +186,56 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
                         EditText nome = (EditText) view.findViewById(R.id.edt_nome_membro);
                         EditText rm = (EditText) view.findViewById(R.id.edt_rm_membro);
-                        int idGrupo = (int) (grupoDAO.getObject().get_id());
-
+                        boolean salvo = false;
                         try {
                             PessoaDAO pessoaDAO = new PessoaDAO(getContext());
                             pessoaDAO.getObject().setNome_pessoa(String.valueOf(nome.getText()));
                             pessoaDAO.getObject().setRm_pessoa(Integer.valueOf(String.valueOf(rm.getText())));
-                            pessoaDAO.getObject().setGrupo_id(idGrupo);
-                            pessoaDAO.doInsert();
+                            pessoaDAO.getObject().setGrupo_id((int) mGrupo.get_id());
+                            if (pessoaDAO.doPersist()) {
+                                Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), R.string.erro_add_integrante, Toast.LENGTH_SHORT).show();
+                            }
 
                         } catch (Exception e) {
                             Log.getStackTraceString(e);
 
                         }
-
-                        Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
-
                         dialog.dismiss();
+
                     }
                 }).create().show();
     }
 
-    @Override
-    public void onFragmentFooterBarSalvarClick(View view) {
-        Toast.makeText(getContext(), "SALVOU!", Toast.LENGTH_LONG).show();
-    }
+    public void listarMembros(View view, GrupoDAO.Grupo grupo) {
 
-
-    public void listMembers(final View view){
 
         listView = (ListView) view.findViewById(R.id.list_membros_grupos);
 
-
         PessoaDAO pessoaDAO = new PessoaDAO(getContext());
 
-        final List<Map<String, Object>> membros = pessoaDAO.doSelectAllMap(grupoDAO.getObject());
+        if (mGrupo != null) {
+            final List<Map<String, Object>> membros = pessoaDAO.doSelectAllMap(grupo);
 
-        if (membros.size() == 0) {
+            if (membros.size() == 0) {
 
-            ((TextView) view.findViewById(R.id.txtView_sem_grupos)).setVisibility(View.VISIBLE);
-            listView.setVisibility(View.GONE);
-        } else {
+                ((TextView) view.findViewById(R.id.txtView_sem_grupos)).setVisibility(View.VISIBLE);
+                listView.setVisibility(View.GONE);
+            } else {
 
 
-        String[] chaves = {"nome", "rm"};
-        int[] identificadores = {R.id.txt_nome_membro,R.id.txt_rm_membro};
+                String[] chaves = {"nome", "rm"};
+                int[] identificadores = {R.id.txt_nome_membro, R.id.txt_rm_membro};
 
-        adapter =
-                new SimpleAdapter(getContext(), membros,
-                        R.layout.layout_membros_grupo, chaves, identificadores) {
-                };
-        listView.setAdapter(adapter);
+                adapter =
+                        new SimpleAdapter(getContext(), membros,
+                                R.layout.layout_membros_grupo, chaves, identificadores) {
+                        };
+                listView.setAdapter(adapter);
+            }
         }
 
-        ImageButton addNovoMembro = (ImageButton) view.findViewById(R.id.img_btn_novo_membro);
-        addNovoMembro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updadeDataGrupo(view);
-            }
-        });
-
     }
-
-
 
 }

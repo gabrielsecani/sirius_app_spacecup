@@ -71,7 +71,6 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
 
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
