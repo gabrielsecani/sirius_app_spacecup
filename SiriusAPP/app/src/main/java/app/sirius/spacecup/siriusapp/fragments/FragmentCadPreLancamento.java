@@ -57,11 +57,16 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
      */
     public static FragmentCadPreLancamento newInstance(GrupoDAO.Grupo grupo, boolean openReadOnly) {
         FragmentCadPreLancamento fragment = new FragmentCadPreLancamento();
+        Bundle args = newBundleArguments(grupo, openReadOnly);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static Bundle newBundleArguments(GrupoDAO.Grupo grupo, boolean openReadOnly) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_GRUPO, grupo);
         args.putSerializable(ARG_READONLY, openReadOnly);
-        fragment.setArguments(args);
-        return fragment;
+        return args;
     }
 
     @Override
@@ -105,11 +110,10 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cad_pre_lancamento, container, false);
 
@@ -205,9 +209,9 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             lan.setVelocidade_vento(Double.parseDouble(String.valueOf(prelancto_velocidade_vento.getText())));
             lan.setPeso_foguete(Double.parseDouble(String.valueOf(prelancto_peso_foguete.getText())));
             lan.setGrupo_id(mGrupo.get_id());
-            if(dao.doPersist()){
+            if (dao.doPersist()) {
                 Toast.makeText(getContext(), "Dados de pré-lançamento foram salvos com sucesso!", Toast.LENGTH_LONG).show();
-            }else{
+            } else {
                 Log.e(getClass().getSimpleName(), dao.getLastError());
                 Toast.makeText(getContext(), "Ocorreu um erro ao salvar os dados de pré-lançamento!", Toast.LENGTH_LONG).show();
             }

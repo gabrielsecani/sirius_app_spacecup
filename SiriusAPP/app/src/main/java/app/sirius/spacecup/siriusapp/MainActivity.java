@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -39,12 +40,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     DrawerMenuAdapter menuAdapter;
 
     Context contexto = this;
+    TextView toolbar_txtToolbarDescricao;
 
     public void onCreate(Bundle SaveInstanceState) {
         super.onCreate(SaveInstanceState);
         setContentView(R.layout.activity_main);
 
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar_menu);
+        toolbar_txtToolbarDescricao = ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao));
         layout = (DrawerLayout) findViewById(R.id.drawerLayout_menu);
         menu = (ListView) findViewById(R.id.listView_menu);
         menu.setOnItemClickListener(this);
@@ -133,16 +136,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toogle.onConfigurationChanged(newConfig);
     }
 
+    /**
+     * Instancia uma classe fragment no container
+     *
+     * @param position
+     * @param fragmentClass
+     */
     public void setFragment(int position, Class fragmentClass) {
+        setFragment(position, fragmentClass, null);
+    }
+
+    /**
+     * Instancia uma classe fragment no container utilizando um Bundle de parametros
+     *
+     * @param position      posicao do menu
+     * @param fragmentClass
+     * @param params
+     */
+    public void setFragment(int position, Class fragmentClass, @Nullable Bundle params) {
 
         try {
             FragmentBase fragment = (FragmentBase) fragmentClass.newInstance();
+            if (params != null)
+                fragment.setArguments(params);
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container_layout, fragment, fragmentClass.getSimpleName());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-            ((TextView) toolbar.findViewById(R.id.txtToolbarDescricao)).setText(((DrawerMenuItem) menu.getItemAtPosition(position)).getTexto());
+            toolbar_txtToolbarDescricao.setText(((DrawerMenuItem) menu.getItemAtPosition(position)).getTexto());
+//            toolbar_txtToolbarDescricao.setText(fragment.getToolbarTitle());
             menu.setItemChecked(position, true);
             layout.closeDrawer(menu);
             menu.invalidateViews();

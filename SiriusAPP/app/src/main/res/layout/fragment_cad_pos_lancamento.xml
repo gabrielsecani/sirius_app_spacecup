@@ -16,22 +16,27 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
-            <View
-                android:id="@id/fragment_container_layout"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:isScrollContainer="true" />
+            <!-- TODO: Criar um View personalizado para buscar o grupo -->
+            <!--<app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento-->
+            <!--android:id="@+id/fragment_container_layout_posLancto"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="200dp"-->
+            <!--android:isScrollContainer="true"/>-->
+
+            <!--<include layout="@layout/fragment_cad_pre_lancamento" />-->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="@string/distancia_ate_alvo" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="@string/distancia_ate_alvo" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

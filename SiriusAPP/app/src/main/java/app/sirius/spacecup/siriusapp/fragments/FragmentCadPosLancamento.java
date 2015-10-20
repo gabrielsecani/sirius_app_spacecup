@@ -3,8 +3,6 @@ package app.sirius.spacecup.siriusapp.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,11 +62,11 @@ public class FragmentCadPosLancamento extends FragmentBase implements FragmentFo
         //TODO: buscar o id do botao salvar da pre lancamento e exclui-lo
         //TODO: fazer o fragment abrir os dados de pre lancamento abrirem somente leitura
         //TODO: fazer os dados da fragment pré lancamento persistir no Bundle
-        FragmentCadPreLancamento fragment = FragmentCadPreLancamento.newInstance(grupo, true);
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container_layout, fragment);
-        fragmentTransaction.commit();
+//        FragmentCadPreLancamento fragment = FragmentCadPreLancamento.newInstance(grupo, true);
+//        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_container_layout_posLancto, fragment);
+//        fragmentTransaction.commit();
 
     }
 

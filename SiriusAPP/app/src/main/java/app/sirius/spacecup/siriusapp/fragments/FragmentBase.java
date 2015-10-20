@@ -1,5 +1,6 @@
 package app.sirius.spacecup.siriusapp.fragments;
 
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 
 /**
@@ -7,13 +8,21 @@ import android.support.v4.app.Fragment;
  */
 public class FragmentBase extends Fragment {
 
+    private int toolbarTitle;
+
     /**
-     * Define o resid para o título. Deve ser feito Override.
+     * Resource id para o titulo da pagina
+     */
+//    protected String title;
+
+    /**
+     * Define o titulo para ser exibido no Toolbar
      *
      * @return Resource id para o titulo da pagina
      */
-//    public @StringRes int getResID_ToolbarDescricao(){
-//        return R.string.app_name;
-//    }
+    @StringRes
+    public int getToolbarTitle() {
+        return toolbarTitle;
+    }
 
 }
