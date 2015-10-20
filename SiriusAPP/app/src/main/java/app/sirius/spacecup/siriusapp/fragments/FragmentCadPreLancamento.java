@@ -48,6 +48,10 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         // Required empty public constructor
     }
 
+    public static FragmentCadPreLancamento newInstance() {
+        return newInstance(null, false);
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.

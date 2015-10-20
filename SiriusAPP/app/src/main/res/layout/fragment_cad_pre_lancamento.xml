@@ -33,8 +33,7 @@
                 android:id="@+id/prelancto_dtLancamento"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
+                android:calendarViewShown="false" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,5 +105,8 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:layout_gravity="bottom"
+        android:tag="footerBar"
+        tools:context="app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento"
         tools:layout="@layout/layout_footer_bar" />
+
 </FrameLayout>

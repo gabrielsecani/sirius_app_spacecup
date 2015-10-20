@@ -1,19 +1,16 @@
 <resources>
     <string name="app_name" translatable="false">SiriusAPP</string>
-    <string name="toolbar_title_NovoGrupo">Novo Grupo</string>
 
     <string-array name="drawer_itens">
         <item>Ranking</item>
         <item>Novo Grupo</item>
         <item>Pré Lançamento</item>
-        <item>Pós Lançamento</item>
     </string-array>
 
     <string-array name="drawer_icons">
         <item>@drawable/ic_rank</item>
         <item>@drawable/ic_novo_grupo</item>
         <item>@drawable/ic_pre_lanc</item>
-        <item>@drawable/ic_pos_lanc</item>
     </string-array>
 
     <string name="txt_nome_grupo" translatable="false">Nome do grupo</string>

@@ -1,11 +1,9 @@
 package app.sirius.spacecup.siriusapp;
 
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -22,7 +20,6 @@ import java.util.List;
 
 import app.sirius.spacecup.siriusapp.fragments.FragmentBase;
 import app.sirius.spacecup.siriusapp.fragments.FragmentCadNovoGrupo;
-import app.sirius.spacecup.siriusapp.fragments.FragmentCadPosLancamento;
 import app.sirius.spacecup.siriusapp.fragments.FragmentCadPreLancamento;
 import app.sirius.spacecup.siriusapp.fragments.FragmentRanking;
 import app.sirius.spacecup.siriusapp.menu.DrawerMenuAdapter;
@@ -39,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ListView menu;
     DrawerMenuAdapter menuAdapter;
 
-    Context contexto = this;
     TextView toolbar_txtToolbarDescricao;
 
     public void onCreate(Bundle SaveInstanceState) {
@@ -95,19 +91,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
-                setFragment(0, FragmentRanking.class);
+                setFragment(0, new FragmentRanking());
                 break;
             case 1:
-                setFragment(1, FragmentCadNovoGrupo.class);
+                setFragment(1, new FragmentCadNovoGrupo());
                 break;
             case 2:
-                setFragment(2, FragmentCadPreLancamento.class);
-                break;
-            case 3:
-                setFragment(3, FragmentCadPosLancamento.class);
+                setFragment(2, new FragmentCadPreLancamento());
                 break;
         }
-
     }
 
     @Override
@@ -137,31 +129,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     * Instancia uma classe fragment no container
-     *
-     * @param position
-     * @param fragmentClass
-     */
-    public void setFragment(int position, Class fragmentClass) {
-        setFragment(position, fragmentClass, null);
-    }
-
-    /**
      * Instancia uma classe fragment no container utilizando um Bundle de parametros
      *
-     * @param position      posicao do menu
-     * @param fragmentClass
-     * @param params
+     * @param position posicao do menu
+     *                 //     * @param fragmentClass
+     *                 //     * @param params
      */
-    public void setFragment(int position, Class fragmentClass, @Nullable Bundle params) {
+//    public void setFragment(int position, Class fragmentClass, @Nullable Bundle params) {
+    public void setFragment(int position, FragmentBase fragment) {
 
         try {
-            FragmentBase fragment = (FragmentBase) fragmentClass.newInstance();
-            if (params != null)
-                fragment.setArguments(params);
+//            FragmentBase fragment = (FragmentBase) fragmentClass.newInstance();
+//            if (params != null)
+//                fragment.setArguments(params);
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container_layout, fragment, fragmentClass.getSimpleName());
+            fragmentTransaction.replace(R.id.fragment_container_layout, fragment, fragment.getClass().getSimpleName());
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             toolbar_txtToolbarDescricao.setText(((DrawerMenuItem) menu.getItemAtPosition(position)).getTexto());
@@ -171,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             menu.invalidateViews();
 
         } catch (ClassCastException e) {
-            throw new ClassCastException(fragmentClass.toString() + " must extend FragmentBase");
+            throw new ClassCastException(fragment.getClass().toString() + " must extend FragmentBase");
         } catch (Exception ex) {
             Log.e("setFragment", ex.getMessage());
         }
