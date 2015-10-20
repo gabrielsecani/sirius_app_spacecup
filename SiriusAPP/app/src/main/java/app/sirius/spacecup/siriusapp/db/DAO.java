@@ -2,6 +2,7 @@ package app.sirius.spacecup.siriusapp.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.DateFormat;
@@ -19,6 +20,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
     final public static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, Locale.ENGLISH);
     private final Context context;
     protected T object;
+    private String lastError;
 
     protected DAO(Context context) {
         super();
@@ -93,8 +95,13 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
      * @return the row ID of the newly inserted row, or -1 if an error occurred
      */
     public long doInsert() {
-        long id = getDB().insert(getTableName(), null, getContentValues());
-        getObject().set_id(id);
+        long id = 0;
+        try {
+            id = getDB().insertOrThrow(getTableName(), null, getContentValues());
+            getObject().set_id(id);
+        }catch (Exception e){
+            lastError = "Erro ao inserir "+getTableName()+"(size:"+ getContentValues().size()+"): "+e.getMessage()+"\n"+e.getStackTrace().toString();
+        }
         return id;
     }
 
@@ -104,7 +111,13 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
      * @return the number of rows affected
      */
     public int doUpdate() {
-        return getDB().update(getTableName(), getContentValues(), getWhereClause(), getWhereArgs());
+        int rowsUpdated = 0;
+        try {
+            rowsUpdated = getDB().update(getTableName(), getContentValues(), getWhereClause(), getWhereArgs());
+        }catch (SQLException e){
+            lastError = "Erro ao inserir "+getTableName()+"(size:"+ getContentValues().size()+"): "+e.getMessage()+"\n"+e.getStackTrace().toString();
+        }
+        return rowsUpdated;
     }
 
     /**
@@ -115,7 +128,14 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
      * whereClause.
      */
     public int doDelete() {
-        return getDB().delete(getTableName(), getWhereClause(), getWhereArgs());
+        int rowsInserted = 0;
+        try {
+            rowsInserted = getDB().delete(getTableName(), getWhereClause(), getWhereArgs());
+        }catch (SQLException e){
+            lastError = "Erro ao excluir "+getTableName()+": "+e.getMessage()+"\n"+e.getStackTrace().toString();
+        }
+        return rowsInserted;
+
     }
 
     /**
@@ -131,6 +151,14 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
         } else {
             return doInsert() > 0;
         }
+    }
+
+    public String getLastError() {
+        return lastError;
+    }
+
+    public void setLastError(String lastError) {
+        this.lastError = lastError;
     }
 
     /**

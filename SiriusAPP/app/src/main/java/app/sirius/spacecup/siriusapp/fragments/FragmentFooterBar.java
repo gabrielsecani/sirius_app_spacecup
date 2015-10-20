@@ -3,12 +3,14 @@ package app.sirius.spacecup.siriusapp.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.media.MediaMetadataCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import app.sirius.spacecup.siriusapp.R;
+import app.sirius.spacecup.siriusapp.db.DAO;
 
 /**
  * A simple {@link Fragment} subclass.

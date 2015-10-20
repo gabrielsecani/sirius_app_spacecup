@@ -27,6 +27,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="@string/distancia_ate_alvo" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/distancia_ate_alvo" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/distancia_ate_alvo" />
 
             <EditText
                 android:id="@+id/prelancto_distanciaAlvo"

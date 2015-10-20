@@ -4,6 +4,7 @@ package app.sirius.spacecup.siriusapp.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +109,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cad_pre_lancamento, container, false);
 
@@ -188,29 +190,27 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
     public void onFragmentFooterBarSalvarClick(View view) {
         ProgressDialog pd = new ProgressDialog(getContext());
         try {
-            pd.setIndeterminate(false);
+            pd.setIndeterminate(true);
             pd.setMessage(getContext().getString(R.string.aguarde));
-            pd.setMax(6);
             pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             pd.setCancelable(false);
             pd.show();
-            pd.incrementProgressBy(1);
+
             LancamentoDAO dao = new LancamentoDAO(getContext());
             LancamentoDAO.Lancamento lan = dao.getObject();
             lan.setAngulo_lancamento(Double.parseDouble(String.valueOf(prelancto_angulo_lancto.getText())));
             lan.setAngulo_lancamento(Double.parseDouble(String.valueOf(prelancto_distanciaAlvo.getText())));
-            pd.incrementProgressBy(1);
             String sData = dao.dateFormat.format(new Date(prelancto_dtLancamento.getYear(), prelancto_dtLancamento.getMonth(), prelancto_dtLancamento.getDayOfMonth()));
             lan.setData(sData);
-            pd.incrementProgressBy(1);
             lan.setVelocidade_vento(Double.parseDouble(String.valueOf(prelancto_velocidade_vento.getText())));
             lan.setPeso_foguete(Double.parseDouble(String.valueOf(prelancto_peso_foguete.getText())));
             lan.setGrupo_id(mGrupo.get_id());
-            pd.incrementProgressBy(1);
-            dao.doPersist();
-            pd.incrementProgressBy(1);
-            Toast.makeText(getContext(), "botao salvar do footer", Toast.LENGTH_LONG).show();
-            pd.incrementProgressBy(1);
+            if(dao.doPersist()){
+                Toast.makeText(getContext(), "Dados de pré-lançamento foram salvos com sucesso!", Toast.LENGTH_LONG).show();
+            }else{
+                Log.e(getClass().getSimpleName(), dao.getLastError());
+                Toast.makeText(getContext(), "Ocorreu um erro ao salvar os dados de pré-lançamento!", Toast.LENGTH_LONG).show();
+            }
         } finally {
             pd.dismiss();
         }
