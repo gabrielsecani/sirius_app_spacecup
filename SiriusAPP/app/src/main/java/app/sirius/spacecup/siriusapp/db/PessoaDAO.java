@@ -109,7 +109,7 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
 
         private String nome_pessoa;
         private int rm_pessoa;
-        private int grupo_id;
+        private long grupo_id;
 
         public Pessoa() {
         }
@@ -131,11 +131,11 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
             this.rm_pessoa = rm_pessoa;
         }
 
-        public int getGrupo_id() {
+        public long getGrupo_id() {
             return grupo_id;
         }
 
-        public void setGrupo_id(int grupo_id) {
+        public void setGrupo_id(long grupo_id) {
             this.grupo_id = grupo_id;
         }
 

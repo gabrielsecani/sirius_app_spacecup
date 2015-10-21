@@ -125,12 +125,8 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         listView = (ListView) view.findViewById(R.id.list_membros_grupos);
         fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
 
-        /*listarMembros(mGrupo);*/
-        if (mGrupo != null) {
-            integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(mGrupo);
-            adapter = new ListPessoaAdapter(getContext(), integrantres);
-            listView.setAdapter(adapter);
-        }
+        listarMembros(mGrupo);
+
 
         /*String[] chaves = {"nome", "rm"};
         int[] identificadores = {R.id.txt_nome_membro, R.id.txt_rm_membro};*/
@@ -157,6 +153,12 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         return view;
     }
 
+    private void listarMembros(GrupoDAO.Grupo _mGrupo) {
+        integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(_mGrupo);
+        adapter = new ListPessoaAdapter(getContext(), integrantres);
+        listView.setAdapter(adapter);
+    }
+
     @Override
     public void onFragmentFooterBarSalvarClick(View view) {
 
@@ -171,23 +173,23 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 //            @Override
 //            public void onClick(DialogInterface dialog, int which) {
 
-                try {
+        try {
 
-                    GrupoDAO grupoDAO = new GrupoDAO(getContext());
-                    GrupoDAO.Grupo grupo = grupoDAO.getObject();
-                    grupo.setNome_grupo(String.valueOf(edtNomeGrupo.getText()));
-                    grupo.setNome_turma(String.valueOf(edtTurmaGrupo.getText()));
-                    mGrupo = grupo;
-                    if (grupoDAO.doPersist()) {
-                        configuraObjetos();
-                        Toast.makeText(getContext(), R.string.msg_grupo_salvo_sucesso, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Log.e(getClass().getSimpleName(), grupoDAO.getLastException().getMessage(), grupoDAO.getLastException());
-                        Toast.makeText(getContext(), R.string.erro_salvor_grupo, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    Log.getStackTraceString(e);
-                }
+            GrupoDAO grupoDAO = new GrupoDAO(getContext());
+            GrupoDAO.Grupo grupo = grupoDAO.getObject();
+            grupo.setNome_grupo(String.valueOf(edtNomeGrupo.getText()));
+            grupo.setNome_turma(String.valueOf(edtTurmaGrupo.getText()));
+            mGrupo = grupo;
+            if (grupoDAO.doPersist()) {
+                configuraObjetos();
+                Toast.makeText(getContext(), R.string.msg_grupo_salvo_sucesso, Toast.LENGTH_SHORT).show();
+            } else {
+                Log.e(getClass().getSimpleName(), grupoDAO.getLastException().getMessage(), grupoDAO.getLastException());
+                Toast.makeText(getContext(), R.string.erro_salvor_grupo, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.getStackTraceString(e);
+        }
 //                dialog.dismiss();
 //            }
 //        }).create().show();
@@ -222,20 +224,15 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //salvar
-
                         EditText nome = (EditText) view.findViewById(R.id.edt_nome_membro);
                         EditText rm = (EditText) view.findViewById(R.id.edt_rm_membro);
-                        boolean salvo = false;
                         try {
                             PessoaDAO pessoaDAO = new PessoaDAO(getContext());
                             pessoaDAO.getObject().setNome_pessoa(String.valueOf(nome.getText()));
                             pessoaDAO.getObject().setRm_pessoa(Integer.valueOf(String.valueOf(rm.getText())));
-                            pessoaDAO.getObject().setGrupo_id((int) mGrupo.get_id());
+                            pessoaDAO.getObject().setGrupo_id(mGrupo.get_id());
                             if (pessoaDAO.doPersist()) {
-                                integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(mGrupo);
-                                adapter = new ListPessoaAdapter(getContext(), integrantres);
-                                listView.setAdapter(adapter);
-                                listView.setAdapter(adapter);
+                                listarMembros(mGrupo);
                                 Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), R.string.erro_add_integrante, Toast.LENGTH_SHORT).show();
