@@ -142,6 +142,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //            FragmentBase fragment = (FragmentBase) fragmentClass.newInstance();
 //            if (params != null)
 //                fragment.setArguments(params);
+            FragmentBase.escondeTeclado(menu, this);
+
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.fragment_container_layout, fragment, fragment.getClass().getSimpleName());
@@ -152,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             menu.setItemChecked(position, true);
             layout.closeDrawer(menu);
             menu.invalidateViews();
-
         } catch (ClassCastException e) {
             throw new ClassCastException(fragment.getClass().toString() + " must extend FragmentBase");
         } catch (Exception ex) {

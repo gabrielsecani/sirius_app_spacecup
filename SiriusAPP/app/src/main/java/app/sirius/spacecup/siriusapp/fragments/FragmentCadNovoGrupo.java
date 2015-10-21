@@ -132,9 +132,6 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         }
 
 
-
-
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,16 +159,6 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     @Override
     public void onFragmentFooterBarSalvarClick(View view) {
 
-//        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-//
-//        alert.setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.confirma_cad_grupo).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//            }
-//        }).setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
 
         try {
 
@@ -190,9 +177,6 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         } catch (Exception e) {
             Log.getStackTraceString(e);
         }
-//                dialog.dismiss();
-//            }
-//        }).create().show();
     }
 
     public boolean configuraObjetos() {
@@ -207,6 +191,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     }
 
     public void registraNovoIntegrante(View v) {
+        FragmentBase.escondeTeclado(v, getContext());
 
         final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
 

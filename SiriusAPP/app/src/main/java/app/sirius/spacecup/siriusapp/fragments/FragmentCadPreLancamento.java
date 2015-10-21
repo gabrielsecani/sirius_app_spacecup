@@ -136,6 +136,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mGrupo = (GrupoDAO.Grupo) parent.getSelectedItem();
+                FragmentBase.escondeTeclado(view, getContext());
                 carregaDadosLancamento();
             }
 
