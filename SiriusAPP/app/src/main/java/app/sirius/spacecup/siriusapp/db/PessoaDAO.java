@@ -99,7 +99,6 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
         return mapList;
     }
 
-
     /**
      * Classe de objeto para acesso aos dados
      */
