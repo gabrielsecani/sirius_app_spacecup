@@ -216,7 +216,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             if (dao.doPersist()) {
                 Toast.makeText(getContext(), "Dados de pré-lançamento foram salvos com sucesso!", Toast.LENGTH_LONG).show();
             } else {
-                Log.e(getClass().getSimpleName(), dao.getLastError());
+                Log.e(getClass().getSimpleName(), dao.getLastException().getMessage(), dao.getLastException());
                 Toast.makeText(getContext(), "Ocorreu um erro ao salvar os dados de pré-lançamento!", Toast.LENGTH_LONG).show();
             }
         } finally {

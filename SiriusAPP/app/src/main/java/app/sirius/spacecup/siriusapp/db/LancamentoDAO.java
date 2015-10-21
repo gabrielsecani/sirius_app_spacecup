@@ -292,9 +292,19 @@ public class LancamentoDAO extends DAO<LancamentoDAO.Lancamento> {
             this.grupo_id = grupo_id;
         }
 
+        public void setGrupo(GrupoDAO.Grupo grupo) {
+            this.grupo = grupo;
+            setGrupo_id(grupo.get_id());
+        }
+
         public GrupoDAO.Grupo getGrupo(Context context) {
             if (grupo == null)
-                grupo = new GrupoDAO(context).doSelectOne(getGrupo_id());
+                try {
+                    GrupoDAO.Grupo newGrupo = new GrupoDAO(context).doSelectOne(getGrupo_id());
+                    grupo = newGrupo;
+                } catch (Exception e) {
+                    Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
+                }
             return grupo;
         }
 

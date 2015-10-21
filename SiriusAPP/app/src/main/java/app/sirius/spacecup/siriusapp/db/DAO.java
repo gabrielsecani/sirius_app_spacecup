@@ -20,7 +20,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
     final public static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DATE_FIELD, Locale.ENGLISH);
     private final Context context;
     protected T object;
-    private String lastError;
+    private Exception lastException;
 
     protected DAO(Context context) {
         super();
@@ -100,7 +100,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
             id = getDB().insertOrThrow(getTableName(), null, getContentValues());
             getObject().set_id(id);
         }catch (Exception e){
-            lastError = "Erro ao inserir "+getTableName()+"(size:"+ getContentValues().size()+"): "+e.getMessage()+"\n"+e.getStackTrace().toString();
+            lastException = e;
         }
         return id;
     }
@@ -115,7 +115,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
         try {
             rowsUpdated = getDB().update(getTableName(), getContentValues(), getWhereClause(), getWhereArgs());
         }catch (SQLException e){
-            lastError = "Erro ao inserir "+getTableName()+"(size:"+ getContentValues().size()+"): "+e.getMessage()+"\n"+e.getStackTrace().toString();
+            lastException = e;
         }
         return rowsUpdated;
     }
@@ -132,7 +132,7 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
         try {
             rowsInserted = getDB().delete(getTableName(), getWhereClause(), getWhereArgs());
         }catch (SQLException e){
-            lastError = "Erro ao excluir "+getTableName()+": "+e.getMessage()+"\n"+e.getStackTrace().toString();
+            lastException = e;
         }
         return rowsInserted;
 
@@ -153,12 +153,8 @@ public abstract class DAO<T extends DAO.ObjetoDao> {
         }
     }
 
-    public String getLastError() {
-        return lastError;
-    }
-
-    public void setLastError(String lastError) {
-        this.lastError = lastError;
+    public Exception getLastException() {
+        return lastException;
     }
 
     /**
