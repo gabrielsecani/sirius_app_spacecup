@@ -53,9 +53,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/distancia_ate_alvo"
-                android:inputType="number"
-                android:maxLength="3" />
-
+                android:inputType="number" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -68,8 +66,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/angulo_lacamento"
-                android:inputType="number"
-                android:maxLength="3" />
+                android:inputType="number" />
 
 
             <TextView
@@ -84,9 +81,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/velocidade_vento"
-                android:inputType="number"
-                android:maxLength="3" />
-
+                android:inputType="number" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -94,14 +89,137 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:text="@string/peso_foguete" />
 
-
             <EditText
                 android:id="@+id/prelancto_peso_foguete"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/peso_foguete"
-                android:inputType="number"
-                android:maxLength="3" />
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/pos_lancamento" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/altura_max" />
+
+            <EditText
+                android:id="@+id/poslancto_altura_max"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/altura_max"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/velocidade_max" />
+
+            <EditText
+                android:id="@+id/poslancto_velocidade_max"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/velocidade_max"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/pico_acelaracao" />
+
+            <EditText
+                android:id="@+id/poslancto_pico_aceleracao"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pico_acelaracao"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/aceleracao_media" />
+
+            <EditText
+                android:id="@+id/poslancto_aceleracao_media"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/aceleracao_media"
+                android:inputType="number" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/tmp_propulsao" />
+
+            <EditText
+                android:id="@+id/poslancto_tmp_propulsao"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/tmp_propulsao"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/tmp_apogeo_descida" />
+
+            <EditText
+                android:id="@+id/poslancto_tmp_apogeo_decida"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/tmp_apogeo_descida"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/alt_ejecao" />
+
+            <EditText
+                android:id="@+id/poslancto_alt_ejecao"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/alt_ejecao"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/taxa_descida" />
+
+            <EditText
+                android:id="@+id/poslancto_taxa_descida"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/taxa_descida"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/duracao_voo" />
+
+            <EditText
+                android:id="@+id/poslancto_duracao_voo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/duracao_voo"
+                android:inputType="number" />
+
         </LinearLayout>
 
     </ScrollView>

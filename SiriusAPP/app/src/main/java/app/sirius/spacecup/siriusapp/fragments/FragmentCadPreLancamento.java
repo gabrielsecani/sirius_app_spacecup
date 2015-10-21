@@ -43,6 +43,19 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
     private EditText prelancto_velocidade_vento;
     private EditText prelancto_peso_foguete;
 
+
+    private EditText poslancto_pos_lancamento;
+    private EditText poslancto_altura_max;
+    private EditText poslancto_velocidade_max;
+    private EditText poslancto_tmp_propulsao;
+    private EditText poslancto_pico_acelaracao;
+    private EditText poslancto_aceleracao_media;
+    private EditText poslancto_tmp_apogeo_descida;
+    private EditText poslancto_alt_ejecao;
+    private EditText poslancto_taxa_descida;
+    private EditText poslancto_duracao_voo;
+
+
     public FragmentCadPreLancamento() {
         // Required empty public constructor
     }
@@ -126,6 +139,20 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         prelancto_velocidade_vento = (EditText) view.findViewById(R.id.prelancto_velocidade_vento);
         prelancto_peso_foguete = (EditText) view.findViewById(R.id.prelancto_peso_foguete);
 
+
+        poslancto_pos_lancamento = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_altura_max = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_velocidade_max = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_tmp_propulsao = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_pico_acelaracao = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_aceleracao_media = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_tmp_apogeo_descida = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_alt_ejecao = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_taxa_descida = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_duracao_voo = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+
+
+
         Spinner prelancto_Grupos = (Spinner) view.findViewById(R.id.prelancto_Grupos);
         prelancto_Grupos.requestFocus();
 
@@ -173,6 +200,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             prelancto_distanciaAlvo.setText(String.valueOf(mLancamento.getDistancia_alvo()));
             prelancto_velocidade_vento.setText(String.valueOf(mLancamento.getVelocidade_vento()));
             prelancto_peso_foguete.setText(String.valueOf(mLancamento.getPeso_foguete()));
+
 
             if (!mLancamento.getData().isEmpty()) {
                 try {

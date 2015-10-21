@@ -10,5 +10,15 @@
     <string name="confirma_cad_grupo">Cadastro novo grupo</string>
     <string name="aguarde">Aguarde...</string>
     <string name="msg_grupo_salvo_sucesso">Grupo salvo com sucesso!</string>
+    <string name="altura_max">Altura Maxima</string>
+    <string name="velocidade_max">Velocidade máxima (Km/h)</string>
+    <string name="pico_acelaracao">Pico de Aceleração</string>
+    <string name="aceleracao_media">Aceleração media</string>
+    <string name="tmp_apogeo_descida">Tempo entre apogeu e descida (s)</string>
+    <string name="tmp_ejecao">Tempo de ejeção</string>
+    <string name="taxa_descida">Taxa de descida</string>
+    <string name="duracao_voo">Duração do voo</string>
+    <string name="pos_lancamento">Pós Lançamento</string>
+    <string name="tmp_propulsao">Tempo de propulsão</string>
 
 </resources>

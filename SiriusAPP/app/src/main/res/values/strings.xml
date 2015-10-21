@@ -17,10 +17,22 @@
     <string name="txt_turma_grupo" translatable="false">Turma </string>
     <string name="txt_membros_grupo" translatable="false">Integrantes </string>
     <string name="data_de_lancamento" translatable="false">Data de Lançamento</string>
-    <string name="distancia_ate_alvo" translatable="false">Distância até o alvo</string>
-    <string name="angulo_lacamento" translatable="false">Ângulo do lançamento</string>
-    <string name="velocidade_vento" translatable="false">Velocidade do vento</string>
-    <string name="peso_foguete" translatable="false">Peso do foguete</string>
+    <string name="distancia_ate_alvo" translatable="false">Distância até o alvo (m)</string>
+    <string name="angulo_lacamento" translatable="false">Ângulo do lançamento (º)</string>
+    <string name="velocidade_vento" translatable="false">Velocidade do vento (m/s)</string>
+    <string name="peso_foguete" translatable="false">Peso do foguete (g)</string>
+
+    <string name="pos_lancamento" translatable="false">Pós Lançamento</string>
+    <string name="altura_max" translatable="false">Altura máxima (m)</string>
+    <string name="velocidade_max" translatable="false">Velocidade máxima (m/s)</string>
+    <string name="tmp_propulsao" translatable="false">Tempo de Propulsão (cs)</string>
+    <string name="pico_acelaracao" translatable="false">Pico de Aceleração (Gs)</string>
+    <string name="aceleracao_media" translatable="false">Aceleração media (Gs)</string>
+    <string name="tmp_apogeo_descida" translatable="false">Tempo entre apogeu e descida (s)</string>
+    <string name="alt_ejecao" translatable="false">ALtitude de ejeção (m)</string>
+    <string name="taxa_descida" translatable="false">Taxa de descida (s)</string>
+    <string name="duracao_voo" translatable="false">Duração do voo (s)</string>
+
 
     <string name="btn_salvar">Salvar</string>
 
@@ -38,6 +50,6 @@
     <string name="aguarde">Aguarde...</string>
     <string name="msg_grupo_salvo_sucesso">Grupo salvo com sucesso!</string>
     <string name="erro_salvor_grupo">Ocorreu um erro: Grupo não foi cadastrado.</string>
-    erro_salvor_grupo
+
 
 </resources>
