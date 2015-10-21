@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,8 +18,8 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
+import app.sirius.spacecup.siriusapp.ListGrupoAdapter;
 import app.sirius.spacecup.siriusapp.R;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.LancamentoDAO;
@@ -130,16 +129,13 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         Spinner prelancto_Grupos = (Spinner) view.findViewById(R.id.prelancto_Grupos);
         prelancto_Grupos.requestFocus();
 
-        final List<Map<String, Object>> listagrupos = new GrupoDAO(getContext()).doSelectAllMap();
-
-        SimpleAdapter adap = new SimpleAdapter(getContext(), listagrupos, R.layout.layout_spinner,
-                new String[]{"nome_grupo"}, new int[]{R.id.txt_spinner_item});
+        List<GrupoDAO.Grupo> listagrupos = new GrupoDAO(getContext()).doSelectAll();
+        ListGrupoAdapter adap = new ListGrupoAdapter(getContext(), listagrupos);
         prelancto_Grupos.setAdapter(adap);
         prelancto_Grupos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> map = listagrupos.get(position);
-                mGrupo = (GrupoDAO.Grupo) map.get("self");
+                mGrupo = (GrupoDAO.Grupo) parent.getSelectedItem();
                 carregaDadosLancamento();
             }
 

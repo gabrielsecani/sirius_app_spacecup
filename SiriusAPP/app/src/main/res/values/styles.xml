@@ -7,6 +7,7 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/primary_text_material_light</item>
+        <item name="android:textSize">@dimen/size_font_standard</item>
     </style>
 
     <style name="DrawerListView" parent="AppTheme">
