@@ -8,7 +8,7 @@
         android:id="@+id/txt_nome_membro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:minWidth="200dp"
         android:text="Nome" />
 
@@ -16,6 +16,7 @@
         android:id="@+id/txt_rm_membro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin"
         android:layout_toRightOf="@+id/txt_nome_membro"
         android:text="72015" />
 

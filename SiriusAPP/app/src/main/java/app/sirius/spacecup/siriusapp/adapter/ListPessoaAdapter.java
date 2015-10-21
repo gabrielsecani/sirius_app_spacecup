@@ -49,11 +49,14 @@ public class ListPessoaAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.layout_membros_grupo, null);
         }
-        TextView textView;
-        textView = (TextView) convertView.findViewById(R.id.txt_nome_membro);
-        textView.setText(mIntegrante.get(position).getNome_pessoa());
-        textView = (TextView) convertView.findViewById(R.id.txt_rm_membro);
-        textView.setText(mIntegrante.get(position).getRm_pessoa());
+        PessoaDAO.Pessoa p = mIntegrante.get(position);
+
+        TextView txt_nome_membro = (TextView) convertView.findViewById(R.id.txt_nome_membro);
+        txt_nome_membro.setText(p.getNome_pessoa());
+
+        TextView txt_rm_membro = (TextView) convertView.findViewById(R.id.txt_rm_membro);
+        txt_rm_membro.setText(String.valueOf(p.getRm_pessoa()));
+
         return convertView;
     }
 }

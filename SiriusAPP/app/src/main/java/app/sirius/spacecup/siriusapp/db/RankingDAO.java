@@ -46,7 +46,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
     public List<Ranking> doSelectAll() {
 
         Cursor cursor = getDB().rawQuery(
-                "select G.nome_grupo, G.nome_turma, L.distancia_alcancada from GRUPO G " +
+                "select G.nome_grupo, G.nome_turma, L.distancia_alcancada, g._id as grupoID from GRUPO G " +
                         "left join LANCAMENTO L on (grupo_id=L._ID) order by L.distancia_alcancada asc", null);
 
         List<Ranking> lista = new ArrayList<>();
@@ -58,15 +58,16 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
             nf.setMaximumFractionDigits(1);
             do {
                 Ranking object = new Ranking();
-                object.setNome_grupo(cursor.getString(1));
-                object.setNome_turma(cursor.getString(2));
-                if (!cursor.isNull(3)) {
+                object.setNome_grupo(cursor.getString(0));
+                object.setNome_turma(cursor.getString(1));
+                if (!cursor.isNull(2)) {
                     object.setPosicaoRank(String.valueOf(i++));
-                    object.setDistancia_alcancada(nf.format(cursor.getFloat(3)) + " m");
+                    object.setDistancia_alcancada(nf.format(cursor.getFloat(2)) + " m");
                 } else {
                     object.setPosicaoRank("");
                     object.setDistancia_alcancada("");
                 }
+                object.setGrupoID(Integer.parseInt(cursor.getString(3)));
 
                 lista.add(object);
             } while (cursor.moveToNext());
@@ -83,6 +84,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
             hashMap.put("distancia", r.getDistancia_alcancada());
             hashMap.put("posicao", String.valueOf(r.getPosicaoRank()));
             hashMap.put("img", r.getResIdMedal());
+            hashMap.put("grupoID", r.getGrupo_ID());
 
             mapList.add(hashMap);
         }
@@ -98,6 +100,7 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
         private String nome_turma;
         private String posicaoRank;
         private String distancia_alcancada;
+        private int grupoID;
 
         public Ranking() {
         }
@@ -134,6 +137,13 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
             this.distancia_alcancada = distancia_alcancada;
         }
 
+        public long getGrupo_ID() {
+            return grupoID;
+        }
+
+        public void setGrupoID(int grupoID) {
+            this.grupoID = grupoID;
+        }
         @DrawableRes
         public int getResIdMedal() {
 
@@ -148,5 +158,6 @@ public class RankingDAO extends DAO<RankingDAO.Ranking> {
                     return R.drawable.ic_lanc_ok;
             }
         }
+
     }
 }

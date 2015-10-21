@@ -7,12 +7,13 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="40dp"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="fill_parent">
 
             <TextView
                 android:id="@+id/txtView_nome_grupo"
@@ -64,7 +65,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@id/txtView_membros_grupo">
 
                 <TextView
@@ -78,14 +79,17 @@
 
             </LinearLayout>
 
-            <ListView
-                android:id="@+id/list_membros_grupos"
-                android:layout_width="300dp"
-                android:layout_height="match_parent"
-                android:layout_below="@id/txtView_membros_grupo"
-                android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/txtView_membros_grupo">
 
-            </ListView>
+                <ListView
+                    android:id="@+id/list_membros_grupos"
+                    android:layout_width="fill_parent"
+                    android:layout_height="300dp"
+                    android:visibility="visible" />
+            </LinearLayout>
 
             <com.melnykov.fab.FloatingActionButton
                 android:id="@+id/fab_add"

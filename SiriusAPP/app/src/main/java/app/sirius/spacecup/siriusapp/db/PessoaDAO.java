@@ -3,6 +3,7 @@ package app.sirius.spacecup.siriusapp.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +62,7 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
         List<Pessoa> lista = new ArrayList<>();
         if (grupo == null) {
             return lista;
-        } else if (grupo.get_id() > 0) {
+        } else if (grupo.get_id() <= 0) {
             return lista;
         }
 
@@ -139,10 +140,19 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
             this.grupo_id = grupo_id;
         }
 
+        public void setGrupo(GrupoDAO.Grupo grupo) {
+            this.grupo = grupo;
+            setGrupo_id(grupo.get_id());
+        }
+
         public GrupoDAO.Grupo getGrupo(Context context) {
-            if (grupo == null) {
-                grupo = new GrupoDAO(context).doSelectOne(getGrupo_id());
-            }
+            if (grupo == null)
+                try {
+                    GrupoDAO.Grupo newGrupo = new GrupoDAO(context).doSelectOne(getGrupo_id());
+                    grupo = newGrupo;
+                } catch (Exception e) {
+                    Log.e(this.getClass().getSimpleName(), e.getMessage(), e);
+                }
             return grupo;
         }
 

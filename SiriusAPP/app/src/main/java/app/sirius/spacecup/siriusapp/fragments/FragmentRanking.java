@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -18,6 +17,7 @@ import java.util.Map;
 
 import app.sirius.spacecup.siriusapp.MainActivity;
 import app.sirius.spacecup.siriusapp.R;
+import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.RankingDAO;
 
 public class FragmentRanking extends FragmentBase {
@@ -70,11 +70,14 @@ public class FragmentRanking extends FragmentBase {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                     Map<String, Object> map = grupos.get(position);
-                    String msg = "Grupo selecionado: ";
-                    msg += (String) map.get("grupo");
+//                    String msg = "Grupo selecionado: ";
+//                    msg += (String) map.get("grupo");
+//                    Toast.makeText(getContext(), msg,
+//                            Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(getContext(), msg,
-                            Toast.LENGTH_SHORT).show();
+                    long grupoID = Long.valueOf(String.valueOf(map.get("grupoID")));
+                    GrupoDAO.Grupo grupo = new GrupoDAO(getContext()).doSelectOne(grupoID);
+                    ((MainActivity) getActivity()).setFragment(1, FragmentCadNovoGrupo.newInstance(grupo, false));
                 }
             });
 

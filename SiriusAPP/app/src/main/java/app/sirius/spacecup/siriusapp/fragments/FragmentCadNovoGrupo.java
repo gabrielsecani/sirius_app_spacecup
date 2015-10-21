@@ -69,7 +69,6 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         args.putSerializable(ARG_READONLY, openReadOnly);*/
         Bundle args = newBundleArguments(grupo, openReadOnly);
         fragment.setArguments(args);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -126,6 +125,12 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
 
         listarMembros(mGrupo);
+        if (mGrupo != null) {
+            edtNomeGrupo.setText(mGrupo.getNome_grupo());
+            edtTurmaGrupo.setText(mGrupo.getNome_turma());
+            configuraObjetos();
+        }
+
 
 
         /*String[] chaves = {"nome", "rm"};
@@ -157,6 +162,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(_mGrupo);
         adapter = new ListPessoaAdapter(getContext(), integrantres);
         listView.setAdapter(adapter);
+        listView.invalidateViews();
     }
 
     @Override
@@ -209,7 +215,6 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     public void registraNovoIntegrante(View v) {
 
         final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
-        final View v1 = v;
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 
@@ -230,7 +235,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                             PessoaDAO pessoaDAO = new PessoaDAO(getContext());
                             pessoaDAO.getObject().setNome_pessoa(String.valueOf(nome.getText()));
                             pessoaDAO.getObject().setRm_pessoa(Integer.valueOf(String.valueOf(rm.getText())));
-                            pessoaDAO.getObject().setGrupo_id(mGrupo.get_id());
+                            pessoaDAO.getObject().setGrupo(mGrupo);
                             if (pessoaDAO.doPersist()) {
                                 listarMembros(mGrupo);
                                 Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
