@@ -126,19 +126,20 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
 
         /*listarMembros(mGrupo);*/
-        integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(mGrupo);
-        adapter = new ListPessoaAdapter(getContext(), integrantres);
-        listView.setAdapter(adapter);
+        if (mGrupo != null) {
+            integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(mGrupo);
+            adapter = new ListPessoaAdapter(getContext(), integrantres);
+            listView.setAdapter(adapter);
+        }
 
-        String[] chaves = {"nome", "rm"};
-        int[] identificadores = {R.id.txt_nome_membro, R.id.txt_rm_membro};
+        /*String[] chaves = {"nome", "rm"};
+        int[] identificadores = {R.id.txt_nome_membro, R.id.txt_rm_membro};*/
 
         /*adapter =
                 new Ada(getContext(), listarMembros(mGrupo),
                         R.layout.layout_membros_grupo, chaves, identificadores) {
                 };
         listView.setAdapter(adapter);*/
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,6 +232,9 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                             pessoaDAO.getObject().setRm_pessoa(Integer.valueOf(String.valueOf(rm.getText())));
                             pessoaDAO.getObject().setGrupo_id((int) mGrupo.get_id());
                             if (pessoaDAO.doPersist()) {
+                                integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(mGrupo);
+                                adapter = new ListPessoaAdapter(getContext(), integrantres);
+                                listView.setAdapter(adapter);
                                 listView.setAdapter(adapter);
                                 Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
                             } else {
