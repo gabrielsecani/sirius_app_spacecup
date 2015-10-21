@@ -140,7 +140,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         prelancto_velocidade_vento = (EditText) view.findViewById(R.id.prelancto_velocidade_vento);
         prelancto_peso_foguete = (EditText) view.findViewById(R.id.prelancto_peso_foguete);
 
-        poslancto_distancia_alcancada = (EditText) view.findViewById(R.id.prelancto_distancia_alcancada);
+        poslancto_distancia_alcancada = (EditText) view.findViewById(R.id.poslancto_distancia_alcancada);
         poslancto_altura_max = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
         poslancto_velocidade_max = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
         poslancto_tmp_propulsao = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
