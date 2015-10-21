@@ -42,6 +42,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
     private DatePicker prelancto_dtLancamento;
     private EditText prelancto_velocidade_vento;
     private EditText prelancto_peso_foguete;
+    //TODO: add private EditText de campos de PÓS lançamento
 
     public FragmentCadPreLancamento() {
         // Required empty public constructor
@@ -125,6 +126,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         prelancto_dtLancamento = (DatePicker) view.findViewById(R.id.prelancto_dtLancamento);
         prelancto_velocidade_vento = (EditText) view.findViewById(R.id.prelancto_velocidade_vento);
         prelancto_peso_foguete = (EditText) view.findViewById(R.id.prelancto_peso_foguete);
+        //TODO: add findViews de campos de PÓS lançamento
 
         Spinner prelancto_Grupos = (Spinner) view.findViewById(R.id.prelancto_Grupos);
         prelancto_Grupos.requestFocus();
@@ -173,6 +175,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             prelancto_distanciaAlvo.setText(String.valueOf(mLancamento.getDistancia_alvo()));
             prelancto_velocidade_vento.setText(String.valueOf(mLancamento.getVelocidade_vento()));
             prelancto_peso_foguete.setText(String.valueOf(mLancamento.getPeso_foguete()));
+            //TODO: add set de campos de PÓS lançamento
 
             if (!mLancamento.getData().isEmpty()) {
                 try {
