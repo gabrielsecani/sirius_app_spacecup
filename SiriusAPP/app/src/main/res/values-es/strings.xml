@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="toolbar_title_NovoGrupo">Nuevo Grupo</string>
     <string name="btn_salvar">Salvo</string>
     <string name="novo_integrante">Novo membro</string>
     <string name="cancelar">Cancelar</string>
     <string name="adicionar">Adicionar</string>
-    <string name="adicionado_sucesso">Adicionado</string>
+    <string name="integrante_salvo_sucesso">Adicionado</string>
     <string name="valida_grupos">Insira o nome do grupo e a turma</string>
     <string name="confirma_cad_grupo">Cadastro novo grupo</string>
     <string name="aguarde">Aguarde...</string>
