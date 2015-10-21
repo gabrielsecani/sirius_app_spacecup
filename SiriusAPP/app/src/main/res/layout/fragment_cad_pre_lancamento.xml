@@ -100,7 +100,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="@string/pos_lancamento" />
+                android:text="@string/pos_lancamento"
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -109,10 +111,23 @@
                 android:text="@string/altura_max" />
 
             <EditText
-                android:id="@+id/poslancto_altura_max"
+                android:id="@+id/poslancto_prelancto_distancia_alcancada"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/altura_max"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="@string/distancia_alcancada" />
+
+            <EditText
+                android:id="@+id/poslancto_altura_max"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/distancia_alcancada"
                 android:inputType="number" />
 
             <TextView

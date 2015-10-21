@@ -45,6 +45,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
 
 
     private EditText poslancto_pos_lancamento;
+    private EditText poslancto_distancia_alcancada;
     private EditText poslancto_altura_max;
     private EditText poslancto_velocidade_max;
     private EditText poslancto_tmp_propulsao;
@@ -139,8 +140,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         prelancto_velocidade_vento = (EditText) view.findViewById(R.id.prelancto_velocidade_vento);
         prelancto_peso_foguete = (EditText) view.findViewById(R.id.prelancto_peso_foguete);
 
-
-        poslancto_pos_lancamento = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
+        poslancto_distancia_alcancada = (EditText) view.findViewById(R.id.prelancto_distancia_alcancada);
         poslancto_altura_max = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
         poslancto_velocidade_max = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
         poslancto_tmp_propulsao = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
@@ -150,8 +150,6 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
         poslancto_alt_ejecao = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
         poslancto_taxa_descida = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
         poslancto_duracao_voo = (EditText) view.findViewById(R.id.prelancto_angulo_lancto);
-
-
 
         Spinner prelancto_Grupos = (Spinner) view.findViewById(R.id.prelancto_Grupos);
         prelancto_Grupos.requestFocus();
@@ -201,6 +199,15 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             prelancto_velocidade_vento.setText(String.valueOf(mLancamento.getVelocidade_vento()));
             prelancto_peso_foguete.setText(String.valueOf(mLancamento.getPeso_foguete()));
 
+            poslancto_distancia_alcancada.setText(String.valueOf(mLancamento.getDistancia_alcancada()));
+            poslancto_velocidade_max.setText(String.valueOf(mLancamento.getMaxima_velocidade()));
+            poslancto_tmp_propulsao.setText(String.valueOf(mLancamento.getTempo_propoulsao()));
+            poslancto_aceleracao_media.setText(String.valueOf(mLancamento.getAceleracao_media()));
+            poslancto_tmp_apogeo_descida.setText(String.valueOf(mLancamento.getTempo_apogeo_distancia()));
+            poslancto_alt_ejecao.setText(String.valueOf(mLancamento.getTempo_ejecao()));
+            poslancto_taxa_descida.setText(String.valueOf(mLancamento.getTaxa_decida()));
+            poslancto_duracao_voo.setText(String.valueOf(mLancamento.getDuracao_voo()));
+
 
             if (!mLancamento.getData().isEmpty()) {
                 try {
@@ -237,9 +244,17 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             lan.setData(sData);
             lan.setVelocidade_vento(Double.parseDouble(String.valueOf(prelancto_velocidade_vento.getText())));
             lan.setPeso_foguete(Double.parseDouble(String.valueOf(prelancto_peso_foguete.getText())));
+            //POS
+            lan.setDistancia_alcancada(Double.parseDouble(String.valueOf(poslancto_distancia_alcancada)));
+            lan.setMaxima_velocidade(Double.parseDouble(String.valueOf(poslancto_velocidade_max)));
+            lan.setTempo_propoulsao(Double.parseDouble(String.valueOf(poslancto_tmp_propulsao)));
+            lan.setTempo_apogeo_distancia(Double.parseDouble(String.valueOf(poslancto_tmp_apogeo_descida)));
+            lan.setTempo_ejecao(Double.parseDouble(String.valueOf(poslancto_alt_ejecao)));
+            lan.setTaxa_decida(Double.parseDouble(String.valueOf(poslancto_taxa_descida)));
+            lan.setDuracao_voo(Double.parseDouble(String.valueOf(poslancto_duracao_voo)));
             lan.setGrupo_id(mGrupo.get_id());
             if (dao.doPersist()) {
-                Toast.makeText(getContext(), "Dados de pré-lançamento foram salvos com sucesso!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Dados de lançamento foram salvos com sucesso!", Toast.LENGTH_LONG).show();
             } else {
                 Log.e(getClass().getSimpleName(), dao.getLastException().getMessage(), dao.getLastException());
                 Toast.makeText(getContext(), "Ocorreu um erro ao salvar os dados de pré-lançamento!", Toast.LENGTH_LONG).show();

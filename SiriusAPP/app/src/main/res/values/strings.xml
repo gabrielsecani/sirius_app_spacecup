@@ -23,6 +23,7 @@
     <string name="peso_foguete" translatable="false">Peso do foguete (g)</string>
 
     <string name="pos_lancamento" translatable="false">Pós Lançamento</string>
+    <string name="distancia_alcancada" translatable="false">Distância Alcançada</string>
     <string name="altura_max" translatable="false">Altura máxima (m)</string>
     <string name="velocidade_max" translatable="false">Velocidade máxima (m/s)</string>
     <string name="tmp_propulsao" translatable="false">Tempo de Propulsão (cs)</string>
@@ -32,7 +33,6 @@
     <string name="alt_ejecao" translatable="false">ALtitude de ejeção (m)</string>
     <string name="taxa_descida" translatable="false">Taxa de descida (s)</string>
     <string name="duracao_voo" translatable="false">Duração do voo (s)</string>
-
 
     <string name="btn_salvar">Salvar</string>
 
