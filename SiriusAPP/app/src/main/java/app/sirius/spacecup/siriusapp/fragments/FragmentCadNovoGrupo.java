@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -37,12 +38,13 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     private GrupoDAO.Grupo mGrupo;
     private boolean mReadOnly;
 
-    private ListView listView;
-
+    private View view;
     private EditText edtNomeGrupo;
     private EditText edtTurmaGrupo;
     private TextView textViewIntegrantes;
     private TextView textViewMsgSemIntegrantes;
+    private FloatingActionButton fab;
+    private ListView listView;
 
     private SimpleAdapter adapter;
 
@@ -103,14 +105,14 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
+        view = inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
 
         edtNomeGrupo = (EditText) view.findViewById(R.id.edt_nome_grupo);
         edtTurmaGrupo = (EditText) view.findViewById(R.id.edt_turma_grupo);
         textViewIntegrantes = (TextView) view.findViewById(R.id.txtView_membros_grupo);
         textViewMsgSemIntegrantes = (TextView) view.findViewById(R.id.txtView_sem_grupos);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
 
         listarMembros(view, mGrupo);
 
@@ -141,13 +143,16 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
             public void onClick(DialogInterface dialog, int which) {
 
                 try {
-                    mGrupo.setNome_grupo(String.valueOf(edtNomeGrupo.getText()));
-                    mGrupo.setNome_turma(String.valueOf(edtTurmaGrupo.getText()));
+
                     GrupoDAO grupoDAO = new GrupoDAO(getContext());
-                    grupoDAO.setObject(mGrupo);
+                    GrupoDAO.Grupo grupo = grupoDAO.getObject();
+                    grupo.setNome_grupo(String.valueOf(edtNomeGrupo.getText()));
+                    grupo.setNome_turma(String.valueOf(edtTurmaGrupo.getText()));
                     if (grupoDAO.doPersist()) {
+                        configuraObjetos();
                         Toast.makeText(getContext(), R.string.msg_grupo_salvo_sucesso, Toast.LENGTH_SHORT).show();
                     } else {
+                        Log.e(getClass().getSimpleName(), grupoDAO.getLastException().getMessage(), grupoDAO.getLastException());
                         Toast.makeText(getContext(), R.string.erro_salvor_grupo, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
@@ -162,7 +167,13 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
         edtNomeGrupo.setEnabled(false);
         edtTurmaGrupo.setEnabled(false);
-
+        textViewIntegrantes.setVisibility(View.VISIBLE);
+        textViewMsgSemIntegrantes.setVisibility(View.VISIBLE);
+        fab.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.VISIBLE);
+        Button button = (Button) view.findViewById(R.id.btnSalvar);
+        button.setText("");
+        button.setEnabled(false);
 
     }
 
