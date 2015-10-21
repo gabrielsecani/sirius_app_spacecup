@@ -17,8 +17,8 @@ import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
 
-import app.sirius.spacecup.siriusapp.ListPessoaAdapter;
 import app.sirius.spacecup.siriusapp.R;
+import app.sirius.spacecup.siriusapp.adapter.ListPessoaAdapter;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.PessoaDAO;
 
@@ -159,16 +159,16 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     @Override
     public void onFragmentFooterBarSalvarClick(View view) {
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-
-        alert.setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.confirma_cad_grupo).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+//        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+//
+//        alert.setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.confirma_cad_grupo).setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        }).setPositiveButton(R.string.cadastrar, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
 
                 try {
 
@@ -187,9 +187,9 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                 } catch (Exception e) {
                     Log.getStackTraceString(e);
                 }
-                dialog.dismiss();
-            }
-        }).create().show();
+//                dialog.dismiss();
+//            }
+//        }).create().show();
     }
 
     public boolean configuraObjetos() {

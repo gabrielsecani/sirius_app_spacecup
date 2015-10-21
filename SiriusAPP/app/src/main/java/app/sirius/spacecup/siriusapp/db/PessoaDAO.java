@@ -58,16 +58,17 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
 
     public List<Pessoa> doSelectAllMembersGroup(GrupoDAO.Grupo grupo) {
 
+        List<Pessoa> lista = new ArrayList<>();
+        if (grupo == null) {
+            return lista;
+        } else if (grupo.get_id() > 0) {
+            return lista;
+        }
+
         Cursor cursor = getDB().rawQuery(
                 "select P._id, nome_pessoa, rm_pessoa" +
                         " from PESSOA P" +
                         " join GRUPO G on G._id = P.grupo_id where G._id = ?", new String[]{String.valueOf(grupo.get_id())});
-
-        /*Cursor cursor = getDB().rawQuery(
-                "select P._id, nome_pessoa, rm_pessoa" +
-                        " from PESSOA P", null);*/
-
-        List<Pessoa> lista = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
             do {

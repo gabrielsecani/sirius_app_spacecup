@@ -19,8 +19,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import app.sirius.spacecup.siriusapp.ListGrupoAdapter;
 import app.sirius.spacecup.siriusapp.R;
+import app.sirius.spacecup.siriusapp.adapter.ListGrupoAdapter;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.LancamentoDAO;
 

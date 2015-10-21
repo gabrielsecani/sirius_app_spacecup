@@ -1,4 +1,4 @@
-package app.sirius.spacecup.siriusapp;
+package app.sirius.spacecup.siriusapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import app.sirius.spacecup.siriusapp.R;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 
 /**
