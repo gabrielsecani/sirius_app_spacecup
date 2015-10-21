@@ -53,7 +53,7 @@ public class ListPessoaAdapter extends BaseAdapter {
         textView = (TextView) convertView.findViewById(R.id.txt_nome_membro);
         textView.setText(mIntegrante.get(position).getNome_pessoa());
         textView = (TextView) convertView.findViewById(R.id.txt_rm_membro);
-        textView.setText(mIntegrante.get(position).getRm_pessoa());
+        textView.setText(String.valueOf(mIntegrante.get(position).getRm_pessoa()));
         return convertView;
     }
 }

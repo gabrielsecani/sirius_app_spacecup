@@ -62,28 +62,27 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
         if (grupo == null) {
             return lista;
         } else if (grupo.get_id() > 0) {
-            return lista;
+
+            Cursor cursor = getDB().rawQuery(
+                    "select P._id, nome_pessoa, rm_pessoa" +
+                            " from PESSOA P" +
+                            " join GRUPO G on G._id = P.grupo_id where G._id = ?", new String[]{String.valueOf(grupo.get_id())});
+
+            if (cursor.moveToFirst()) {
+                do {
+                    Pessoa membro = new Pessoa();
+                    membro.set_id(cursor.getInt(0));
+                    membro.setNome_pessoa(cursor.getString(1));
+                    membro.setRm_pessoa(cursor.getInt(2));
+                    membro.grupo = grupo;
+
+                    lista.add(membro);
+
+                } while (cursor.moveToNext());
+
+            }
+
         }
-
-        Cursor cursor = getDB().rawQuery(
-                "select P._id, nome_pessoa, rm_pessoa" +
-                        " from PESSOA P" +
-                        " join GRUPO G on G._id = P.grupo_id where G._id = ?", new String[]{String.valueOf(grupo.get_id())});
-
-        if (cursor.moveToFirst()) {
-            do {
-                Pessoa membro = new Pessoa();
-                membro.set_id(cursor.getInt(0));
-                membro.setNome_pessoa(cursor.getString(1));
-                membro.setRm_pessoa(cursor.getInt(2));
-                membro.grupo = grupo;
-
-                lista.add(membro);
-
-            } while (cursor.moveToNext());
-
-        }
-
         return lista;
     }
 

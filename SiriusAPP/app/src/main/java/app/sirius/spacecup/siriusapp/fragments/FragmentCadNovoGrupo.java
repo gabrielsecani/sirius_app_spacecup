@@ -128,14 +128,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         listarMembros(mGrupo);
 
 
-        /*String[] chaves = {"nome", "rm"};
-        int[] identificadores = {R.id.txt_nome_membro, R.id.txt_rm_membro};*/
 
-        /*adapter =
-                new Ada(getContext(), listarMembros(mGrupo),
-                        R.layout.layout_membros_grupo, chaves, identificadores) {
-                };
-        listView.setAdapter(adapter);*/
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +147,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     }
 
     private void listarMembros(GrupoDAO.Grupo _mGrupo) {
+        listView.setAdapter(null);
         integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(_mGrupo);
         adapter = new ListPessoaAdapter(getContext(), integrantres);
         listView.setAdapter(adapter);
@@ -232,7 +226,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                             pessoaDAO.getObject().setRm_pessoa(Integer.valueOf(String.valueOf(rm.getText())));
                             pessoaDAO.getObject().setGrupo_id(mGrupo.get_id());
                             if (pessoaDAO.doPersist()) {
-                                listarMembros(mGrupo);
+
                                 Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), R.string.erro_add_integrante, Toast.LENGTH_SHORT).show();
@@ -242,40 +236,11 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                             Log.getStackTraceString(e);
 
                         }
+                        listarMembros(mGrupo);
                         dialog.dismiss();
 
                     }
                 }).create().show();
     }
-
-    /*public List<PessoaDAO.Pessoa> listarMembros(GrupoDAO.Grupo grupo) {
-
-        PessoaDAO pessoaDAO = new PessoaDAO(getContext());
-
-        *//*if (grupo != null) {
-            final List<Map<String, Object>> membros = pessoaDAO.doSelectAllMap(grupo);
-
-            if (membros.size() == 0) {
-
-                textViewMsgSemIntegrantes.setVisibility(View.VISIBLE);
-                listView.setVisibility(View.GONE);
-            } else {
-                textViewMsgSemIntegrantes.setVisibility(View.GONE);
-                listView.setVisibility(View.VISIBLE);
-
-                String[] chaves = {"nome", "rm"};
-                int[] identificadores = {R.id.txt_nome_membro, R.id.txt_rm_membro};
-
-                adapter =
-                        new SimpleAdapter(getContext(), membros,
-                                R.layout.layout_membros_grupo, chaves, identificadores) {
-                        };
-                listView.setAdapter(adapter);
-            }
-        }*//*
-
-        return pessoaDAO.doSelectAllMembersGroup(grupo);
-
-    }*/
 
 }
