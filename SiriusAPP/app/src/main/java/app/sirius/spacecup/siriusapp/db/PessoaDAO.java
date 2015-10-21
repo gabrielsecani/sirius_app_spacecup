@@ -25,7 +25,7 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
     protected ContentValues getContentValues() {
 
         ContentValues cv = new ContentValues();
-        cv.put("nome_grupo", getObject().getNome_pessoa());
+        cv.put("nome_pessoa", getObject().getNome_pessoa());
         cv.put("rm_pessoa", getObject().getRm_pessoa());
         cv.put("grupo_id", getObject().getGrupo_id());
         return cv;
@@ -63,6 +63,10 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
                         " from PESSOA P" +
                         " join GRUPO G on G._id = P.grupo_id where G._id = ?", new String[]{String.valueOf(grupo.get_id())});
 
+        /*Cursor cursor = getDB().rawQuery(
+                "select P._id, nome_pessoa, rm_pessoa" +
+                        " from PESSOA P", null);*/
+
         List<Pessoa> lista = new ArrayList<>();
 
         if (cursor.moveToFirst()) {
@@ -72,6 +76,9 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
                 membro.setNome_pessoa(cursor.getString(1));
                 membro.setRm_pessoa(cursor.getInt(2));
                 membro.grupo = grupo;
+
+                lista.add(membro);
+
             } while (cursor.moveToNext());
 
         }

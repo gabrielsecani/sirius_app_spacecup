@@ -8,18 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import java.util.List;
-import java.util.Map;
 
+import app.sirius.spacecup.siriusapp.ListPessoaAdapter;
 import app.sirius.spacecup.siriusapp.R;
 import app.sirius.spacecup.siriusapp.db.GrupoDAO;
 import app.sirius.spacecup.siriusapp.db.PessoaDAO;
@@ -38,7 +36,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     private GrupoDAO.Grupo mGrupo;
     private boolean mReadOnly;
 
-    private View view;
+
     private EditText edtNomeGrupo;
     private EditText edtTurmaGrupo;
     private TextView textViewIntegrantes;
@@ -46,7 +44,10 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     private FloatingActionButton fab;
     private ListView listView;
 
-    private SimpleAdapter adapter;
+
+    private List<PessoaDAO.Pessoa> integrantres;
+    private ListPessoaAdapter adapter;
+
 
     public FragmentCadNovoGrupo() {
         // Required empty public constructor
@@ -63,17 +64,27 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
 
     public static FragmentCadNovoGrupo newInstance(GrupoDAO.Grupo grupo, boolean openReadOnly) {
         FragmentCadNovoGrupo fragment = new FragmentCadNovoGrupo();
+        /*Bundle args = new Bundle();
+        args.putSerializable(ARG_GRUPO, grupo);
+        args.putSerializable(ARG_READONLY, openReadOnly);*/
+        Bundle args = newBundleArguments(grupo, openReadOnly);
+        fragment.setArguments(args);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static Bundle newBundleArguments(GrupoDAO.Grupo grupo, boolean openReadOnly) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_GRUPO, grupo);
         args.putSerializable(ARG_READONLY, openReadOnly);
-        fragment.setArguments(args);
-        return fragment;
+        return args;
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable(ARG_GRUPO, mGrupo);
+        outState.putSerializable(ARG_READONLY, configuraObjetos());
     }
 
     @Override
@@ -105,25 +116,42 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
+        View view = inflater.inflate(R.layout.fragment_cad_novo_grupo, container, false);
 
         edtNomeGrupo = (EditText) view.findViewById(R.id.edt_nome_grupo);
         edtTurmaGrupo = (EditText) view.findViewById(R.id.edt_turma_grupo);
         textViewIntegrantes = (TextView) view.findViewById(R.id.txtView_membros_grupo);
         textViewMsgSemIntegrantes = (TextView) view.findViewById(R.id.txtView_sem_grupos);
-
+        listView = (ListView) view.findViewById(R.id.list_membros_grupos);
         fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
 
-        listarMembros(view, mGrupo);
+        /*listarMembros(mGrupo);*/
+        integrantres = new PessoaDAO(getContext()).doSelectAllMembersGroup(mGrupo);
+        adapter = new ListPessoaAdapter(getContext(), integrantres);
+        listView.setAdapter(adapter);
+
+        String[] chaves = {"nome", "rm"};
+        int[] identificadores = {R.id.txt_nome_membro, R.id.txt_rm_membro};
+
+        /*adapter =
+                new Ada(getContext(), listarMembros(mGrupo),
+                        R.layout.layout_membros_grupo, chaves, identificadores) {
+                };
+        listView.setAdapter(adapter);*/
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                registraNovoIntegrante();
+                registraNovoIntegrante(view);
             }
 
         });
+
+        if (mReadOnly) {
+            configuraObjetos();
+        }
 
         return view;
     }
@@ -148,6 +176,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                     GrupoDAO.Grupo grupo = grupoDAO.getObject();
                     grupo.setNome_grupo(String.valueOf(edtNomeGrupo.getText()));
                     grupo.setNome_turma(String.valueOf(edtTurmaGrupo.getText()));
+                    mGrupo = grupo;
                     if (grupoDAO.doPersist()) {
                         configuraObjetos();
                         Toast.makeText(getContext(), R.string.msg_grupo_salvo_sucesso, Toast.LENGTH_SHORT).show();
@@ -163,23 +192,21 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         }).create().show();
     }
 
-    public void configuraObjetos() {
+    public boolean configuraObjetos() {
 
-        edtNomeGrupo.setEnabled(false);
-        edtTurmaGrupo.setEnabled(false);
         textViewIntegrantes.setVisibility(View.VISIBLE);
-        textViewMsgSemIntegrantes.setVisibility(View.VISIBLE);
         fab.setVisibility(View.VISIBLE);
-        listView.setVisibility(View.VISIBLE);
-        Button button = (Button) view.findViewById(R.id.btnSalvar);
-        button.setText("");
-        button.setEnabled(false);
+        if (listView != null) {
+            listView.setVisibility(View.VISIBLE);
+        }
 
+        return true;
     }
 
-    public void registraNovoIntegrante() {
+    public void registraNovoIntegrante(View v) {
 
         final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
+        final View v1 = v;
 
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 
@@ -204,6 +231,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                             pessoaDAO.getObject().setRm_pessoa(Integer.valueOf(String.valueOf(rm.getText())));
                             pessoaDAO.getObject().setGrupo_id((int) mGrupo.get_id());
                             if (pessoaDAO.doPersist()) {
+                                listView.setAdapter(adapter);
                                 Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), R.string.erro_add_integrante, Toast.LENGTH_SHORT).show();
@@ -219,22 +247,20 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                 }).create().show();
     }
 
-    public void listarMembros(View view, GrupoDAO.Grupo grupo) {
-
-
-        listView = (ListView) view.findViewById(R.id.list_membros_grupos);
+    /*public List<PessoaDAO.Pessoa> listarMembros(GrupoDAO.Grupo grupo) {
 
         PessoaDAO pessoaDAO = new PessoaDAO(getContext());
 
-        if (mGrupo != null) {
+        *//*if (grupo != null) {
             final List<Map<String, Object>> membros = pessoaDAO.doSelectAllMap(grupo);
 
             if (membros.size() == 0) {
 
-                ((TextView) view.findViewById(R.id.txtView_sem_grupos)).setVisibility(View.VISIBLE);
+                textViewMsgSemIntegrantes.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.GONE);
             } else {
-
+                textViewMsgSemIntegrantes.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
 
                 String[] chaves = {"nome", "rm"};
                 int[] identificadores = {R.id.txt_nome_membro, R.id.txt_rm_membro};
@@ -245,8 +271,10 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                         };
                 listView.setAdapter(adapter);
             }
-        }
+        }*//*
 
-    }
+        return pessoaDAO.doSelectAllMembersGroup(grupo);
+
+    }*/
 
 }

@@ -80,7 +80,7 @@
 
             <ListView
                 android:id="@+id/list_membros_grupos"
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_below="@id/txtView_membros_grupo"
                 android:visibility="gone">
@@ -91,9 +91,9 @@
                 android:id="@+id/fab_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/txtView_membros_grupo"
                 android:layout_margin="@dimen/fab_margin"
+                android:layout_toRightOf="@id/txtView_membros_grupo"
                 android:src="@drawable/ic_add"
                 android:visibility="gone" />
 
