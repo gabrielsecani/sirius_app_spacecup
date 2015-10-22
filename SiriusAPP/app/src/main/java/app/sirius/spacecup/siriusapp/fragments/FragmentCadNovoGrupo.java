@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -122,6 +123,13 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         textViewIntegrantes = (TextView) view.findViewById(R.id.txtView_membros_grupo);
         textViewMsgSemIntegrantes = (TextView) view.findViewById(R.id.txtView_sem_grupos);
         listView = (ListView) view.findViewById(R.id.list_membros_grupos);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                PessoaDAO.Pessoa p = integrantres.get(position);
+                registraIntegrante(view, p);
+            }
+        });
         fab = (FloatingActionButton) view.findViewById(R.id.fab_add);
 
         listarMembros(mGrupo);
@@ -136,7 +144,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
             @Override
             public void onClick(View view) {
 
-                registraNovoIntegrante(view);
+                registraIntegrante(view, null);
             }
 
         });
@@ -172,7 +180,7 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                 Toast.makeText(getContext(), R.string.msg_grupo_salvo_sucesso, Toast.LENGTH_SHORT).show();
             } else {
                 Log.e(getClass().getSimpleName(), grupoDAO.getLastException().getMessage(), grupoDAO.getLastException());
-                Toast.makeText(getContext(), R.string.erro_salvor_grupo, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.erro_salvar_grupo, Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             Log.getStackTraceString(e);
@@ -190,11 +198,22 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
         return true;
     }
 
-    public void registraNovoIntegrante(View v) {
+    /**
+     * Registra novo ou atualiza um integrante
+     *
+     * @param v
+     * @param pessoa null se for para cadastrar novo, ou objeto <link>PessoaDAO.Pessoa</link> para alterar
+     */
+    public void registraIntegrante(View v, final PessoaDAO.Pessoa pessoa) {
         FragmentBase.escondeTeclado(v, getContext());
 
         final View view = getLayoutInflater(null).inflate(R.layout.layout_cad_membro, null);
-
+        final EditText nome = (EditText) view.findViewById(R.id.edt_nome_membro);
+        final EditText rm = (EditText) view.findViewById(R.id.edt_rm_membro);
+        if (pessoa != null) {
+            nome.setText(pessoa.getNome_pessoa());
+            rm.setText(String.valueOf(pessoa.getRm_pessoa()));
+        }
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
 
         alert.setView(view).setIcon(R.drawable.ic_novo_grupo).setTitle(R.string.novo_integrante).
@@ -208,16 +227,17 @@ public class FragmentCadNovoGrupo extends FragmentBase implements FragmentFooter
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //salvar
-                        EditText nome = (EditText) view.findViewById(R.id.edt_nome_membro);
-                        EditText rm = (EditText) view.findViewById(R.id.edt_rm_membro);
+//                        EditText nome = (EditText) view.findViewById(R.id.edt_nome_membro);
+//                        EditText rm = (EditText) view.findViewById(R.id.edt_rm_membro);
                         try {
                             PessoaDAO pessoaDAO = new PessoaDAO(getContext());
+                            if (pessoa != null)
+                                pessoaDAO.setObject(pessoa);
                             pessoaDAO.getObject().setNome_pessoa(String.valueOf(nome.getText()));
                             pessoaDAO.getObject().setRm_pessoa(Integer.valueOf(String.valueOf(rm.getText())));
                             pessoaDAO.getObject().setGrupo(mGrupo);
                             if (pessoaDAO.doPersist()) {
-
-                                Toast.makeText(getContext(), R.string.adicionado_sucesso, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.integrante_salvo_sucesso, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), R.string.erro_add_integrante, Toast.LENGTH_SHORT).show();
                             }
