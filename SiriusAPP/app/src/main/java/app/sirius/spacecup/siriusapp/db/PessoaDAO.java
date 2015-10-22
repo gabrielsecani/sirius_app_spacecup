@@ -57,6 +57,33 @@ public class PessoaDAO extends DAO<PessoaDAO.Pessoa> {
 
     }
 
+    /**
+     * Busca Aluno por RM
+     *
+     * @param RM
+     */
+    public Pessoa doSelectByRM(int RM) {
+
+        Cursor cursor = getDB().rawQuery(
+                "select P._id, nome_pessoa, rm_pessoa, grupo_id" +
+                        " from PESSOA P" +
+                        " where G.rm_pessoa = ?", new String[]{String.valueOf(RM)});
+
+        Pessoa membro = new Pessoa();
+        if (cursor.moveToFirst()) {
+            do {
+                membro.set_id(cursor.getInt(0));
+                membro.setNome_pessoa(cursor.getString(1));
+                membro.setRm_pessoa(cursor.getInt(2));
+                membro.setGrupo_id(cursor.getInt(3));
+
+            } while (cursor.moveToNext());
+
+        }
+
+        return membro;
+    }
+
     public List<Pessoa> doSelectAllMembersGroup(GrupoDAO.Grupo grupo) {
 
         List<Pessoa> lista = new ArrayList<>();

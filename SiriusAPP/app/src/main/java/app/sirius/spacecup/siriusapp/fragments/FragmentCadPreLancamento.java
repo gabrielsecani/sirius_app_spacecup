@@ -171,6 +171,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             }
         });
 
+
         if (mReadOnly) {
             View v = view.findViewById(R.id.footerbar_prelancto);
             if (v != null)
@@ -245,13 +246,15 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             lan.setVelocidade_vento(Double.parseDouble(String.valueOf(prelancto_velocidade_vento.getText())));
             lan.setPeso_foguete(Double.parseDouble(String.valueOf(prelancto_peso_foguete.getText())));
             //POS
-            lan.setDistancia_alcancada(Double.parseDouble(String.valueOf(poslancto_distancia_alcancada)));
-            lan.setMaxima_velocidade(Double.parseDouble(String.valueOf(poslancto_velocidade_max)));
-            lan.setTempo_propoulsao(Double.parseDouble(String.valueOf(poslancto_tmp_propulsao)));
-            lan.setTempo_apogeo_distancia(Double.parseDouble(String.valueOf(poslancto_tmp_apogeo_descida)));
-            lan.setTempo_ejecao(Double.parseDouble(String.valueOf(poslancto_alt_ejecao)));
-            lan.setTaxa_decida(Double.parseDouble(String.valueOf(poslancto_taxa_descida)));
-            lan.setDuracao_voo(Double.parseDouble(String.valueOf(poslancto_duracao_voo)));
+            if (lan.get_id() > 0) {
+                lan.setDistancia_alcancada(Double.parseDouble(String.valueOf(poslancto_distancia_alcancada)));
+                lan.setMaxima_velocidade(Double.parseDouble(String.valueOf(poslancto_velocidade_max)));
+                lan.setTempo_propoulsao(Double.parseDouble(String.valueOf(poslancto_tmp_propulsao)));
+                lan.setTempo_apogeo_distancia(Double.parseDouble(String.valueOf(poslancto_tmp_apogeo_descida)));
+                lan.setTempo_ejecao(Double.parseDouble(String.valueOf(poslancto_alt_ejecao)));
+                lan.setTaxa_decida(Double.parseDouble(String.valueOf(poslancto_taxa_descida)));
+                lan.setDuracao_voo(Double.parseDouble(String.valueOf(poslancto_duracao_voo)));
+            }
             lan.setGrupo_id(mGrupo.get_id());
             if (dao.doPersist()) {
                 Toast.makeText(getContext(), "Dados de lançamento foram salvos com sucesso!", Toast.LENGTH_LONG).show();
@@ -261,6 +264,7 @@ public class FragmentCadPreLancamento extends FragmentBase implements FragmentFo
             }
         } finally {
             pd.dismiss();
+            carregaDadosLancamento();
         }
     }
 }
